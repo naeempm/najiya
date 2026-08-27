@@ -112,12 +112,7 @@ app.use(async (_req, _res, next) => {
   }
 });
 
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-app.options('*', cors());
+app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (_request, response) => {
