@@ -1,0 +1,11 @@
+{
+  "name": "lead-slp-website",
+  "private": true,
+  "scripts": {
+    "client": "npm --prefix client run dev",
+    "admin": "npm --prefix admin run dev",
+    "server": "npm --prefix server run dev",
+    "build:client": "npm --prefix client run build",
+    "build:admin": "npm --prefix admin run build"
+  }
+}
