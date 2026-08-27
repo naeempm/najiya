@@ -109,7 +109,10 @@ app.get('/api/health', (_request, response) => {
   response.json({
     ok: true,
     service: 'lead-slp-server',
+    databaseState: mongoose.connection.readyState,
     database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    hasUri: !!process.env.MONGODB_URI,
+    nodeEnv: process.env.NODE_ENV
   });
 });
 
