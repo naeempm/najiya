@@ -88,7 +88,9 @@ async function connectToDatabase() {
   if (!MONGODB_URI) {
     throw new Error('Missing MONGODB_URI environment variable.');
   }
-  cachedConnection = await mongoose.connect(MONGODB_URI);
+  cachedConnection = await mongoose.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 3000
+  });
   console.log(`Connected to MongoDB database on: ${mongoose.connection.host}`);
   return cachedConnection;
 }
