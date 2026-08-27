@@ -8,7 +8,8 @@ import mongoose from 'mongoose';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.join(__dirname, '.env') });
+// Load .env from parent directory (server/)
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
 dotenv.config();
 
 const app = express();
@@ -196,8 +197,6 @@ app.use((error, _request, response, _next) => {
   console.error(error);
   response.status(500).json({ error: 'Server error. Please try again later.' });
 });
-
-
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
