@@ -20,6 +20,12 @@ const getApiUrl = () => {
 const API_URL = getApiUrl();
 
 function AdminApp() {
+  const [token, setToken] = useState(() => localStorage.getItem('admin_token') || '');
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [loggingIn, setLoggingIn] = useState(false);
+
   const [appointments, setAppointments] = useState([]);
   const [status, setStatus] = useState('Loading appointments...');
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,16 +44,28 @@ function AdminApp() {
 
   async function loadAppointments(isManual = false) {
     try {
-      const response = await fetch(`${API_URL}/appointments`);
+      const response = await fetch(`${API_URL}/appointments`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.status === 401 || response.status === 403) {
+        handleLogout();
+        throw new Error('Session expired');
+      }
       const data = await response.json();
       setAppointments(data);
       setStatus(data.length ? '' : 'No appointment requests yet.');
       if (isManual) {
         showToast('Appointments list updated.', 'success');
       }
-    } catch {
-      setStatus('Server is not running. Start the server to view appointments.');
-      showToast('Error connecting to backend server.', 'error');
+    } catch (err) {
+      if (err.message === 'Session expired') {
+        showToast('Session expired. Please login again.', 'error');
+      } else {
+        setStatus('Server is not running. Start the server to view appointments.');
+        showToast('Error connecting to backend server.', 'error');
+      }
     }
   }
 
@@ -55,9 +73,17 @@ function AdminApp() {
     try {
       const response = await fetch(`${API_URL}/appointments/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ status: newStatus }),
       });
+      if (response.status === 401 || response.status === 403) {
+        handleLogout();
+        showToast('Session expired. Please login again.', 'error');
+        return;
+      }
       if (response.ok) {
         setAppointments((prev) =>
           prev.map((app) => (app.id === id ? { ...app, status: newStatus } : app))
@@ -78,7 +104,15 @@ function AdminApp() {
     try {
       const response = await fetch(`${API_URL}/appointments/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
+      if (response.status === 401 || response.status === 403) {
+        handleLogout();
+        showToast('Session expired. Please login again.', 'error');
+        return;
+      }
       if (response.ok) {
         setAppointments((prev) => prev.filter((app) => app.id !== id));
         showToast('Appointment request permanently deleted.', 'success');
@@ -90,9 +124,48 @@ function AdminApp() {
     }
   }
 
+  async function handleLogin(e) {
+    e.preventDefault();
+    setLoginError('');
+    setLoggingIn(true);
+
+    try {
+      const response = await fetch(`${API_URL}/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Invalid credentials');
+      }
+
+      setToken(data.token);
+      localStorage.setItem('admin_token', data.token);
+      showToast('Logged in successfully.', 'success');
+      setLoginUsername('');
+      setLoginPassword('');
+    } catch (err) {
+      setLoginError(err.message || 'Failed to login');
+      showToast(err.message || 'Login failed', 'error');
+    } finally {
+      setLoggingIn(false);
+    }
+  }
+
+  function handleLogout() {
+    setToken('');
+    localStorage.removeItem('admin_token');
+    showToast('Logged out successfully.', 'info');
+  }
+
   useEffect(() => {
-    loadAppointments();
-  }, []);
+    if (token) {
+      loadAppointments();
+    }
+  }, [token]);
 
   // Stats calculation
   const totalCount = appointments.length;
@@ -115,6 +188,58 @@ function AdminApp() {
 
     return matchesStatus && matchesSearch;
   });
+
+  if (!token) {
+    return (
+      <main className="login-page">
+        <form className="login-form" onSubmit={handleLogin}>
+          <div className="login-brand">
+            <span>Lead</span> SLP Admin
+          </div>
+          <h2>Sign in to Workspace</h2>
+          <p>Enter your administrator credentials to continue.</p>
+
+          {loginError && <p className="login-error-msg">{loginError}</p>}
+
+          <label>
+            Username
+            <input
+              type="text"
+              required
+              value={loginUsername}
+              onChange={(e) => setLoginUsername(e.target.value)}
+              placeholder="Username"
+              disabled={loggingIn}
+            />
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              required
+              value={loginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
+              placeholder="••••••••"
+              disabled={loggingIn}
+            />
+          </label>
+
+          <button type="submit" disabled={loggingIn}>
+            {loggingIn ? 'Signing in...' : 'Sign in'}
+          </button>
+        </form>
+
+        <div className="toast-container" aria-live="polite">
+          {toasts.map((toast) => (
+            <div key={toast.id} className={`toast toast-${toast.type}`}>
+              {toast.message}
+            </div>
+          ))}
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -159,6 +284,13 @@ function AdminApp() {
             }}
           >
             Overview
+          </button>
+          <button
+            type="button"
+            className="logout-link"
+            onClick={handleLogout}
+          >
+            Logout
           </button>
         </nav>
       </aside>

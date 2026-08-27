@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,6 +24,27 @@ if (MONGODB_URI) {
 mongoose.connection.on('error', (err) => {
   console.error('Mongoose connection error:', err);
 });
+
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_for_local_dev';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'password';
+
+function authenticateToken(request, response, next) {
+  const authHeader = request.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return response.status(401).json({ error: 'Access token required.' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (error, user) => {
+    if (error) {
+      return response.status(403).json({ error: 'Invalid or expired token.' });
+    }
+    request.user = user;
+    next();
+  });
+}
 
 const appointmentSchema = new mongoose.Schema(
   {
@@ -116,6 +138,21 @@ app.use(async (_req, _res, next) => {
 app.use(cors());
 app.use(express.json());
 
+app.post('/api/admin/login', (request, response) => {
+  const { username, password } = request.body;
+
+  if (!username || !password) {
+    return response.status(400).json({ error: 'Username and password are required.' });
+  }
+
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '7d' });
+    return response.json({ token });
+  }
+
+  return response.status(401).json({ error: 'Invalid username or password.' });
+});
+
 app.get('/api/health', (_request, response) => {
   response.json({
     ok: true,
@@ -127,7 +164,7 @@ app.get('/api/health', (_request, response) => {
   });
 });
 
-app.get('/api/appointments', async (_request, response, next) => {
+app.get('/api/appointments', authenticateToken, async (_request, response, next) => {
   try {
     const appointments = await Appointment.find().sort({ createdAt: -1 });
     response.json(appointments);
@@ -161,7 +198,7 @@ app.post('/api/appointments', async (request, response, next) => {
   }
 });
 
-app.patch('/api/appointments/:id', async (request, response, next) => {
+app.patch('/api/appointments/:id', authenticateToken, async (request, response, next) => {
   try {
     const { status } = request.body;
     if (!['new', 'contacted', 'completed'].includes(status)) {
@@ -181,7 +218,7 @@ app.patch('/api/appointments/:id', async (request, response, next) => {
   }
 });
 
-app.delete('/api/appointments/:id', async (request, response, next) => {
+app.delete('/api/appointments/:id', authenticateToken, async (request, response, next) => {
   try {
     const appointment = await Appointment.findByIdAndDelete(request.params.id);
     if (!appointment) {
