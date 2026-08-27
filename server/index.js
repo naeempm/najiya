@@ -169,6 +169,10 @@ if (!MONGODB_URI) {
 await mongoose.connect(MONGODB_URI);
 console.log(`Connected to MongoDB database on: ${mongoose.connection.host}`);
 
-app.listen(PORT, () => {
-  console.log(`Lead SLP server running${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Lead SLP server running${PORT}`);
+  });
+}
+
+export default app;
