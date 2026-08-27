@@ -10,7 +10,6 @@
     "cors": "latest",
     "dotenv": "^17.4.2",
     "express": "latest",
-    "lead-slp-website": "file:..",
     "mongoose": "^9.9.2"
   }
 }
