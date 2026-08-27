@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 
 const getApiUrl = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+  let url = import.meta.env.VITE_API_URL;
+  if (url) {
+    url = url.replace(/\/$/, '');
+    if (!url.endsWith('/api')) {
+      url = `${url}/api`;
+    }
+    return url;
   }
   const isLocal = typeof window !== 'undefined' && (
     window.location.hostname === 'localhost' || 
