@@ -82,7 +82,7 @@ const Appointment = mongoose.model('Appointment', appointmentSchema);
 let cachedConnection = null;
 
 async function connectToDatabase() {
-  if (cachedConnection) {
+  if (cachedConnection && mongoose.connection.readyState >= 1) {
     return cachedConnection;
   }
   if (!MONGODB_URI) {
