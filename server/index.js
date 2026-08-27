@@ -79,6 +79,29 @@ appointmentSchema.set('toJSON', {
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
+let cachedConnection = null;
+
+async function connectToDatabase() {
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+  if (!MONGODB_URI) {
+    throw new Error('Missing MONGODB_URI environment variable.');
+  }
+  cachedConnection = await mongoose.connect(MONGODB_URI);
+  console.log(`Connected to MongoDB database on: ${mongoose.connection.host}`);
+  return cachedConnection;
+}
+
+app.use(async (_req, _res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.use(cors());
 app.use(express.json());
 
@@ -161,13 +184,7 @@ app.use((error, _request, response, _next) => {
   response.status(500).json({ error: 'Server error. Please try again later.' });
 });
 
-if (!MONGODB_URI) {
-  console.error('Missing MONGODB_URI. Create server/.env from server/.env.example.');
-  process.exit(1);
-}
 
-await mongoose.connect(MONGODB_URI);
-console.log(`Connected to MongoDB database on: ${mongoose.connection.host}`);
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
