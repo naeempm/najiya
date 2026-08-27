@@ -15,6 +15,11 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const MONGODB_URI = process.env.MONGODB_URI;
 
+// Handle connection errors after initial connection is established to prevent unhandled error event crashes
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err);
+});
+
 const appointmentSchema = new mongoose.Schema(
   {
     name: {
