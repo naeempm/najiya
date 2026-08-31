@@ -195,7 +195,7 @@ function App() {
             <h1 className="hero-title">ONLINE SPEECH THERAPY</h1>
             <div className="hero-actions">
               <button className="primary-button" type="button" onClick={() => changeView('appointment')}>
-                Book an Appointment
+                BOOK AN APPOINTMENT
               </button>
             </div>
             <div className="hero-stats" aria-label="Key platform details">

@@ -1,4 +1,4 @@
-{
+into{
   "name": "lead-slp-server",
   "private": true,
   "type": "module",
