@@ -316,13 +316,29 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.split-section,
-.appointment-section {
+.split-section {
   border-top: 1px solid rgba(23, 49, 45, 0.1);
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
   gap: 46px;
   padding: 76px 0;
+}
+
+.appointment-section {
+  border-top: 1px solid rgba(23, 49, 45, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 76px 0;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.appointment-copy {
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
 }
 
 .split-section h2,
@@ -626,6 +642,7 @@ blockquote {
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   padding: 24px;
+  width: 100%;
 }
 
 .booking-form label {
