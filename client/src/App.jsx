@@ -80,7 +80,7 @@ const navItems = [
   { id: 'about', label: 'About' },
   { id: 'services', label: 'Services' },
   { id: 'resources', label: 'Resources' },
-  { id: 'contact', label: 'Contacts' },
+  { id: 'contact', label: 'Contact Us' },
 ];
 
 function App() {
@@ -192,12 +192,10 @@ function App() {
       {activeView === 'home' && (
         <section className="hero interface-page" id="home">
           <div className="hero-copy section-wrap">
-            <p className="eyebrow">Online therapy platform</p>
-            <h1>Speech Language Pathology Platform (Online)</h1>
-            <p>
+            <h1 className="hero-title">
               Speech and language support for paediatrics and adults with
               flexible days and timings.
-            </p>
+            </h1>
             <div className="hero-actions">
               <button className="primary-button" type="button" onClick={() => changeView('appointment')}>
                 Book an appointment
