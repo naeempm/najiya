@@ -192,6 +192,7 @@ function App() {
       {activeView === 'home' && (
         <section className="hero interface-page" id="home">
           <div className="hero-copy section-wrap">
+            <h1 className="hero-title">ONLINE SPEECH THERAPY</h1>
             <div className="hero-actions">
               <button className="primary-button" type="button" onClick={() => changeView('appointment')}>
                 Book an appointment
