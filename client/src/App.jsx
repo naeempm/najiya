@@ -42,10 +42,10 @@ const services = [
 
 const concerns = [
   'Language Delay',
-  'Clarity Issues',
+  'Clarity Issue',
   'Stammering',
-  'Voice Disorders',
-  'Stroke & Other Neurological Damage Related Communication Disorders',
+  'Voice Disorder',
+  'Stroke and/or Other Neurological Communication Disorders',
 ];
 
 const resources = [
@@ -356,7 +356,7 @@ function App() {
                 name="concerns"
                 value={form.concerns}
                 onChange={updateField}
-                placeholder="Language delay, clarity issue, stammering, voice concern, neurological communication difficulty..."
+                placeholder="Language delay, Clarity issue, Stammering, Voice disorder, Stroke and/or other neurological communication disorders etc..."
                 rows="5"
                 required
               />
