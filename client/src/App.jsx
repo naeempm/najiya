@@ -31,7 +31,11 @@ const therapist = {
   linkedIn: 'https://www.linkedin.com/in/najiya-p-m-69b349322',
 };
 
-const keywords = ['Online Therapy', 'Paediatrics & Adults', 'Flexible Days & Timings'];
+const keywords = [
+  { title: 'Online', desc: 'Therapy' },
+  { title: 'Population', desc: 'Paediatrics & Adults' },
+  { title: 'Flexible', desc: 'Days & Timings' },
+];
 
 const services = [
   'Speech & Language Consultation, Assessment & Therapy',
@@ -199,10 +203,10 @@ function App() {
               </button>
             </div>
             <div className="hero-stats" aria-label="Key platform details">
-              {keywords.map((keyword) => (
-                <div key={keyword}>
-                  <strong>{keyword.split(' ')[0]}</strong>
-                  <span>{keyword.replace(keyword.split(' ')[0], '').trim() || keyword}</span>
+              {keywords.map((item) => (
+                <div key={item.title}>
+                  <strong>{item.title}</strong>
+                  <span>{item.desc}</span>
                 </div>
               ))}
             </div>
