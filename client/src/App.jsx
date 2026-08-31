@@ -195,11 +195,8 @@ function App() {
             <h1 className="hero-title">ONLINE SPEECH THERAPY</h1>
             <div className="hero-actions">
               <button className="primary-button" type="button" onClick={() => changeView('appointment')}>
-                Book an appointment
+                Book an Appointment
               </button>
-              <a className="secondary-button" href={`https://wa.me/${therapist.whatsapp.replace(/\D/g, '')}`}>
-                WhatsApp
-              </a>
             </div>
             <div className="hero-stats" aria-label="Key platform details">
               {keywords.map((keyword) => (
