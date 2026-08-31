@@ -32,7 +32,7 @@ const therapist = {
 };
 
 const keywords = [
-  { title: 'Online', desc: 'Therapy' },
+  { title: 'Individualized', desc: 'Therapy' },
   { title: 'Population', desc: 'Paediatrics & Adults' },
   { title: 'Flexible', desc: 'Days & Timings' },
 ];
