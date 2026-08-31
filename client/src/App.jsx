@@ -306,7 +306,7 @@ function App() {
       {activeView === 'appointment' && (
         <section className="appointment-section interface-page section-wrap" id="appointment">
           <div className="appointment-copy">
-            <p className="section-label">Book an appointment</p>
+            <h2 className="appointment-title">APPOINTMENT FORM</h2>
           </div>
 
           <form className="booking-form" onSubmit={submitAppointment}>
