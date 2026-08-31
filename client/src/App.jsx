@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import AccordionGallery from './AccordionGallery';
 
 const getApiUrl = () => {
   let url = import.meta.env.VITE_API_URL;
@@ -30,6 +31,13 @@ const therapist = {
   whatsapp: '+91 9349412153',
   linkedIn: 'https://www.linkedin.com/in/najiya-p-m-69b349322',
 };
+
+const galleryItems = [
+  { image: therapist.photo, label: therapist.name, alt: `${therapist.name}, Speech Language Pathologist` },
+  { image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=900&auto=format&fit=crop', label: 'Pediatric Care', alt: 'Pediatric Care' },
+  { image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=900&auto=format&fit=crop', label: 'Speech Assessment', alt: 'Speech Assessment' },
+  { image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=900&auto=format&fit=crop', label: 'Oral Placement', alt: 'Oral Placement Therapy' },
+];
 
 const keywords = [
   { title: 'Individualized', desc: 'Therapy' },
@@ -213,9 +221,15 @@ function App() {
           </div>
 
           <aside className="profile-panel" aria-label="Therapist profile">
-            <div className="profile-photo">
-              <img src={therapist.photo} alt={`${therapist.name}, speech language pathologist`} />
-            </div>
+            <AccordionGallery
+              items={galleryItems}
+              defaultIndex={0}
+              height={360}
+              expandRatio={0.52}
+              trigger="hover"
+              accentColor="#176b5c"
+              overlayColor="#0a221d"
+            />
             <div>
               <h2>{therapist.name}</h2>
               <p>{therapist.credentials}</p>
