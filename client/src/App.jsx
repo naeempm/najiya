@@ -338,7 +338,6 @@ function App() {
                 <option>Female</option>
                 <option>Male</option>
                 <option>Other</option>
-                <option>Prefer not to say</option>
               </select>
             </label>
             <label>
