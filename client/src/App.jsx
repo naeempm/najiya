@@ -134,15 +134,7 @@ function App() {
     <main>
       <header className="topbar">
         <div className="topbar-inner">
-          <button
-            className="brand brand-button"
-            type="button"
-            onClick={() => changeView('home')}
-            aria-label="Speech Language Pathology Platform home"
-          >
-            <span>SLP</span> Online
-          </button>
-          
+
           <button
             className={`menu-toggle ${menuOpen ? 'open' : ''}`}
             type="button"
