@@ -311,13 +311,12 @@ function App() {
 
           <form className="booking-form" onSubmit={submitAppointment}>
             <label>
-              Name
+              Full Name
               <input
                 name="name"
                 type="text"
                 value={form.name}
                 onChange={updateField}
-                placeholder="Full name"
                 required
               />
             </label>
@@ -329,7 +328,6 @@ function App() {
                 min="0"
                 value={form.age}
                 onChange={updateField}
-                placeholder="Age"
                 required
               />
             </label>
