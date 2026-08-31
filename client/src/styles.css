@@ -456,6 +456,80 @@ blockquote {
   margin-bottom: 0;
 }
 
+.resources-section {
+  padding: 76px 0;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.resource-card {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(23, 49, 45, 0.09);
+  border-radius: 8px;
+  margin: 0;
+  min-height: 178px;
+  padding: 22px;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.resource-card:hover {
+  box-shadow: 0 18px 44px rgba(28, 45, 39, 0.1);
+  transform: translateY(-3px);
+}
+
+.resource-category {
+  display: inline-block;
+  align-self: flex-start;
+  background: #e3efe8;
+  border-radius: 999px;
+  color: #176b5c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.resource-card h3 {
+  color: #17312d;
+  font-size: 1.16rem;
+  line-height: 1.22;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.resource-card p {
+  color: #5d6e68;
+  font-size: 0.96rem;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.resource-link {
+  color: #176b5c;
+  font-weight: 750;
+  font-size: 0.92rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+
+.resource-link:hover {
+  color: #114d42;
+}
+
 .concerns-panel {
   background: #ffffff;
   border: 1px solid rgba(23, 49, 45, 0.09);
@@ -671,7 +745,8 @@ address span {
 
   .process-section,
   .service-grid,
-  .review-grid {
+  .review-grid,
+  .resources-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -704,6 +779,7 @@ address span {
   .process-section,
   .service-grid,
   .review-grid,
+  .resources-grid,
   .contact-grid,
   .booking-form {
     grid-template-columns: 1fr;
@@ -712,7 +788,8 @@ address span {
   .split-section,
   .services-section,
   .appointment-section,
-  .reviews-section {
+  .reviews-section,
+  .resources-section {
     padding: 54px 0;
   }
 

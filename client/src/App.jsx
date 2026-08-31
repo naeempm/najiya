@@ -48,11 +48,38 @@ const concerns = [
   'Stroke & Other Neurological Damage Related Communication Disorders',
 ];
 
+const resources = [
+  {
+    title: 'Parent Guide: Speech Milestones',
+    category: 'Development Guide',
+    description: 'A comprehensive checklist of speech and language developmental milestones for children ages 1 to 5.',
+    link: '#',
+  },
+  {
+    title: 'Home Training Best Practices',
+    category: 'Tips & Exercises',
+    description: 'Simple and effective daily exercises and habits parents can implement at home to foster language growth.',
+    link: '#',
+  },
+  {
+    title: 'Understanding Stuttering',
+    category: 'Educational Article',
+    description: 'Key facts, myths, and early intervention tips for children and adults experiencing stammering/stuttering.',
+    link: '#',
+  },
+  {
+    title: 'Oral Placement Therapy (OPT) Overview',
+    category: 'Therapy Guide',
+    description: 'Learn how OPT exercises can help improve speech clarity, feeding skills, and muscle coordination.',
+    link: '#',
+  },
+];
+
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'services', label: 'Services' },
-  { id: 'appointment', label: 'Appointments' },
+  { id: 'resources', label: 'Resources' },
   { id: 'contact', label: 'Contacts' },
 ];
 
@@ -251,6 +278,35 @@ function App() {
                 <li key={concern}>{concern}</li>
               ))}
             </ul>
+          </div>
+        </section>
+      )}
+
+      {activeView === 'resources' && (
+        <section className="resources-section interface-page section-wrap" id="resources">
+          <div className="section-heading">
+            <div>
+              <p className="section-label">Resources</p>
+              <h2>Educational Materials & Guides</h2>
+            </div>
+            <p>
+              Helpful insights, articles, and home tips compiled by Ms. Najiya P M to support speech-language development.
+            </p>
+          </div>
+
+          <div className="resources-grid">
+            {resources.map((resource) => (
+              <article className="resource-card" key={resource.title}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span className="resource-category">{resource.category}</span>
+                  <h3>{resource.title}</h3>
+                  <p>{resource.description}</p>
+                </div>
+                <a className="resource-link" href={resource.link} onClick={(e) => e.preventDefault()}>
+                  Read Article →
+                </a>
+              </article>
+            ))}
           </div>
         </section>
       )}
