@@ -361,7 +361,7 @@ function App() {
                 required
               />
             </label>
-            <button type="submit">Send appointment request</button>
+            <button type="submit">Submit</button>
             {status && <p className="form-status">{status}</p>}
           </form>
         </section>
