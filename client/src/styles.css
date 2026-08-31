@@ -343,16 +343,16 @@ h1 {
 
 .appointment-title {
   color: #17312d;
-  font-size: 1.1rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-size: 1.6rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
   margin-bottom: 0;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .split-section h2,
-.section-heading h2,
-.appointment-copy h2 {
+.section-heading h2 {
   color: #102824;
   font-size: clamp(2rem, 4vw, 3.15rem);
   line-height: 1.06;
