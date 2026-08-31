@@ -100,11 +100,13 @@ nav button {
   border-radius: 999px;
   color: #43544f;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 750;
   padding: 11px 20px;
   flex: 1;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   transition: all 0.2s ease;
 }
 
