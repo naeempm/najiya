@@ -307,11 +307,7 @@ function App() {
         <section className="appointment-section interface-page section-wrap" id="appointment">
           <div className="appointment-copy">
             <p className="section-label">Book an appointment</p>
-            <h2>Share the basic details.</h2>
-            <p>
-              Name, age, gender, mobile number, and concerns are enough for the
-              first contact.
-            </p>
+            <h2>Book an Appointment</h2>
           </div>
 
           <form className="booking-form" onSubmit={submitAppointment}>
