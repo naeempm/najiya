@@ -216,12 +216,6 @@ function App() {
             <div className="profile-photo">
               <img src={therapist.photo} alt={`${therapist.name}, speech language pathologist`} />
             </div>
-            <div className="profile-panel-info">
-              <h2>{therapist.name}</h2>
-              <p>{therapist.credentials}</p>
-              <strong>{therapist.role}</strong>
-              <p className="crr-number">{therapist.crr}</p>
-            </div>
           </aside>
         </section>
       )}
