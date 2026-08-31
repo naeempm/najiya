@@ -347,7 +347,6 @@ function App() {
                 type="tel"
                 value={form.phone}
                 onChange={updateField}
-                placeholder="+91"
                 required
               />
             </label>
