@@ -334,7 +334,7 @@ function App() {
             <label>
               Gender
               <select name="gender" value={form.gender} onChange={updateField} required>
-                <option value="">Select gender</option>
+                <option value="">Select</option>
                 <option>Female</option>
                 <option>Male</option>
                 <option>Other</option>
