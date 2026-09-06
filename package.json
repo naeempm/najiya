@@ -2,6 +2,7 @@
   "name": "lead-slp-website",
   "private": true,
   "scripts": {
+    "dev": "npm --prefix client run dev",
     "client": "npm --prefix client run dev",
     "admin": "npm --prefix admin run dev",
     "server": "npm --prefix server run dev",

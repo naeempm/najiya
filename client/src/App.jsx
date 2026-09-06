@@ -20,15 +20,16 @@ const getApiUrl = () => {
 const API_URL = getApiUrl();
 
 const therapist = {
-  name: 'Ms. Najiya P M',
-  credentials: 'MSc.SLP, OPT',
-  role: 'Speech Language Pathologist',
-  crr: 'CRR NO. A84512',
+  name: 'Najiya P M (Msc. SLP, OPT)',
+  fullName: 'Najiya P M',
+  role: 'Founder & Lead SLP',
+  crr: 'CRR No: A84512',
   photo: '/images/najiya-pm.jpg',
-  email: '',
+  email: 'speechconnect.in@gmail.com',
   call: '+91 8281753253',
   whatsapp: '+91 9349412153',
   linkedIn: 'https://www.linkedin.com/in/najiya-p-m-69b349322',
+  linkedInName: 'NAJIYA P M',
 };
 
 const keywords = [
@@ -38,53 +39,23 @@ const keywords = [
 ];
 
 const services = [
-  'Speech & Language Consultation, Assessment & Therapy',
+  'Speech & Language Consultations & Assessment',
+  'Early Intervention',
+  'Speech Therapy',
+  'Pair Sessions & Group Therapy',
   'Oral Placement Therapy',
-  'Counseling',
-  'Home Training',
-];
-
-const concerns = [
-  'Language Delay',
-  'Clarity Issue',
-  'Stammering',
-  'Voice Disorder',
-  'Stroke and/or Other Neurological Communication Disorders',
-];
-
-const resources = [
-  {
-    title: 'Parent Guide: Speech Milestones',
-    category: 'Development Guide',
-    description: 'A comprehensive checklist of speech and language developmental milestones for children ages 1 to 5.',
-    link: '#',
-  },
-  {
-    title: 'Home Training Best Practices',
-    category: 'Tips & Exercises',
-    description: 'Simple and effective daily exercises and habits parents can implement at home to foster language growth.',
-    link: '#',
-  },
-  {
-    title: 'Understanding Stuttering',
-    category: 'Educational Article',
-    description: 'Key facts, myths, and early intervention tips for children and adults experiencing stammering/stuttering.',
-    link: '#',
-  },
-  {
-    title: 'Oral Placement Therapy (OPT) Overview',
-    category: 'Therapy Guide',
-    description: 'Learn how OPT exercises can help improve speech clarity, feeding skills, and muscle coordination.',
-    link: '#',
-  },
+  'Neurological Rehabilitation',
+  'Cognitive Communication Therapy',
+  'Caregiver / Parental Training',
+  'Home Programs',
+  'Counselling',
 ];
 
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'services', label: 'Services' },
-  { id: 'resources', label: 'Resources' },
-  { id: 'contact', label: 'Contact Us' },
+  { id: 'contact', label: 'Get In Touch' },
 ];
 
 function App() {
@@ -165,6 +136,15 @@ function App() {
     <main>
       <header className="topbar">
         <div className="topbar-inner">
+          <button
+            className="brand-link"
+            type="button"
+            onClick={() => changeView('home')}
+            aria-label="Speech Connect Home"
+          >
+            <span className="brand-dot"></span>
+            <strong>SPEECH CONNECT</strong>
+          </button>
 
           <button
             className={`menu-toggle ${menuOpen ? 'open' : ''}`}
@@ -196,7 +176,8 @@ function App() {
       {activeView === 'home' && (
         <section className="hero interface-page" id="home">
           <div className="hero-copy section-wrap">
-            <h1 className="hero-title">ONLINE SPEECH THERAPY</h1>
+            <h1 className="hero-title">SPEECH CONNECT</h1>
+            <p className="hero-subtitle">online speech therapy platform</p>
             <div className="hero-actions">
               <button className="primary-button" type="button" onClick={() => changeView('appointment')}>
                 BOOK AN APPOINTMENT
@@ -214,26 +195,22 @@ function App() {
 
           <aside className="profile-panel" aria-label="Therapist profile">
             <div className="profile-photo">
-              <img src={therapist.photo} alt={`${therapist.name}, speech language pathologist`} />
+              <img src={therapist.photo} alt="Najiya P M, Founder & Lead SLP" />
             </div>
           </aside>
         </section>
       )}
 
       {activeView === 'about' && (
-        <section className="split-section interface-page section-wrap" id="about">
-          <div>
-            <p className="section-label">About</p>
-            <h2>{therapist.name}</h2>
-          </div>
-          <div className="about-layout">
-            <div className="profile-photo about-photo">
-              <img src={therapist.photo} alt={`${therapist.name}, speech language pathologist`} />
+        <section className="about-section interface-page section-wrap" id="about">
+          <div className="about-card-clean">
+            <div className="profile-photo about-photo-clean">
+              <img src={therapist.photo} alt="Najiya P M, Founder & Lead SLP" />
             </div>
-            <div className="about-details">
-              <p>{therapist.credentials}</p>
-              <p>{therapist.role}</p>
-              <p>{therapist.crr}</p>
+            <div className="about-details-clean">
+              <h2 className="about-name">Najiya P M (Msc. SLP, OPT)</h2>
+              <p className="about-role">Founder & Lead SLP</p>
+              <p className="about-crr">CRR No: A84512</p>
             </div>
           </div>
         </section>
@@ -241,60 +218,11 @@ function App() {
 
       {activeView === 'services' && (
         <section className="services-section interface-page section-wrap" id="services">
-          <div className="section-heading">
-            <div>
-              <p className="section-label">Services</p>
-              <h2>Speech, language, and communication support</h2>
-            </div>
-            <p>
-              Consultation, assessment, therapy, counseling, and home training
-              for common speech-language concerns.
-            </p>
-          </div>
-
-          <div className="service-grid">
-            {services.map((service) => (
-              <article className="service-card" key={service}>
-                <span aria-hidden="true">{service.slice(0, 1)}</span>
-                <h3>{service}</h3>
-              </article>
-            ))}
-          </div>
-
-          <div className="concerns-panel">
-            <h3>Supported concerns</h3>
-            <ul>
-              {concerns.map((concern) => (
-                <li key={concern}>{concern}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {activeView === 'resources' && (
-        <section className="resources-section interface-page section-wrap" id="resources">
-          <div className="section-heading">
-            <div>
-              <p className="section-label">Resources</p>
-              <h2>Educational Materials & Guides</h2>
-            </div>
-            <p>
-              Helpful insights, articles, and home tips compiled by Ms. Najiya P M to support speech-language development.
-            </p>
-          </div>
-
-          <div className="resources-grid">
-            {resources.map((resource) => (
-              <article className="resource-card" key={resource.title}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span className="resource-category">{resource.category}</span>
-                  <h3>{resource.title}</h3>
-                  <p>{resource.description}</p>
-                </div>
-                <a className="resource-link" href={resource.link} onClick={(e) => e.preventDefault()}>
-                  Read Article →
-                </a>
+          <div className="services-grid-clean">
+            {services.map((service, index) => (
+              <article className="service-card-clean" key={service}>
+                <span className="service-number">{String(index + 1).padStart(2, '0')}</span>
+                <h3 className="service-title">{service}</h3>
               </article>
             ))}
           </div>
@@ -354,7 +282,7 @@ function App() {
                 name="concerns"
                 value={form.concerns}
                 onChange={updateField}
-                placeholder="Language delay, Clarity issue, Stammering, Voice disorder, Stroke and/or other neurological communication disorders etc..."
+                placeholder="Speech & language assessment, clarity issues, stammering, cognitive communication, etc."
                 rows="5"
                 required
               />
@@ -367,26 +295,57 @@ function App() {
 
       {activeView === 'contact' && (
         <section className="contact-section interface-page section-wrap" id="contact">
-          <div>
-            <p className="section-label">Contact Us</p>
-            <h2>Speech Language Pathology Platform (Online)</h2>
+          <div className="contact-heading-clean">
+            <h2>GET IN TOUCH</h2>
           </div>
-          <div className="contact-grid">
-            <a href={`tel:${therapist.call.replace(/\D/g, '')}`}>
-              <span>Call</span>
-              <strong>{therapist.call}</strong>
+          <div className="contact-grid-clean">
+            <a className="contact-item-card" href={`tel:${therapist.call.replace(/\s+/g, '')}`}>
+              <div className="contact-symbol-box call-symbol-box" aria-hidden="true">
+                <svg className="contact-symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <div className="contact-text-content">
+                <span className="contact-type">Call</span>
+                <strong className="contact-detail">{therapist.call}</strong>
+              </div>
             </a>
-            <a href={`https://wa.me/${therapist.whatsapp.replace(/\D/g, '')}`}>
-              <span>WhatsApp</span>
-              <strong>{therapist.whatsapp}</strong>
+
+            <a className="contact-item-card" href={`https://wa.me/${therapist.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <div className="contact-symbol-box whatsapp-symbol-box" aria-hidden="true">
+                <svg className="contact-symbol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.031 2c-5.518 0-10 4.475-10 9.993a9.96 9.96 0 0 0 1.543 5.342L2 22l4.814-1.528a9.957 9.957 0 0 0 5.217 1.487h.004c5.518 0 10-4.475 10-9.993 0-2.67-1.04-5.18-2.929-7.069A9.927 9.927 0 0 0 12.031 2zm0 18.286c-1.59 0-3.14-.424-4.502-1.23l-.323-.192-3.342 1.06 1.085-3.256-.21-.334a8.287 8.287 0 0 1-1.271-4.341c0-4.566 3.719-8.28 8.29-8.28a8.243 8.243 0 0 1 5.867 2.43 8.257 8.257 0 0 1 2.428 5.86c0 4.567-3.719 8.28-8.29 8.28zm4.542-6.195c-.249-.125-1.472-.726-1.7-.809-.228-.083-.394-.125-.56.125-.166.249-.643.809-.788.975-.145.166-.29.187-.539.062a6.788 6.788 0 0 1-2.001-1.234 7.494 7.494 0 0 1-1.385-1.724c-.145-.249-.015-.384.11-.508.112-.112.249-.29.373-.435.125-.145.166-.249.249-.415.083-.166.041-.311-.021-.435-.062-.125-.56-1.349-.768-1.847-.202-.485-.407-.419-.56-.427l-.477-.008c-.166 0-.435.062-.663.311-.228.249-.871.851-.871 2.075s.892 2.407 1.016 2.573c.125.166 1.754 2.678 4.249 3.755.594.256 1.058.409 1.42.524.597.19 1.14.163 1.569.099.479-.071 1.472-.602 1.68-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.291z"/>
+                </svg>
+              </div>
+              <div className="contact-text-content">
+                <span className="contact-type">Whatsapp</span>
+                <strong className="contact-detail">{therapist.whatsapp}</strong>
+              </div>
             </a>
-            <div>
-              <span>Email</span>
-              <strong>{therapist.email || 'To be added'}</strong>
-            </div>
-            <a href={therapist.linkedIn}>
-              <span>LinkedIn</span>
-              <strong>Najiya P M</strong>
+
+            <a className="contact-item-card" href={`mailto:${therapist.email}`}>
+              <div className="contact-symbol-box email-symbol-box" aria-hidden="true">
+                <svg className="contact-symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div className="contact-text-content">
+                <span className="contact-type">Email</span>
+                <strong className="contact-detail">{therapist.email}</strong>
+              </div>
+            </a>
+
+            <a className="contact-item-card" href={therapist.linkedIn} target="_blank" rel="noopener noreferrer">
+              <div className="contact-symbol-box linkedin-symbol-box" aria-hidden="true">
+                <svg className="contact-symbol" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45c-.9 0-1.63.73-1.63 1.63s.73 1.63 1.63 1.63c.9 0 1.63-.73 1.63-1.63s-.73-1.63-1.63-1.63z"/>
+                </svg>
+              </div>
+              <div className="contact-text-content">
+                <span className="contact-type">LinkedIn</span>
+                <strong className="contact-detail">{therapist.linkedInName}</strong>
+              </div>
             </a>
           </div>
         </section>
