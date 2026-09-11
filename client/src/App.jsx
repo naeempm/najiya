@@ -327,7 +327,17 @@ function App() {
               </div>
             </a>
 
-            <a className="contact-item-card" href={`mailto:${therapist.email}`}>
+            <a
+              className="contact-item-card"
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${therapist.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setTimeout(() => {
+                  window.location.href = `mailto:${therapist.email}`;
+                }, 300);
+              }}
+            >
               <div className="contact-symbol-box email-symbol-box" aria-hidden="true">
                 <svg className="contact-symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
