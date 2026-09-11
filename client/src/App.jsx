@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 const getApiUrl = () => {
   let url = import.meta.env.VITE_API_URL;
@@ -33,6 +33,11 @@ const therapist = {
   linkedInName: 'NAJIYA P M',
 };
 
+const heroPhotos = [
+  '/images/najiya-pm.jpg',
+  '/images/najiya-pm-2.jpg',
+];
+
 const keywords = [
   { title: 'Individualized', desc: 'Therapy' },
   { title: 'Population', desc: 'Paediatrics & Adults' },
@@ -64,6 +69,7 @@ const navItems = [
 
 function App() {
   const [activeView, setActiveView] = useState('home');
+  const [heroIndex, setHeroIndex] = useState(0);
   const [form, setForm] = useState({
     name: '',
     age: '',
@@ -74,6 +80,13 @@ function App() {
   const [status, setStatus] = useState('');
   const [toasts, setToasts] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroPhotos.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   function showToast(message, type = 'success') {
     const id = Date.now();
@@ -198,8 +211,26 @@ function App() {
           </div>
 
           <aside className="profile-panel" aria-label="Therapist profile">
-            <div className="profile-photo">
-              <img src={therapist.photo} alt="Najiya P M, Founder & Lead SLP" />
+            <div className="profile-photo hero-slider">
+              {heroPhotos.map((photo, index) => (
+                <img
+                  key={photo}
+                  src={photo}
+                  alt="Speech Connect Online Therapy"
+                  className={`hero-slide-img ${index === heroIndex ? 'active-slide' : ''}`}
+                />
+              ))}
+              <div className="slider-dots">
+                {heroPhotos.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className={`slider-dot ${index === heroIndex ? 'active' : ''}`}
+                    onClick={() => setHeroIndex(index)}
+                    aria-label={`Slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </aside>
         </section>
