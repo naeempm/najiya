@@ -25,6 +25,7 @@ const therapist = {
   role: 'Founder & Lead SLP',
   crr: 'CRR No: A84512',
   photo: '/images/najiya-pm.jpg',
+  aboutPhoto: '/images/najiya-pm-about.png',
   email: 'speechconnect.in@gmail.com',
   call: '+91 8281753253',
   whatsapp: '+91 9349412153',
@@ -208,7 +209,7 @@ function App() {
         <section className="about-section interface-page section-wrap" id="about">
           <div className="about-card-clean">
             <div className="profile-photo about-photo-clean">
-              <img src={therapist.photo} alt="Najiya P M, Founder & Lead SLP" />
+              <img src={therapist.aboutPhoto} alt="Najiya P M, Founder & Lead SLP" />
             </div>
             <div className="about-details-clean">
               <h2 className="about-name">Najiya P M (Msc. SLP, OPT)</h2>
