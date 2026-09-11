@@ -36,6 +36,9 @@ const keywords = [
   { title: 'Individualized', desc: 'Therapy' },
   { title: 'Population', desc: 'Paediatrics & Adults' },
   { title: 'Flexible', desc: 'Days & Timings' },
+  { title: 'Early Intervention', desc: 'Programme' },
+  { title: 'Parental/ Caregiver', desc: 'Counselling' },
+  { title: 'Neurological', desc: 'Rehabilitation' },
 ];
 
 const services = [
