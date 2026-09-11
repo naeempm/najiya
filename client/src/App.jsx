@@ -43,14 +43,14 @@ const keywords = [
 
 const services = [
   'Speech & Language Consultations & Assessment',
-  'Early Intervention',
+  'Early Intervention Programme',
   'Speech Therapy',
-  'Pair Sessions & Group Therapy',
+  'Individual & Pair Sessions',
   'Oral Placement Therapy',
   'Neurological Rehabilitation',
   'Cognitive Communication Therapy',
   'Caregiver / Parental Training',
-  'Home Programs',
+  'Home Plans',
   'Counselling',
 ];
 
