@@ -744,6 +744,10 @@ textarea {
     align-items: center;
   }
 
+  .about-crr {
+    align-self: center;
+  }
+
   .about-photo-clean {
     max-width: 320px;
     margin: 0 auto;
