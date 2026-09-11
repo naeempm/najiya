@@ -25,7 +25,7 @@ const therapist = {
   role: 'Founder & Lead SLP',
   crr: 'CRR No: A84512',
   photo: '/images/najiya-pm.jpg',
-  aboutPhoto: '/images/najiya-pm-about.png',
+  aboutPhoto: '/images/najiya-pm-about.jpg',
   email: 'speechconnect.in@gmail.com',
   call: '+91 8281753253',
   whatsapp: '+91 9349412153',

@@ -293,7 +293,7 @@ p {
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center 12%;
+  object-position: center center;
 }
 
 .about-details-clean {
