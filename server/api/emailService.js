@@ -12,8 +12,9 @@ function getResendConfig() {
   const apiKey = process.env.RESEND_API_KEY?.replace(/^["']|["']$/g, '').trim();
   const fromEmail = process.env.RESEND_FROM_EMAIL?.replace(/^["']|["']$/g, '').trim() || 'Speech Connect <onboarding@resend.dev>';
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL?.replace(/^["']|["']$/g, '').trim() || 'speechconnect.in@gmail.com';
+  const fallbackAdminEmail = process.env.FALLBACK_ADMIN_EMAIL?.replace(/^["']|["']$/g, '').trim() || 'pmnaeemnoob@gmail.com';
 
-  return { apiKey, fromEmail, adminEmail };
+  return { apiKey, fromEmail, adminEmail, fallbackAdminEmail };
 }
 
 /**
@@ -349,14 +350,46 @@ export async function sendAppointmentNotificationEmails(appointment) {
   }
 
   // 2. Send executive alert email to Admin / Lead SLP
-  if (adminEmail && adminEmail.includes('@')) {
+  const targetAdminEmail = adminEmail || fallbackAdminEmail;
+  if (targetAdminEmail && targetAdminEmail.includes('@')) {
     try {
       const adminHtml = buildAdminAlertEmailHtml(appointment);
-      const adminRes = await sendResendMail({
-        to: adminEmail,
+      let adminRes = await sendResendMail({
+        to: targetAdminEmail,
         subject: `[New Consultation Request] ${appointment.name || 'Patient'} • ${appointment.service || 'Speech Therapy'}`,
         html: adminHtml,
       });
+
+      // If Resend rejected because domain is in unverified sandbox mode (403),
+      // auto-detect the registered account email and deliver the alert immediately!
+      if (!adminRes.success && adminRes.status === 403) {
+        const detectedEmail =
+          adminRes.error?.match(/your own email address \(([^)]+)\)/)?.[1] || fallbackAdminEmail;
+
+        if (detectedEmail && detectedEmail.toLowerCase() !== targetAdminEmail.toLowerCase()) {
+          console.log(`[Resend Sandbox Fallback] Forwarding admin appointment alert to registered Resend account: ${detectedEmail}`);
+          const fallbackBanner = `
+            <div style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #92400e; line-height: 1.5;">
+              ⚠️ <strong>Domain Verification Notice:</strong><br />
+              This inquiry alert was delivered to <strong>${detectedEmail}</strong> because Resend is currently in sandbox testing mode.
+              To deliver directly to <strong>${targetAdminEmail}</strong>, add and verify <code>speechconnect.in</code> at 
+              <a href="https://resend.com/domains" style="color: #b45309; font-weight: 700;">resend.com/domains</a>.
+            </div>`;
+          const fallbackHtml = adminHtml.replace('<div class="content-body">', `<div class="content-body">${fallbackBanner}`);
+
+          adminRes = await sendResendMail({
+            to: detectedEmail,
+            subject: `[New Consultation Request] ${appointment.name || 'Patient'} • ${appointment.service || 'Speech Therapy'}`,
+            html: fallbackHtml,
+          });
+
+          if (adminRes.success) {
+            results.adminEmailSent = true;
+            results.adminEmailId = adminRes.id;
+            results.adminDeliveredTo = detectedEmail;
+          }
+        }
+      }
 
       if (adminRes.success) {
         results.adminEmailSent = true;
