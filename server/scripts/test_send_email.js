@@ -1,27 +1,17 @@
-import dotenv from 'dotenv';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { sendAppointmentNotificationEmails } from '../api/emailService.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
-
-const testAppointment = {
-  name: 'Aarav Sharma (Official Test)',
-  email: 'speechconnect.in@gmail.com', // also testing client confirmation
+const mockAppointment = {
+  name: 'Aarav Sharma',
+  email: 'client.test@example.com',
   age: '6',
   gender: 'Male',
   phone: '+91 98765 43210',
-  service: 'Speech Therapy & Online Teletherapy',
-  concerns: 'Testing verified speechconnect.in domain for admin & client notifications.',
+  service: 'Speech Therapy & Telepractice',
+  concerns: 'Difficulty with speech sound clarity and language delay.',
 };
 
-console.log('Testing sendAppointmentNotificationEmails with verified domain...');
-console.log('From:', process.env.RESEND_FROM_EMAIL);
-console.log('Admin Email:', process.env.ADMIN_NOTIFICATION_EMAIL);
-
-sendAppointmentNotificationEmails(testAppointment)
+console.log('Testing sendAppointmentNotificationEmails...');
+sendAppointmentNotificationEmails(mockAppointment)
   .then((res) => {
     console.log('Notification Results:', JSON.stringify(res, null, 2));
   })
