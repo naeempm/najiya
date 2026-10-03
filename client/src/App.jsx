@@ -88,92 +88,149 @@ const DEFAULT_CONTENT = {
   services: [
     {
       num: "01",
-      tag: "Assessment",
-      title: "Speech & Language Consultations & Assessment",
-      desc: "In-depth diagnostic evaluation of receptive, expressive, articulation, and cognitive communication abilities.",
+      tag: "Online Telepractice",
+      title: "Speech Therapy & Online Teletherapy",
+      desc: "Comprehensive evidence-based speech and language therapy delivered via secure interactive telepractice. Individualized for toddlers, children, and adults worldwide.",
     },
     {
       num: "02",
-      tag: "Early Years",
-      title: "Early Intervention Programme",
-      desc: "Milestone-focused intervention for toddlers and young children showing initial speech or language delays.",
+      tag: "Early Intervention",
+      title: "Early Intervention for Language Delay",
+      desc: "Milestone-focused developmental stimulation for toddlers and young children aged 1–5 years showing receptive, expressive, or developmental speech and language delays.",
     },
     {
       num: "03",
-      tag: "Core Therapy",
-      title: "Speech Therapy",
-      desc: "Targeted therapy for speech sound disorders, pronunciation, clarity, and verbal expression.",
+      tag: "Specialized Motor",
+      title: "Oral Placement Therapy (OPT)",
+      desc: "Certified tactile-proprioceptive therapy building jaw stability, lip closure, and tongue coordination for clear, effortless speech sound mechanics.",
     },
     {
       num: "04",
-      tag: "Format",
-      title: "Individual & Pair Sessions",
-      desc: "Intensive 1-on-1 clinical focus or paired peer sessions to foster social communication dynamics.",
+      tag: "Fluency Care",
+      title: "Stuttering & Stammering Fluency Therapy",
+      desc: "Evidence-based fluency shaping and stuttering modification techniques reducing speech tension, blocks, and anxiety to achieve smooth conversational flow.",
     },
     {
       num: "05",
-      tag: "Specialized",
-      title: "Oral Placement Therapy (OPT)",
-      desc: "Proprioceptive and tactile-motor therapy techniques addressing jaw stability, lip closure, and tongue placement.",
+      tag: "Affirming Care",
+      title: "Neurodiversity Affirmation & Autism Spectrum Disorder (ASD)",
+      desc: "Respectful, neurodiversity-affirming communication support honoring unique autistic communication profiles, authentic connection, self-advocacy, and gestalt language processing.",
     },
     {
       num: "06",
-      tag: "Clinical",
-      title: "Neurological Rehabilitation",
-      desc: "Evidence-based recovery for speech and language impairments resulting from stroke, head trauma, or neurological conditions.",
+      tag: "Speech Clarity",
+      title: "Misarticulation & Speech Sound Disorders",
+      desc: "Targeted correction for misarticulation, lisping, and sound substitutions (/r/, /s/, /l/, /k/, /th/). Establishing crisp, intelligible articulation in everyday speech.",
     },
     {
       num: "07",
-      tag: "Cognition",
-      title: "Cognitive Communication Therapy",
-      desc: "Structured exercises to improve attention, memory, executive functioning, and social communication.",
+      tag: "Adult Neuro Rehab",
+      title: "Aphasia Rehabilitation",
+      desc: "Dedicated clinical rehabilitation restoring functional word finding, auditory comprehension, reading, and sentence expression after stroke or brain injury.",
     },
     {
       num: "08",
-      tag: "Guidance",
-      title: "Caregiver / Parental Training",
-      desc: "Empowering families with daily conversational strategies and evidence-based stimulation techniques.",
+      tag: "Stroke Recovery",
+      title: "Stroke Rehabilitation & Dysarthria Care",
+      desc: "Intensive neuroplastic rehabilitation strengthening facial and vocal muscles, clarity, and independent communication for adult stroke survivors.",
     },
     {
       num: "09",
-      tag: "Practical Plans",
-      title: "Personalized Home Plans",
-      desc: "Step-by-step home exercise regimens to reinforce gains made in clinical sessions.",
+      tag: "Cognitive Skills",
+      title: "Cognitive Communication Therapy",
+      desc: "Structured exercises to improve attention, memory, executive functioning, and social communication dynamics for academic and career success.",
     },
     {
       num: "10",
-      tag: "Support",
-      title: "Therapeutic Counselling",
-      desc: "Empathetic guidance to support emotional well-being and confidence during the communication journey.",
+      tag: "Parent Coaching",
+      title: "Caregiver Training & Home Stimulation Plans",
+      desc: "Actionable, evidence-based home routines empowering parents and caregivers to reinforce therapy progress in natural daily conversations.",
     },
   ],
   specializations: [
-    "Pediatric Speech & Language Delay",
+    "Speech Therapy & Online Teletherapy",
+    "Early Intervention for Language Delay",
     "Oral Placement Therapy (OPT)",
-    "Stammering & Fluency Disorders",
-    "Articulation & Phonological Disorders",
-    "Adult Neurogenic Rehabilitation",
-    "Aphasia & Dysarthria Care",
+    "Stuttering & Fluency Disorders",
+    "Neurodiversity Affirmation & Autism (ASD)",
+    "Misarticulation & Speech Sound Clarity",
+    "Aphasia Rehabilitation",
+    "Stroke Rehabilitation & Dysarthria",
     "Cognitive Communication Therapy",
-    "Caregiver & Parental Coaching",
+    "Caregiver Coaching & Home Protocols",
   ],
   concernSuggestions: [
-    "Speech Delay",
-    "Speech Clarity / Articulation",
-    "Stammering & Fluency",
-    "Oral Motor Difficulties",
-    "Autism Communication",
-    "Post-Stroke Rehabilitation",
-    "Childhood Apraxia",
-    "Parent Guidance & Assessment",
+    "Language Delay",
+    "Speech Therapy Online",
+    "Stuttering / Stammering",
+    "Oral Placement Therapy (OPT)",
+    "Autism Spectrum Disorder",
+    "Neurodiversity Affirmation",
+    "Misarticulation & Clarity",
+    "Aphasia Rehabilitation",
+    "Stroke Rehabilitation",
+    "Early Intervention (1-5 yrs)",
   ],
   availabilityText: "Monday – Saturday • Flexible Timings",
 };
+
+const CLINICAL_FAQS = [
+  {
+    id: "online-teletherapy",
+    keyword: "Online Speech Therapy & Teletherapy",
+    question: "What is online speech therapy and how does teletherapy work?",
+    answer:
+      "Online speech therapy (teletherapy) is the interactive delivery of certified speech-language pathology via secure, encrypted video calls. Led by RCI-registered specialist Najiya P M (M.Sc. SLP, OPT), virtual sessions include live clinical evaluations, digital interactive tools, real-time articulation feedback, and caregiver coaching. Decades of clinical research prove telepractice is just as effective as in-person clinic visits while providing greater scheduling flexibility and comfort at home.",
+  },
+  {
+    id: "language-delay",
+    keyword: "Language Delay & Early Intervention",
+    question: "How do you treat language delay in toddlers and young children?",
+    answer:
+      "Our Early Intervention Programme addresses developmental speech and language delays in toddlers aged 1–5 years. We evaluate receptive language (understanding), expressive language (words and sentence structure), and social pragmatics. Therapy integrates naturalistic, play-based stimulation with dedicated parent training routines so communication growth continues naturally in everyday home life.",
+  },
+  {
+    id: "opt-therapy",
+    keyword: "Oral Placement Therapy (OPT)",
+    question: "What is Oral Placement Therapy (OPT) and who benefits from it?",
+    answer:
+      "Oral Placement Therapy (OPT) is a specialized tactile-proprioceptive approach that builds muscle strength, stability, and coordination in the jaw, lips, and tongue. By establishing the physical oral-motor foundation required for correct speech sound placement, OPT helps children and adults with dysarthria, apraxia of speech, persistent misarticulation, and developmental conditions achieve clear, effortless speech clarity.",
+  },
+  {
+    id: "stuttering-therapy",
+    keyword: "Stuttering & Fluency Disorders",
+    question: "How is stuttering and stammering treated through speech therapy?",
+    answer:
+      "Speech Connect provides evidence-based fluency therapy incorporating fluency shaping, stuttering modification, respiratory coordination, and cognitive confidence-building. We address speech blocks, sound prolongations, and word repetitions while reducing speaking anxiety, enabling smooth, relaxed speech in school, social, and workplace conversations.",
+  },
+  {
+    id: "neurodiversity-autism",
+    keyword: "Neurodiversity Affirmation & Autism Spectrum Disorder",
+    question: "What is your approach to Neurodiversity Affirmation and Autism Spectrum Disorder (ASD)?",
+    answer:
+      "We strictly uphold a neurodiversity-affirming clinical philosophy. We do not attempt to suppress autistic traits or force neurotypical masking. Instead, we honor each individual's unique communication style, fostering authentic connection, self-advocacy, sensory comfort, gestalt language processing, and multimodal communication (including AAC where appropriate).",
+  },
+  {
+    id: "aphasia-stroke",
+    keyword: "Aphasia Rehabilitation & Stroke Recovery",
+    question: "Can adults receive Aphasia Rehabilitation and Stroke Rehabilitation online?",
+    answer:
+      "Yes. Adult stroke survivors and individuals with brain injuries can achieve substantial communicative recovery through telepractice. We provide intensive neurological rehabilitation for aphasia (word retrieval, reading, writing, and comprehension) and dysarthria (slurred speech from facial muscle weakness), leveraging neuroplasticity to restore functional communication independence.",
+  },
+  {
+    id: "misarticulation-clarity",
+    keyword: "Misarticulation & Speech Sound Clarity",
+    question: "What is misarticulation and how does therapy correct lisping and sound errors?",
+    answer:
+      "Misarticulation is difficulty correctly producing specific consonants and vowels (such as /s/, /z/, /r/, /l/, /k/, or /th/), resulting in lisping, sound substitutions, or omissions. Using visual biofeedback, auditory discrimination training, and tactile placement guidance, we guide the tongue and lips into precise placement for crisp, articulate speech.",
+  },
+];
 
 const navItems = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "services", label: "Services" },
+  { id: "faq", label: "Clinical FAQs" },
   { id: "appointment", label: "Appointment" },
   { id: "contact", label: "Contact" },
 ];
@@ -182,6 +239,7 @@ function App() {
   const [content, setContent] = useState(DEFAULT_CONTENT);
   const [activeView, setActiveView] = useState("home");
   const [heroIndex, setHeroIndex] = useState(0);
+  const [expandedFaq, setExpandedFaq] = useState("online-teletherapy");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -374,6 +432,10 @@ function App() {
       if (current.concerns.includes(tag)) return current;
       return { ...current, concerns: `${current.concerns}, ${tag}` };
     });
+  }
+
+  function toggleFaq(id) {
+    setExpandedFaq((prev) => (prev === id ? null : id));
   }
 
   function changeView(view) {
@@ -701,6 +763,263 @@ function App() {
                     <p className="highlight-desc">{item.desc}</p>
                   </article>
                 ))}
+              </div>
+            </div>
+
+            {/* Targeted Clinical Specializations & SEO Keyword Hub */}
+            <div className="clinical-topics-section" id="clinical-specialties">
+              <div className="section-header-compact">
+                <span className="section-eyebrow">Evidence-Based Interventions</span>
+                <h2 className="section-subtitle">
+                  Specialized Care for Speech, Language & Communication
+                </h2>
+                <p className="section-desc-compact">
+                  Discover individualized online telepractice programs led by certified SLP Najiya P M (M.Sc. SLP, OPT), targeting essential milestones and communication independence.
+                </p>
+              </div>
+
+              <div className="clinical-topics-grid">
+                {/* 1. Speech Therapy & Online Teletherapy */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Online Telepractice</span>
+                    <h3 className="topic-title">Speech Therapy & Online Telepractice</h3>
+                  </div>
+                  <p className="topic-text">
+                    Live interactive virtual speech therapy targeting speech clarity, articulation precision, and language development from the comfort of your home.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Speech Therapy & Online Teletherapy")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 2. Language Delay & Early Intervention */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Early Intervention</span>
+                    <h3 className="topic-title">Language Delay in Toddlers & Preschoolers</h3>
+                  </div>
+                  <p className="topic-text">
+                    Milestone-focused developmental early intervention accelerating vocabulary, receptive understanding, and sentence formulation for children aged 1–5 years.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Language Delay & Early Intervention")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 3. Oral Placement Therapy (OPT) */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Specialized Motor</span>
+                    <h3 className="topic-title">Oral Placement Therapy (OPT)</h3>
+                  </div>
+                  <p className="topic-text">
+                    Certified tactile-proprioceptive therapy building jaw stability, lip closure, and tongue coordination for clear speech sound mechanics.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Oral Placement Therapy (OPT)")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 4. Stuttering & Stammering */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Fluency Care</span>
+                    <h3 className="topic-title">Stuttering & Stammering Fluency Therapy</h3>
+                  </div>
+                  <p className="topic-text">
+                    Evidence-based fluency shaping and stuttering modification techniques reducing speech tension, blocks, and anxiety for effortless conversational flow.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Stuttering & Fluency Disorders")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 5. Neurodiversity Affirmation & Autism */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Neurodiversity-Affirming</span>
+                    <h3 className="topic-title">Neurodiversity Affirmation & Autism (ASD)</h3>
+                  </div>
+                  <p className="topic-text">
+                    Respectful communication support honoring unique neurodivergent profiles, authentic connection, self-advocacy, and gestalt language processing.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Autism Spectrum Disorder & Neurodiversity")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 6. Misarticulation & Clarity */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Clarity & Phonetics</span>
+                    <h3 className="topic-title">Misarticulation & Speech Sound Disorders</h3>
+                  </div>
+                  <p className="topic-text">
+                    Targeted phonetic placement correcting lisping, sound omissions, and substitutions (/r/, /s/, /l/, /k/, /th/) for crisp, intelligible speech.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Misarticulation & Speech Clarity")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 7. Aphasia Rehabilitation */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Neurogenic Recovery</span>
+                    <h3 className="topic-title">Aphasia Rehabilitation</h3>
+                  </div>
+                  <p className="topic-text">
+                    Specialized recovery restoring functional word finding, auditory comprehension, reading, and sentence expression after stroke or brain injury.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Aphasia Rehabilitation")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+
+                {/* 8. Stroke Rehabilitation */}
+                <article className="topic-card">
+                  <div className="topic-header">
+                    <span className="topic-tag">Adult Neuro Care</span>
+                    <h3 className="topic-title">Post-Stroke Speech & Dysarthria Rehabilitation</h3>
+                  </div>
+                  <p className="topic-text">
+                    Intensive neuroplastic rehabilitation strengthening facial musculature, vocal clarity, and independent communication for adult stroke survivors.
+                  </p>
+                  <button type="button" className="topic-link-btn" onClick={() => bookForService("Stroke Rehabilitation & Dysarthria")}>
+                    <span>Schedule Consultation</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </article>
+              </div>
+            </div>
+
+            {/* Interactive Clinical FAQs Accordion on Home */}
+            <div className="faq-preview-section" id="faq">
+              <div className="section-header-compact">
+                <span className="section-eyebrow">Patient & Caregiver Guide</span>
+                <h2 className="section-subtitle">
+                  Frequently Asked Questions About Online Speech Therapy
+                </h2>
+                <p className="section-desc-compact">
+                  Clear, evidence-based answers covering telepractice efficacy, childhood language delays, stuttering, Oral Placement Therapy, and stroke recovery.
+                </p>
+              </div>
+
+              <div className="faq-accordion-container">
+                {CLINICAL_FAQS.map((faq) => (
+                  <div
+                    className={`faq-item-card ${expandedFaq === faq.id ? "expanded" : ""}`}
+                    key={faq.id}
+                  >
+                    <button
+                      type="button"
+                      className="faq-question-btn"
+                      onClick={() => toggleFaq(faq.id)}
+                      aria-expanded={expandedFaq === faq.id}
+                    >
+                      <div className="faq-q-left">
+                        <span className="faq-keyword-tag">{faq.keyword}</span>
+                        <h3 className="faq-q-text">{faq.question}</h3>
+                      </div>
+                      <span className="faq-chevron-icon" aria-hidden="true">
+                        {expandedFaq === faq.id ? "−" : "+"}
+                      </span>
+                    </button>
+                    {expandedFaq === faq.id && (
+                      <div className="faq-answer-pane">
+                        <p>{faq.answer}</p>
+                        <button
+                          type="button"
+                          className="faq-book-hint-btn"
+                          onClick={() => bookForService(faq.keyword)}
+                        >
+                          Book consultation for {faq.keyword} →
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* CLINICAL FAQS VIEW */}
+        {activeView === "faq" && (
+          <section className="faq-page section-wrap" id="faq-page">
+            <div className="section-header-centered">
+              <span className="section-eyebrow">Clinical Knowledge & FAQs</span>
+              <h1 className="page-main-heading">
+                Frequently Asked Questions
+              </h1>
+              <p className="page-main-intro">
+                Evidence-based answers to key questions about online speech therapy, telepractice, language delay, stuttering, Oral Placement Therapy, aphasia, neurodiversity, and stroke recovery.
+              </p>
+            </div>
+
+            <div className="faq-accordion-container">
+              {CLINICAL_FAQS.map((faq) => (
+                <div
+                  className={`faq-item-card ${expandedFaq === faq.id ? "expanded" : ""}`}
+                  key={faq.id}
+                >
+                  <button
+                    type="button"
+                    className="faq-question-btn"
+                    onClick={() => toggleFaq(faq.id)}
+                    aria-expanded={expandedFaq === faq.id}
+                  >
+                    <div className="faq-q-left">
+                      <span className="faq-keyword-tag">{faq.keyword}</span>
+                      <h2 className="faq-q-text">{faq.question}</h2>
+                    </div>
+                    <span className="faq-chevron-icon" aria-hidden="true">
+                      {expandedFaq === faq.id ? "−" : "+"}
+                    </span>
+                  </button>
+                  {expandedFaq === faq.id && (
+                    <div className="faq-answer-pane">
+                      <p>{faq.answer}</p>
+                      <button
+                        type="button"
+                        className="faq-book-hint-btn"
+                        onClick={() => bookForService(faq.keyword)}
+                      >
+                        Book Consultation for {faq.keyword} →
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="faq-cta-banner">
+              <h3>Have a specific question about your speech or language goals?</h3>
+              <p>Connect directly with Lead SLP Najiya P M for an expert consultation.</p>
+              <div className="faq-cta-actions">
+                <button
+                  type="button"
+                  className="primary-btn"
+                  onClick={() => changeView("appointment")}
+                >
+                  Book Online Consultation
+                </button>
+                <a
+                  className="whatsapp-ghost-btn"
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Chat on WhatsApp
+                </a>
               </div>
             </div>
           </section>
@@ -1390,6 +1709,37 @@ function App() {
                   <span>Top</span>
                 </button>
               </div>
+            </div>
+          </div>
+
+          {/* Clinical Focus & SEO Keywords Directory */}
+          <div className="footer-seo-topics-row">
+            <span className="footer-pane-heading">Specialized Clinical Programs & Search Topics</span>
+            <div className="footer-topics-grid">
+              {[
+                "Speech Therapy",
+                "Online Speech Therapy",
+                "Teletherapy",
+                "Language Delay",
+                "Stuttering & Stammering",
+                "Oral Placement Therapy (OPT)",
+                "Early Intervention",
+                "Neurodiversity Affirmation",
+                "Autism Spectrum Disorder",
+                "Misarticulation",
+                "Aphasia Rehabilitation",
+                "Stroke Rehabilitation",
+              ].map((topic) => (
+                <button
+                  key={topic}
+                  type="button"
+                  className="footer-topic-chip"
+                  onClick={() => bookForService(topic)}
+                  title={`Book online consultation for ${topic}`}
+                >
+                  {topic}
+                </button>
+              ))}
             </div>
           </div>
 
