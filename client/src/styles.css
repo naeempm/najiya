@@ -2619,7 +2619,7 @@ img {
     padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
   }
 
-  /* Mobile Hero: Round photo visual ON TOP */
+  /* Mobile Hero: Heading and Eyebrow ON TOP, followed by round visual */
   .hero-section {
     padding: clamp(14px, 3.5vw, 24px) 0 clamp(24px, 4.5vw, 36px);
   }
@@ -2628,7 +2628,7 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     text-align: center;
   }
 
@@ -2636,33 +2636,33 @@ img {
     display: contents;
   }
 
-  /* 1. Round visual ON TOP OF HERO */
-  .hero-visual {
-    order: 1;
-    width: 100%;
-    max-width: clamp(230px, 68vw, 275px);
-    margin: 4px auto 18px;
-    justify-self: center;
-  }
-
-  /* 2. Eyebrow badge below round visual */
+  /* 1. Eyebrow badge ON TOP */
   .hero-text-col .eyebrow {
-    order: 2;
+    order: 1;
     margin: 0 auto;
     align-self: center;
   }
 
-  /* 3. Heading centered */
+  /* 2. Headline ON TOP */
   .hero-text-col .hero-heading {
-    order: 3;
+    order: 2;
     text-align: center;
     align-self: center;
     font-size: clamp(1.65rem, 6.8vw, 2.2rem);
     line-height: 1.2;
-    margin-bottom: 4px;
-    max-width: 580px;
+    margin-bottom: 2px;
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* 3. Round photo visual right below heading */
+  .hero-visual {
+    order: 3;
+    width: 100%;
+    max-width: clamp(230px, 68vw, 275px);
+    margin: 8px auto 16px;
+    justify-self: center;
   }
 
   /* 4. Subtitle / lead text */
@@ -2807,11 +2807,6 @@ img {
     padding: 12px 0 24px;
   }
 
-  .hero-visual {
-    max-width: clamp(225px, 66vw, 265px);
-    margin: 4px auto 16px;
-  }
-
   .hero-heading {
     font-size: clamp(1.55rem, 6.4vw, 1.95rem);
     line-height: 1.18;
@@ -2820,6 +2815,11 @@ img {
 
   .hero-text-col {
     gap: 12px;
+  }
+
+  .hero-visual {
+    max-width: clamp(225px, 66vw, 265px);
+    margin: 8px auto 16px;
   }
 
   .hero-cta-group {
