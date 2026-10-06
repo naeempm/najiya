@@ -413,6 +413,7 @@ img {
   justify-content: center;
   gap: 10px;
   min-height: 52px;
+  max-height: 56px;
   padding: 0 26px;
   border-radius: var(--radius-pill);
   font-size: 0.98rem;
@@ -1562,7 +1563,8 @@ img {
 }
 
 .submit-btn {
-  flex: 1 1 260px;
+  min-width: 240px;
+  flex: 1 1 auto;
 }
 
 .spinner {
@@ -3091,6 +3093,13 @@ img {
   .form-actions {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .form-actions > * {
+    width: 100% !important;
+    min-height: 52px !important;
+    height: auto !important;
+    flex: none !important;
   }
 
   .aside-card {
