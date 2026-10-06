@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 
 const getApiUrl = () => {
   const isLocal =
@@ -21,7 +22,20 @@ const getApiUrl = () => {
 
 const API_URL = getApiUrl();
 
-const CLINIC_LOGO_URL = "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg";
+// v2: the old key was written on every visit (defaulting to dark), so it
+// can't distinguish a real choice from the old default.
+const THEME_STORAGE_KEY = "speech_connect_theme_v2";
+
+function readSavedTheme() {
+  try {
+    const saved = localStorage.getItem(THEME_STORAGE_KEY);
+    return saved === "dark" || saved === "light" ? saved : null;
+  } catch {
+    return null;
+  }
+}
+
+const CLINIC_LOGO_URL ="https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg";
 
 const DEFAULT_CONTENT = {
   therapist: {
@@ -174,6 +188,108 @@ const DEFAULT_CONTENT = {
   availabilityText: "Monday – Saturday • Flexible Timings",
 };
 
+const HOW_IT_WORKS = [
+  {
+    icon: "calendar",
+    title: "Request a session",
+    desc: "Share a few details through the booking form or WhatsApp.",
+  },
+  {
+    icon: "message",
+    title: "Intake consultation",
+    desc: "A relaxed first conversation about history, milestones and goals.",
+  },
+  {
+    icon: "map",
+    title: "Personalised plan",
+    desc: "A clear therapy roadmap with realistic, measurable milestones.",
+  },
+  {
+    icon: "home",
+    title: "Sessions & home coaching",
+    desc: "Live online sessions plus simple routines to practise at home.",
+  },
+];
+
+const TRUST_POINTS = [
+  { icon: "award", title: "RCI registered", sub: "Licensed clinical practice" },
+  { icon: "graduation", title: "M.Sc. SLP · OPT", sub: "Specialist qualifications" },
+  { icon: "users", title: "Toddlers to adults", sub: "Care across the lifespan" },
+  { icon: "globe", title: "100% online", sub: "Join from anywhere" },
+];
+
+const WHO_WE_HELP = [
+  {
+    title: "Children & teens",
+    image: "/images/gallery/child-session.jpg",
+    alt: "A young girl and her mother taking part in an online speech therapy session",
+    desc: "Playful, structured sessions that help little ones find their words and older children speak with clarity and confidence.",
+    topics: ["Language delay", "Stuttering", "Autism (ASD)", "Speech sound clarity"],
+  },
+  {
+    title: "Adults",
+    image: "/images/gallery/adult-session.jpg",
+    alt: "An adult joining a video therapy session from her kitchen table",
+    desc: "Patient, goal-focused rehabilitation to rebuild everyday communication after stroke, brain injury or long-standing fluency difficulties.",
+    topics: ["Stroke recovery", "Aphasia", "Dysarthria", "Fluency"],
+  },
+];
+
+const HOME_BENEFITS = [
+  { icon: "home", title: "No travel, no waiting rooms", desc: "Sessions fit around school, work and family life." },
+  { icon: "heart", title: "Familiar, relaxed surroundings", desc: "Children often open up more in their own space." },
+  { icon: "users", title: "Parents learn alongside", desc: "You see every strategy and can use it in daily routines." },
+  { icon: "globe", title: "Care that travels with you", desc: "Continue therapy wherever your family is in the world." },
+];
+
+// Mirrors the FAQPage JSON-LD in index.html; keep the two in sync.
+const FAQS = [
+  {
+    q: "What is online speech therapy and how does teletherapy work?",
+    a: "Online speech therapy (teletherapy) is the delivery of professional speech-language pathology services via secure, interactive video conferencing. At Speech Connect, Lead SLP Najiya P M provides live, one-on-one virtual evaluations and therapy sessions with digital activities, parent coaching, and real-time guidance, making premier therapy accessible from the comfort of your home anywhere in the world.",
+  },
+  {
+    q: "How does Speech Connect treat language delay and early intervention in toddlers?",
+    a: "Our Early Intervention Programme targets speech and language delays in toddlers and preschoolers through naturalistic, play-based stimulation. We assess receptive understanding, expressive vocabulary, and communicative intent, equipping parents with daily conversational home routines to accelerate language milestones.",
+  },
+  {
+    q: "What is Oral Placement Therapy (OPT) and who needs it?",
+    a: "Oral Placement Therapy (OPT) is a specialized tactile-proprioceptive approach that builds structural muscle strength, stability, and coordination in the jaw, lips, and tongue. It bridges the gap between oral motor control and clear speech sound production, especially beneficial for children and adults with dysarthria, apraxia, Down syndrome, or persistent misarticulation.",
+  },
+  {
+    q: "How is stuttering and stammering treated online?",
+    a: "Speech Connect utilizes holistic fluency therapy combining evidence-based fluency shaping, stuttering modification, breathing coordination, and psychological confidence-building. We help individuals speak smoothly and comfortably while reducing anxiety around speaking.",
+  },
+  {
+    q: "How does Speech Connect support autistic children through neurodiversity affirmation?",
+    a: "Our neurodiversity-affirming approach honors each individual's unique communicative style. Rather than forcing conformity, we foster authentic connection, self-advocacy, multimodal communication (including AAC where appropriate), and regulation, supporting individuals on the Autism Spectrum Disorder (ASD) to thrive.",
+  },
+  {
+    q: "Can adults receive stroke rehabilitation and aphasia recovery through online telepractice?",
+    a: "Yes. Clinical research confirms telepractice is highly effective for adult neurological rehabilitation. We provide targeted therapies for post-stroke aphasia (word retrieval and sentence formulation), dysarthria (muscle weakness), and cognitive-communication deficits to regain independence in daily conversations.",
+  },
+  {
+    q: "What is misarticulation and how can online therapy fix it?",
+    a: "Misarticulation refers to difficulty correctly pronouncing specific speech sounds (such as 'r', 's', 'l', 'k', or 'th'), leading to lisping, sound substitutions, or omissions. Through visual modeling, auditory discrimination, and oral placement guidance, our online therapy systematically teaches correct tongue placement and establishes crisp, clear articulation.",
+  },
+];
+
+const EMPTY_FORM = {
+  name: "",
+  email: "",
+  age: "",
+  gender: "",
+  phone: "",
+  concerns: "",
+};
+
+function splitConcerns(text) {
+  return text
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
 const navItems = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
@@ -187,36 +303,80 @@ function App() {
   const [activeView, setActiveView] = useState("home");
   const [heroIndex, setHeroIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    age: "",
-    gender: "",
-    phone: "",
-    concerns: "",
-  });
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState(EMPTY_FORM);
   const [status, setStatus] = useState("");
   const [toasts, setToasts] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [expandedServices, setExpandedServices] = useState(() => new Set());
 
-  // Theme toggle: dark (black) or light
+  // Compact header once the page scrolls
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Gentle fade-up reveal as sections enter the viewport. Content stays
+  // visible when IntersectionObserver is missing or motion is reduced.
+  useEffect(() => {
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+
+    const root = document.documentElement;
+    root.classList.add("js-reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+    document.querySelectorAll(".reveal:not(.is-visible)").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [activeView, submitted]);
+
+  // Theme: explicit user choice wins, otherwise follow the OS preference.
+  // The inline script in index.html applies the same rule before first paint.
   const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("speech_connect_theme");
-      if (saved === "dark" || saved === "light") return saved;
-      return "dark"; // Default to sleek black dark theme
-    }
-    return "dark";
+    if (typeof window === "undefined") return "light";
+    const saved = readSavedTheme();
+    if (saved) return saved;
+    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.className = theme === "dark" ? "dark-theme" : "light-theme";
-    localStorage.setItem("speech_connect_theme", theme);
   }, [theme]);
 
+  // Track OS theme changes until the visitor picks one explicitly
+  useEffect(() => {
+    const media = window.matchMedia?.("(prefers-color-scheme: dark)");
+    if (!media) return;
+    const handleChange = (e) => {
+      if (!readSavedTheme()) setTheme(e.matches ? "dark" : "light");
+    };
+    media.addEventListener("change", handleChange);
+    return () => media.removeEventListener("change", handleChange);
+  }, []);
+
+  function chooseTheme(next) {
+    setTheme(next);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch {
+      // Storage unavailable (private mode); choice lasts for this visit only
+    }
+  }
+
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    chooseTheme(theme === "dark" ? "light" : "dark");
   };
 
   // Fetch dynamic content updated from Admin Panel
@@ -336,13 +496,8 @@ function App() {
   const availabilityText =
     content.availabilityText || DEFAULT_CONTENT.availabilityText;
 
-  useEffect(() => {
-    if (!heroPhotos.length) return;
-    const timer = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroPhotos.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [heroPhotos.length]);
+  // Hero photos change only when the visitor picks one (no auto-rotation)
+  const activeHeroPhoto = heroPhotos[heroIndex % heroPhotos.length];
 
   function showToast(message, type = "success") {
     const id = Date.now();
@@ -372,17 +527,31 @@ function App() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function handleQuickConcern(tag) {
+  const selectedConcerns = splitConcerns(form.concerns);
+
+  function toggleConcern(tag) {
     setForm((current) => {
-      if (!current.concerns) return { ...current, concerns: tag };
-      if (current.concerns.includes(tag)) return current;
-      return { ...current, concerns: `${current.concerns}, ${tag}` };
+      const parts = splitConcerns(current.concerns);
+      const next = parts.includes(tag)
+        ? parts.filter((part) => part !== tag)
+        : [...parts, tag];
+      return { ...current, concerns: next.join(", ") };
+    });
+  }
+
+  function toggleService(key) {
+    setExpandedServices((current) => {
+      const next = new Set(current);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
     });
   }
 
   function changeView(view) {
     setActiveView(view);
     setStatus("");
+    setSubmitted(false);
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -413,14 +582,9 @@ function App() {
 
       setStatus("Appointment request received! We will contact you shortly.");
       showToast("Appointment request submitted successfully!", "success");
-      setForm({
-        name: "",
-        email: "",
-        age: "",
-        gender: "",
-        phone: "",
-        concerns: "",
-      });
+      setForm(EMPTY_FORM);
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setStatus("Unable to connect to server. Redirecting you to WhatsApp...");
       showToast("Opening WhatsApp to send your request directly.", "info");
@@ -432,87 +596,75 @@ function App() {
     }
   }
 
+  const whatsappDirect = `https://wa.me/${(therapist.whatsapp || "").replace(/\D/g, "")}`;
+  const callHref = `tel:${(therapist.call || "").replace(/\s+/g, "")}`;
+
   return (
     <div className="site-wrapper">
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+
       {/* Header */}
-      <header className="topbar">
+      <header className={`topbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="topbar-inner">
           <button
             className="brand-link"
             type="button"
             onClick={() => changeView("home")}
-            aria-label="Speech Connect Home"
+            aria-label="Speech Connect home"
           >
             <img
               src={CLINIC_LOGO_URL}
-              alt="Speech Connect Logo"
+              alt=""
               className="brand-logo-img"
             />
-            <div className="brand-text-wrap">
-              <span className="brand-title">SPEECH CONNECT</span>
-              <span className="brand-sub">ONLINE THERAPY</span>
-            </div>
+            <span className="brand-text-wrap">
+              <span className="brand-title">Speech Connect</span>
+              <span className="brand-sub">Online therapy</span>
+            </span>
           </button>
 
-          {/* Right Header Controls: Nav + Theme Toggle + Mobile Toggle */}
-          <div className="topbar-right-group">
-            {/* Desktop Navigation */}
-            <nav className="desktop-nav" aria-label="Primary navigation">
-              {navItems.map((item) => (
-                <button
-                  className={`nav-btn ${activeView === item.id ? "active-nav" : ""}`}
-                  key={item.id}
-                  type="button"
-                  onClick={() => changeView(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
+          <nav className="desktop-nav" aria-label="Primary navigation">
+            {navItems.map((item) => (
               <button
-                className="topbar-cta-btn"
+                className={`nav-btn ${activeView === item.id ? "active-nav" : ""}`}
+                key={item.id}
                 type="button"
-                onClick={() => changeView("appointment")}
+                aria-current={activeView === item.id ? "page" : undefined}
+                onClick={() => changeView(item.id)}
               >
-                Book Session
+                {item.label}
               </button>
-            </nav>
+            ))}
+          </nav>
 
-            {/* Dark (Black) / Light Theme Toggle Button */}
+          <div className="topbar-right-group">
+            <button
+              className="topbar-cta-btn"
+              type="button"
+              onClick={() => changeView("appointment")}
+            >
+              Book a session
+            </button>
+
             <button
               className="theme-toggle-btn"
               type="button"
               onClick={toggleTheme}
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode (black)"}
-              title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode (Black)"}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             >
-              {theme === "dark" ? (
-                /* Sun Icon */
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="5" />
-                  <line x1="12" y1="1" x2="12" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="23" />
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                  <line x1="1" y1="12" x2="3" y2="12" />
-                  <line x1="21" y1="12" x2="23" y2="12" />
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-              ) : (
-                /* Moon Icon */
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-              )}
+              <Icon name={theme === "dark" ? "sun" : "moon"} size={19} />
             </button>
 
-            {/* Mobile Hamburger Toggle */}
             <button
               className={`menu-toggle ${menuOpen ? "open" : ""}`}
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle navigation menu"
               aria-expanded={menuOpen}
+              aria-controls="mobile-drawer"
             >
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
@@ -522,284 +674,524 @@ function App() {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        <div className={`mobile-drawer ${menuOpen ? "drawer-open" : ""}`}>
-          <div className="mobile-nav-links">
+        <div
+          id="mobile-drawer"
+          className={`mobile-drawer ${menuOpen ? "drawer-open" : ""}`}
+        >
+          <nav className="mobile-nav-links" aria-label="Mobile navigation">
             {navItems.map((item) => (
               <button
                 className={`mobile-nav-btn ${activeView === item.id ? "active-mobile-nav" : ""}`}
                 key={item.id}
                 type="button"
+                aria-current={activeView === item.id ? "page" : undefined}
                 onClick={() => changeView(item.id)}
               >
                 <span>{item.label}</span>
-                <span className="mobile-nav-arrow" aria-hidden="true">
-                  →
-                </span>
+                <Icon name="arrowRight" size={18} className="mobile-nav-arrow" />
               </button>
             ))}
-          </div>
+          </nav>
 
           <div className="mobile-drawer-footer">
             <div className="mobile-theme-row">
               <span className="mobile-theme-label">Appearance</span>
-              <div className="theme-toggle-chips">
+              <div className="theme-toggle-chips" role="group" aria-label="Colour theme">
                 <button
                   type="button"
                   className={`theme-chip ${theme === "light" ? "active" : ""}`}
-                  onClick={() => setTheme("light")}
+                  aria-pressed={theme === "light"}
+                  onClick={() => chooseTheme("light")}
                 >
-                  ☀️ Light
+                  <Icon name="sun" size={16} /> Light
                 </button>
                 <button
                   type="button"
                   className={`theme-chip ${theme === "dark" ? "active" : ""}`}
-                  onClick={() => setTheme("dark")}
+                  aria-pressed={theme === "dark"}
+                  onClick={() => chooseTheme("dark")}
                 >
-                  🌙 Dark (Black)
+                  <Icon name="moon" size={16} /> Dark
                 </button>
               </div>
             </div>
 
             <button
-              className="primary-btn mobile-cta-btn"
+              className="primary-btn"
               type="button"
               onClick={() => changeView("appointment")}
             >
-              Book an Appointment
+              Book an appointment
             </button>
             <a
-              className="whatsapp-ghost-btn"
+              className="whatsapp-btn"
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <svg
-                className="btn-icon"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12.031 2c-5.518 0-10 4.475-10 9.993a9.96 9.96 0 0 0 1.543 5.342L2 22l4.814-1.528a9.957 9.957 0 0 0 5.217 1.487h.004c5.518 0 10-4.475 10-9.993 0-2.67-1.04-5.18-2.929-7.069A9.927 9.927 0 0 0 12.031 2zm0 18.286c-1.59 0-3.14-.424-4.502-1.23l-.323-.192-3.342 1.06 1.085-3.256-.21-.334a8.287 8.287 0 0 1-1.271-4.341c0-4.566 3.719-8.28 8.29-8.28a8.243 8.243 0 0 1 5.867 2.43 8.257 8.257 0 0 1 2.428 5.86c0 4.567-3.719 8.28-8.29 8.28zm4.542-6.195c-.249-.125-1.472-.726-1.7-.809-.228-.083-.394-.125-.56.125-.166.249-.643.809-.788.975-.145.166-.29.187-.539.062a6.788 6.788 0 0 1-2.001-1.234 7.494 7.494 0 0 1-1.385-1.724c-.145-.249-.015-.384.11-.508.112-.112.249-.29.373-.435.125-.145.166-.249.249-.415.083-.166.041-.311-.021-.435-.062-.125-.56-1.349-.768-1.847-.202-.485-.407-.419-.56-.427l-.477-.008c-.166 0-.435.062-.663.311-.228.249-.871.851-.871 2.075s.892 2.407 1.016 2.573c.125.166 1.754 2.678 4.249 3.755.594.256 1.058.409 1.42.524.597.19 1.14.163 1.569.099.479-.071 1.472-.602 1.68-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.291z" />
-              </svg>
-              <span>Quick Chat on WhatsApp</span>
+              <Icon name="whatsapp" size={18} />
+              <span>Chat on WhatsApp</span>
             </a>
           </div>
         </div>
       </header>
 
-      {/* Main View Container */}
-      <main className="main-content">
+      <main className="main-content" id="main" tabIndex={-1}>
         {/* HOME VIEW */}
         {activeView === "home" && (
-          <section className="hero-section section-wrap" id="home">
-            <div className="hero-grid">
-              <div className="hero-text-col">
-                <div className="pill-badge">
-                  <span className="pill-dot"></span>
-                  <span>{hero.badge}</span>
+          <>
+            <section className="hero-section" id="home">
+              <Blob variant={1} className="hero-bg-blob" />
+              <div className="section-wrap hero-grid">
+                <div className="hero-text-col">
+                  <span className="eyebrow reveal">
+                    <span className="eyebrow-dot" aria-hidden="true" />
+                    {hero.badge}
+                  </span>
+
+                  <h1 className="hero-heading reveal">{hero.title}</h1>
+
+                  <p className="lead reveal">{hero.description}</p>
+
+                  <div className="hero-cta-group reveal">
+                    <button
+                      className="primary-btn"
+                      type="button"
+                      onClick={() => changeView("appointment")}
+                    >
+                      <span>Book an appointment</span>
+                      <Icon name="arrowRight" size={18} className="btn-arrow" />
+                    </button>
+                    <a
+                      className="whatsapp-btn"
+                      href={whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon name="whatsapp" size={18} />
+                      <span>Chat on WhatsApp</span>
+                    </a>
+                  </div>
+
+                  <p className="hero-note reveal">
+                    <Icon name="clock" size={16} />
+                    {availabilityText}
+                  </p>
                 </div>
 
-                <h1 className="hero-heading">{hero.title}</h1>
+                <div className="hero-visual reveal">
+                  <Blob variant={0} className="hero-photo-blob" />
+                  <Blob variant={2} className="hero-accent-blob" />
+                  <div className="blob-frame hero-photo-frame">
+                    <img
+                      key={activeHeroPhoto}
+                      src={activeHeroPhoto}
+                      alt={`${therapist.name}, speech-language pathologist, during an online session`}
+                      className="blob-photo"
+                      loading="eager"
+                      fetchPriority="high"
+                    />
+                  </div>
 
-                <p className="hero-description">{hero.description}</p>
-
-                <div className="hero-cta-group">
-                  <button
-                    className="primary-btn"
-                    type="button"
-                    onClick={() => changeView("appointment")}
-                  >
-                    <span>Book an Appointment</span>
-                    <span className="btn-arrow" aria-hidden="true">
-                      →
+                  <div className="floating-card float-a">
+                    <span className="icon-badge small tint-0">
+                      <Icon name="video" size={18} />
                     </span>
-                  </button>
-                  <button
-                    className="secondary-btn"
-                    type="button"
-                    onClick={() => changeView("services")}
-                  >
-                    View All Services
-                  </button>
-                </div>
-
-                {/* Therapist quick credentials strip */}
-                <div className="therapist-credential-bar">
-                  <div className="cred-item">
-                    <span className="cred-label">Lead Therapist</span>
-                    <span className="cred-val">
-                      {therapist.name || therapist.fullName}
+                    <span>
+                      <strong>Live online sessions</strong>
+                      <small>From the comfort of home</small>
                     </span>
                   </div>
-                  <div className="cred-divider" />
-                  <div className="cred-item">
-                    <span className="cred-label">Qualification</span>
-                    <span className="cred-val">{therapist.degrees}</span>
-                  </div>
-                  <div className="cred-divider" />
-                  <div className="cred-item">
-                    <span className="cred-label">Registration</span>
-                    <span className="cred-val">{therapist.crr}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Photo Showcase Carousel */}
-              <div className="hero-media-col">
-                <div className="hero-image-card">
-                  <div className="hero-slider-wrap">
-                    {heroPhotos.map((photo, index) => (
-                      <img
-                        key={photo}
-                        src={photo}
-                        alt="Speech therapy session showcase"
-                        className={`hero-slide ${index === heroIndex ? "active-slide" : ""}`}
-                        loading={index === 0 ? "eager" : "lazy"}
-                      />
-                    ))}
+                  <div className="floating-card float-b">
+                    <span className="icon-badge small tint-1">
+                      <Icon name="users" size={18} />
+                    </span>
+                    <span>
+                      <strong>Children &amp; adults</strong>
+                      <small>Individualised care</small>
+                    </span>
                   </div>
 
                   {heroPhotos.length > 1 && (
-                    <div className="slider-nav-controls">
-                      {heroPhotos.map((_, index) => (
+                    <div className="photo-dots" role="group" aria-label="Choose photo">
+                      {heroPhotos.map((photo, index) => (
                         <button
-                          key={index}
+                          key={photo}
                           type="button"
-                          className={`slider-pill ${index === heroIndex ? "active-pill" : ""}`}
+                          className={`photo-dot ${index === heroIndex ? "active" : ""}`}
+                          aria-label={`Show photo ${index + 1}`}
+                          aria-pressed={index === heroIndex}
                           onClick={() => setHeroIndex(index)}
-                          aria-label={`Show slide ${index + 1}`}
                         />
                       ))}
                     </div>
                   )}
+                </div>
+              </div>
 
-                  <div className="hero-floating-badge">
-                    <span className="floating-badge-title">
-                      Online Consultations
-                    </span>
-                    <span className="floating-badge-sub">
-                      Pediatrics & Adults
-                    </span>
+              {/* Trust strip */}
+              <div className="section-wrap">
+                <ul className="trust-strip reveal" aria-label="Why families choose Speech Connect">
+                  {TRUST_POINTS.map((point, idx) => (
+                    <li className="trust-item" key={point.title}>
+                      <span className={`icon-badge small tint-${idx % 4}`}>
+                        <Icon name={point.icon} size={20} />
+                      </span>
+                      <span>
+                        <strong>{point.title}</strong>
+                        <small>{point.sub}</small>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            {/* Who we help */}
+            <section className="who-section" aria-labelledby="who-title">
+              <div className="section-wrap">
+                <div className="section-head centered reveal">
+                  <span className="eyebrow">Who we help</span>
+                  <h2 className="section-title" id="who-title">
+                    Support for every stage of life
+                  </h2>
+                  <p className="lead">
+                    Whether it is a toddler's first words or an adult relearning
+                    to speak after a stroke, every plan starts with listening.
+                  </p>
+                </div>
+
+                <div className="who-grid">
+                  {WHO_WE_HELP.map((group, idx) => (
+                    <article className={`who-card tint-${idx === 0 ? 1 : 2} reveal`} key={group.title}>
+                      <div className="who-media">
+                        <img src={group.image} alt={group.alt} loading="lazy" />
+                      </div>
+                      <div className="who-body">
+                        <h3 className="card-title who-title">{group.title}</h3>
+                        <p>{group.desc}</p>
+                        <ul className="who-topics" aria-label={`Common areas for ${group.title.toLowerCase()}`}>
+                          {group.topics.map((topic) => (
+                            <li key={topic}>{topic}</li>
+                          ))}
+                        </ul>
+                        <button
+                          type="button"
+                          className="text-link"
+                          onClick={() => changeView("services")}
+                        >
+                          Explore services <Icon name="arrowRight" size={16} />
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Highlights band */}
+            <WaveDivider />
+            <section className="band highlights-section" aria-labelledby="approach-title">
+              <div className="section-wrap">
+                <div className="section-head centered reveal">
+                  <span className="eyebrow">Our clinical approach</span>
+                  <h2 className="section-title" id="approach-title">
+                    Care designed around you
+                  </h2>
+                  <p className="lead">
+                    Evidence-based therapy, delivered with warmth and tailored to
+                    each person's strengths and goals.
+                  </p>
+                </div>
+
+                <div className="highlights-grid" role="list">
+                  {highlights.map((item, idx) => (
+                    <article
+                      className={`highlight-card tint-${idx % 4} reveal`}
+                      key={item.num || idx}
+                      role="listitem"
+                    >
+                      <span className="icon-badge">
+                        <Icon name={iconFor(item.title)} />
+                      </span>
+                      <h3 className="card-title">{item.title}</h3>
+                      <p>{item.desc}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+            <WaveDivider flip />
+
+            {/* Meet the therapist */}
+            <section className="meet-section" aria-labelledby="meet-title">
+              <div className="section-wrap meet-grid">
+                <div className="meet-visual reveal">
+                  <Blob variant={1} className="meet-blob" />
+                  <div className="blob-frame meet-photo-frame">
+                    <img
+                      src={therapist.aboutPhoto || therapist.photo}
+                      alt={`${therapist.name}, ${therapist.role}`}
+                      className="blob-photo"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <div className="meet-body">
+                  <span className="eyebrow reveal">Meet your therapist</span>
+                  <h2 className="section-title reveal" id="meet-title">
+                    Hello, I'm {therapist.name}
+                  </h2>
+                  <p className="meet-role reveal">{therapist.role}</p>
+                  {therapist.bioParagraphs?.[1] && (
+                    <p className="lead reveal">{therapist.bioParagraphs[1]}</p>
+                  )}
+                  <ul className="credential-pills reveal" aria-label="Credentials">
+                    <li className="chip">
+                      <Icon name="graduation" size={18} />
+                      {therapist.degrees}
+                    </li>
+                    <li className="chip">
+                      <Icon name="award" size={18} />
+                      {therapist.crr}
+                    </li>
+                  </ul>
+                  <div className="action-row reveal">
+                    <button
+                      className="secondary-btn"
+                      type="button"
+                      onClick={() => changeView("about")}
+                    >
+                      Read full profile
+                      <Icon name="arrowRight" size={18} />
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* Core Highlights Grid */}
-            <div className="highlights-section">
-              <div className="section-header-compact">
-                <span className="section-eyebrow">Our Clinical Approach</span>
-                <h2 className="section-subtitle">
-                  Designed Around Your Individual Communication Needs
-                </h2>
+            {/* How it works */}
+            <section className="steps-section" aria-labelledby="steps-title">
+              <div className="section-wrap">
+                <div className="section-head centered reveal">
+                  <span className="eyebrow">How online therapy works</span>
+                  <h2 className="section-title" id="steps-title">
+                    Four gentle steps to clearer communication
+                  </h2>
+                </div>
+
+                <div className="steps-track">
+                  <svg
+                    className="steps-path"
+                    viewBox="0 0 1000 120"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M125,60 C220,0 280,120 375,60 S530,0 625,60 S780,120 875,60" />
+                  </svg>
+                  <ol className="steps-list">
+                    {HOW_IT_WORKS.map((step, idx) => (
+                      <li className="step reveal" key={step.title}>
+                        <span className={`step-circle tint-${idx % 4}`}>
+                          <span className="step-num">{idx + 1}</span>
+                        </span>
+                        <div className="step-body">
+                          <h3 className="card-title">{step.title}</h3>
+                          <p>{step.desc}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
               </div>
+            </section>
 
-              <div className="highlights-grid">
-                {highlights.map((item, idx) => (
-                  <article className="highlight-card" key={item.num || idx}>
-                    <span className="highlight-num">
-                      {item.num || `0${idx + 1}`}
-                    </span>
-                    <h3 className="highlight-title">{item.title}</h3>
-                    <p className="highlight-desc">{item.desc}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* ABOUT VIEW */}
-        {activeView === "about" && (
-          <section className="about-page section-wrap" id="about">
-            <div className="section-header-centered">
-              <span className="section-eyebrow">About The Specialist</span>
-              <h1 className="page-main-heading">
-                Clinical Excellence & Empathy
-              </h1>
-              <p className="page-main-intro">
-                Dedicated to clinical precision, gentle guidance, and empowering
-                individuals of all ages to speak with clarity and confidence.
-              </p>
-            </div>
-
-            <div className="about-editorial-grid">
-              <div className="about-image-column">
-                <div className="about-portrait-card">
+            {/* Therapy from home */}
+            <section className="home-benefits" aria-labelledby="benefits-title">
+              <div className="section-wrap benefits-grid">
+                <div className="benefits-media reveal">
                   <img
-                    src={therapist.aboutPhoto || therapist.photo}
-                    alt={`${therapist.name} - Lead Speech-Language Pathologist`}
-                    className="about-portrait-img"
+                    src="/images/gallery/therapy-at-home.jpg"
+                    alt="A parent joining an online therapy session on a tablet from her living room"
+                    loading="lazy"
                   />
-                  <div className="portrait-caption">
-                    <strong>{therapist.name}</strong>
-                    <span>{therapist.role}</span>
+                  <div className="floating-card benefits-badge">
+                    <span className="icon-badge small tint-0">
+                      <Icon name="lock" size={18} />
+                    </span>
+                    <span>
+                      <strong>Private &amp; secure</strong>
+                      <small>Confidential video sessions</small>
+                    </span>
                   </div>
                 </div>
+                <div className="benefits-body">
+                  <span className="eyebrow reveal">Therapy from home</span>
+                  <h2 className="section-title reveal" id="benefits-title">
+                    Real progress, right where life happens
+                  </h2>
+                  <ul className="benefit-list">
+                    {HOME_BENEFITS.map((benefit, idx) => (
+                      <li className="benefit reveal" key={benefit.title}>
+                        <span className={`icon-badge small tint-${idx % 4}`}>
+                          <Icon name={benefit.icon} size={18} />
+                        </span>
+                        <span>
+                          <strong>{benefit.title}</strong>
+                          <small>{benefit.desc}</small>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </section>
 
-                <div className="about-quick-contact-card">
-                  <h4>Direct Inquiries</h4>
-                  <p>Have specific clinical questions before booking?</p>
+            {/* FAQ */}
+            <section className="faq-section" aria-labelledby="faq-title">
+              <div className="section-wrap faq-grid">
+                <div className="section-head faq-head reveal">
+                  <span className="eyebrow">Questions parents ask</span>
+                  <h2 className="section-title" id="faq-title">
+                    Frequently asked questions
+                  </h2>
+                  <p className="lead">
+                    Can't find your answer? Message us on WhatsApp and we will
+                    get back to you.
+                  </p>
                   <a
-                    className="whatsapp-ghost-btn full-width"
+                    className="whatsapp-btn"
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span>Connect on WhatsApp</span>
+                    <Icon name="whatsapp" size={18} />
+                    <span>Ask a question</span>
                   </a>
                 </div>
+                <div className="faq-list">
+                  {FAQS.map((item, idx) => (
+                    <details className="faq-item reveal" key={item.q} open={idx === 0}>
+                      <summary>
+                        <span>{item.q}</span>
+                        <span className="faq-icon" aria-hidden="true">
+                          <Icon name="chevronDown" size={18} />
+                        </span>
+                      </summary>
+                      <p>{item.a}</p>
+                    </details>
+                  ))}
+                </div>
               </div>
+            </section>
 
-              <div className="about-bio-column">
-                <div className="bio-block">
-                  <div className="badge-row">
-                    <span className="clean-badge">{therapist.degrees}</span>
-                    <span className="clean-badge">{therapist.crr}</span>
-                    <span className="clean-badge">
-                      {therapist.council || "RCI Certified"}
-                    </span>
-                  </div>
-
-                  <h2 className="bio-title">{therapist.name}</h2>
-                  <p className="bio-subtitle">{therapist.role}</p>
-
-                  <div className="bio-prose">
-                    {(therapist.bioParagraphs || []).map((paragraph, index) => (
-                      <p key={index}>{paragraph}</p>
-                    ))}
-                  </div>
+            {/* Closing CTA */}
+            <section className="section-wrap cta-section">
+              <div className="cta-band reveal">
+                <Blob variant={2} className="cta-blob" />
+                <div className="cta-band-text">
+                  <h2>Every voice deserves to be heard</h2>
+                  <p>
+                    Take the first step today. Tell us a little about your
+                    concerns and we will guide you to the right therapy plan.
+                  </p>
                 </div>
-
-                <div className="expertise-block">
-                  <h3 className="sub-heading">
-                    Areas of Clinical Specialization
-                  </h3>
-                  <div className="expertise-tags-grid">
-                    {specializations.map((spec) => (
-                      <span className="expertise-tag" key={spec}>
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="about-action-strip">
+                <div className="cta-band-actions">
                   <button
                     className="primary-btn"
                     type="button"
                     onClick={() => changeView("appointment")}
                   >
-                    Schedule an Assessment
+                    Book an appointment
                   </button>
                   <button
                     className="secondary-btn"
                     type="button"
                     onClick={() => changeView("services")}
                   >
-                    Explore All Services
+                    Explore services
                   </button>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+
+        {/* ABOUT VIEW */}
+        {activeView === "about" && (
+          <section className="page-section about-page" id="about">
+            <div className="section-wrap about-grid">
+              <div className="about-visual reveal">
+                <Blob variant={2} className="about-photo-blob" />
+                <div className="blob-frame about-photo-frame">
+                  <img
+                    src={therapist.aboutPhoto || therapist.photo}
+                    alt={`${therapist.name}, ${therapist.role}`}
+                    className="blob-photo"
+                  />
+                </div>
+                <div className="floating-card about-caption">
+                  <span className="icon-badge small tint-0">
+                    <Icon name="award" size={18} />
+                  </span>
+                  <span>
+                    <strong>{therapist.council || "RCI Certified"}</strong>
+                    <small>{therapist.crr}</small>
+                  </span>
+                </div>
+              </div>
+
+              <div className="about-bio-column">
+                <span className="eyebrow reveal">About the specialist</span>
+                <h1 className="bio-title reveal">{therapist.name}</h1>
+                <p className="bio-subtitle reveal">{therapist.role}</p>
+
+                <ul className="credential-pills reveal" aria-label="Credentials">
+                  <li className="chip">
+                    <Icon name="graduation" size={18} />
+                    {therapist.degrees}
+                  </li>
+                  <li className="chip">
+                    <Icon name="award" size={18} />
+                    {therapist.crr}
+                  </li>
+                </ul>
+
+                <div className="bio-prose reveal">
+                  {(therapist.bioParagraphs || []).map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
+
+                <div className="expertise-block reveal">
+                  <h2 className="card-title">Areas of clinical specialisation</h2>
+                  <ul className="expertise-tags">
+                    {specializations.map((spec, idx) => (
+                      <li className={`expertise-tag tint-${idx % 4}`} key={spec}>
+                        {spec}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="action-row reveal">
+                  <button
+                    className="primary-btn"
+                    type="button"
+                    onClick={() => changeView("appointment")}
+                  >
+                    Schedule an assessment
+                  </button>
+                  <a
+                    className="whatsapp-btn"
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="whatsapp" size={18} />
+                    <span>Ask a question</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -808,77 +1200,99 @@ function App() {
 
         {/* SERVICES VIEW */}
         {activeView === "services" && (
-          <section className="services-page section-wrap" id="services">
-            <div className="section-header-centered">
-              <span className="section-eyebrow">Our Clinical Services</span>
-              <h1 className="page-main-heading">
-                Comprehensive Telepractice Care
-              </h1>
-              <p className="page-main-intro">
-                Specialized evaluation and individualized therapeutic programs
-                delivered online for toddlers, school-age children, teens, and
-                adults.
-              </p>
-            </div>
-
-            <div className="services-catalog-grid">
-              {servicesList.map((service, idx) => (
-                <article
-                  className="service-editorial-card"
-                  key={service.num || idx}
-                >
-                  <div className="service-card-top">
-                    <span className="service-index">
-                      {service.num || `0${idx + 1}`}
-                    </span>
-                    {service.tag && (
-                      <span className="service-category-tag">
-                        {service.tag}
-                      </span>
-                    )}
-                  </div>
-                  <h2 className="service-card-heading">{service.title}</h2>
-                  <p className="service-card-text">{service.desc}</p>
-                  <div className="service-card-footer">
-                    <button
-                      className="service-book-action"
-                      type="button"
-                      onClick={() => bookForService(service.title)}
-                    >
-                      <span>Book this service</span>
-                      <span className="link-arrow" aria-hidden="true">
-                        →
-                      </span>
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="services-cta-banner">
-              <div className="banner-content">
-                <h3>Unsure which service fits your requirements?</h3>
-                <p>
-                  Reach out for an initial consultation and we will guide you to
-                  the right therapeutic plan.
+          <section className="page-section services-page" id="services">
+            <div className="section-wrap">
+              <div className="section-head centered reveal">
+                <span className="eyebrow">Our clinical services</span>
+                <h1 className="page-main-heading">Comprehensive telepractice care</h1>
+                <p className="lead">
+                  Specialised evaluation and individualised therapy programmes,
+                  delivered online for toddlers, school-age children, teens and
+                  adults.
                 </p>
               </div>
-              <div className="banner-actions">
-                <button
-                  className="primary-btn"
-                  type="button"
-                  onClick={() => changeView("appointment")}
-                >
-                  Book Assessment
-                </button>
-                <a
-                  className="whatsapp-ghost-btn"
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ask on WhatsApp
-                </a>
+
+              <div className="services-bento">
+                {servicesList.map((service, idx) => {
+                  const key = service.num || String(idx);
+                  const expanded = expandedServices.has(key);
+                  const descId = `service-desc-${idx}`;
+                  return (
+                    <article
+                      className={`service-card tint-${idx % 4} ${idx % 5 === 0 ? "wide" : ""} reveal`}
+                      key={key}
+                    >
+                      <div className="service-card-top">
+                        <span className="icon-badge">
+                          <Icon name={iconFor(service.title)} />
+                        </span>
+                        {service.tag && (
+                          <span className="service-tag">{service.tag}</span>
+                        )}
+                      </div>
+                      <h2 className="card-title">{service.title}</h2>
+                      <p
+                        id={descId}
+                        className={`service-desc ${expanded ? "expanded" : ""}`}
+                      >
+                        {service.desc}
+                      </p>
+                      <div className="service-card-actions">
+                        <button
+                          type="button"
+                          className="text-link"
+                          aria-expanded={expanded}
+                          aria-controls={descId}
+                          onClick={() => toggleService(key)}
+                        >
+                          {expanded ? "Show less" : "Learn more"}
+                          <Icon
+                            name="chevronDown"
+                            size={16}
+                            className={`chevron ${expanded ? "up" : ""}`}
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="book-pill"
+                          onClick={() => bookForService(service.title)}
+                        >
+                          Book this
+                          <Icon name="arrowRight" size={16} />
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              <div className="cta-band reveal">
+                <Blob variant={0} className="cta-blob" />
+                <div className="cta-band-text">
+                  <h2>Unsure which service fits?</h2>
+                  <p>
+                    Reach out for an initial consultation and we will guide you
+                    to the right therapeutic plan.
+                  </p>
+                </div>
+                <div className="cta-band-actions">
+                  <button
+                    className="primary-btn"
+                    type="button"
+                    onClick={() => changeView("appointment")}
+                  >
+                    Book an assessment
+                  </button>
+                  <a
+                    className="whatsapp-btn"
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="whatsapp" size={18} />
+                    <span>Ask on WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
           </section>
@@ -886,418 +1300,368 @@ function App() {
 
         {/* APPOINTMENT VIEW */}
         {activeView === "appointment" && (
-          <section className="appointment-page section-wrap" id="appointment">
-            <div className="section-header-centered">
-              <span className="section-eyebrow">Consultation Booking</span>
-              <h1 className="page-main-heading">Book An Appointment</h1>
-              <p className="page-main-intro">
-                Fill in the details below to request a speech therapy
-                consultation. We will get in touch with you promptly to confirm
-                your schedule.
+          <section className="booking-page" id="appointment">
+            <div className="section-wrap section-head centered reveal booking-head">
+              <span className="eyebrow">Consultation booking</span>
+              <h1 className="page-main-heading">Book an appointment</h1>
+              <p className="lead">
+                Share a few details and we will get in touch promptly to confirm
+                a time that suits you.
               </p>
             </div>
 
-            <div className="booking-layout-wrap">
-              <div className="booking-form-card">
-                <form
-                  className="booking-form-clean"
-                  onSubmit={submitAppointment}
-                >
-                  <div className="form-field-group">
-                    <label className="form-label" htmlFor="form-name">
-                      Full Name <span className="req">*</span>
-                    </label>
-                    <input
-                      id="form-name"
-                      name="name"
-                      type="text"
-                      className="form-input"
-                      placeholder="e.g. Sarah Jenkins"
-                      value={form.name}
-                      onChange={updateField}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-row-two-col">
-                    <div className="form-field-group">
-                      <label className="form-label" htmlFor="form-age">
-                        Age (Years) <span className="req">*</span>
-                      </label>
-                      <input
-                        id="form-age"
-                        name="age"
-                        type="number"
-                        min="0"
-                        max="120"
-                        className="form-input"
-                        placeholder="e.g. 5"
-                        value={form.age}
-                        onChange={updateField}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-field-group">
-                      <label className="form-label" htmlFor="form-gender">
-                        Gender <span className="req">*</span>
-                      </label>
-                      <select
-                        id="form-gender"
-                        name="gender"
-                        className="form-select"
-                        value={form.gender}
-                        onChange={updateField}
-                        required
-                      >
-                        <option value="">Select Gender</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="form-row-two-col">
-                    <div className="form-field-group">
-                      <label className="form-label" htmlFor="form-phone">
-                        Mobile / WhatsApp <span className="req">*</span>
-                      </label>
-                      <input
-                        id="form-phone"
-                        name="phone"
-                        type="tel"
-                        inputMode="tel"
-                        autoComplete="tel"
-                        className="form-input"
-                        placeholder="e.g. +91 98765 43210"
-                        value={form.phone}
-                        onChange={updateField}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-field-group">
-                      <label className="form-label" htmlFor="form-email">
-                        Email Address <span className="field-hint" style={{ fontSize: "11px", fontWeight: "normal", opacity: 0.8 }}>(for instant confirmation)</span>
-                      </label>
-                      <input
-                        id="form-email"
-                        name="email"
-                        type="email"
-                        inputMode="email"
-                        autoComplete="email"
-                        className="form-input"
-                        placeholder="e.g. parent@gmail.com"
-                        value={form.email}
-                        onChange={updateField}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-field-group">
-                    <div className="label-with-hint">
-                      <label className="form-label" htmlFor="form-concerns">
-                        Primary Concerns or Goals <span className="req">*</span>
-                      </label>
-                      <span className="field-hint">
-                        Tap quick tags below or describe in your words
-                      </span>
-                    </div>
-
-                    <div className="concern-chips-row">
-                      {concernSuggestions.map((tag) => (
-                        <button
-                          key={tag}
-                          type="button"
-                          className="concern-chip"
-                          onClick={() => handleQuickConcern(tag)}
-                        >
-                          + {tag}
-                        </button>
-                      ))}
-                    </div>
-
-                    <textarea
-                      id="form-concerns"
-                      name="concerns"
-                      className="form-textarea"
-                      value={form.concerns}
-                      onChange={updateField}
-                      placeholder="Describe the primary communication concerns, difficulties, or goals..."
-                      rows="4"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-actions-wrap">
-                    <button
-                      className="primary-btn submit-btn"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <span className="spinner" aria-hidden="true" />
-                          <span>Sending Request...</span>
-                        </>
-                      ) : (
-                        <span>Submit Appointment Request</span>
-                      )}
-                    </button>
-
-                    <a
-                      className="whatsapp-alternative-btn"
-                      href={whatsappLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12.031 2c-5.518 0-10 4.475-10 9.993a9.96 9.96 0 0 0 1.543 5.342L2 22l4.814-1.528a9.957 9.957 0 0 0 5.217 1.487h.004c5.518 0 10-4.475 10-9.993 0-2.67-1.04-5.18-2.929-7.069A9.927 9.927 0 0 0 12.031 2zm0 18.286c-1.59 0-3.14-.424-4.502-1.23l-.323-.192-3.342 1.06 1.085-3.256-.21-.334a8.287 8.287 0 0 1-1.271-4.341c0-4.566 3.719-8.28 8.29-8.28a8.243 8.243 0 0 1 5.867 2.43 8.257 8.257 0 0 1 2.428 5.86c0 4.567-3.719 8.28-8.29 8.28zm4.542-6.195c-.249-.125-1.472-.726-1.7-.809-.228-.083-.394-.125-.56.125-.166.249-.643.809-.788.975-.145.166-.29.187-.539.062a6.788 6.788 0 0 1-2.001-1.234 7.494 7.494 0 0 1-1.385-1.724c-.145-.249-.015-.384.11-.508.112-.112.249-.29.373-.435.125-.145.166-.249.249-.415.083-.166.041-.311-.021-.435-.062-.125-.56-1.349-.768-1.847-.202-.485-.407-.419-.56-.427l-.477-.008c-.166 0-.435.062-.663.311-.228.249-.871.851-.871 2.075s.892 2.407 1.016 2.573c.125.166 1.754 2.678 4.249 3.755.594.256 1.058.409 1.42.524.597.19 1.14.163 1.569.099.479-.071 1.472-.602 1.68-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.291z" />
-                      </svg>
-                      <span>Or Book via WhatsApp</span>
-                    </a>
-                  </div>
-
-                  {status && (
-                    <div className="status-notice-clean">
-                      <p>{status}</p>
-                    </div>
-                  )}
-                </form>
-              </div>
-
-              {/* Consultation sidebar notes */}
-              <aside className="booking-info-sidebar">
-                <div className="info-card-minimal">
-                  <h4>What to Expect</h4>
-                  <ul className="info-checklist">
-                    <li>
-                      <span className="check-bullet" aria-hidden="true">
-                        ✓
-                      </span>
-                      <div>
-                        <strong>Confidential Assessment</strong>
-                        <p>
-                          Detailed intake discussing speech history, milestones,
-                          and challenges.
-                        </p>
-                      </div>
-                    </li>
-                    <li>
-                      <span className="check-bullet" aria-hidden="true">
-                        ✓
-                      </span>
-                      <div>
-                        <strong>Personalized Roadmap</strong>
-                        <p>
-                          Clear therapeutic objectives and realistic milestone
-                          timeline.
-                        </p>
-                      </div>
-                    </li>
-                    <li>
-                      <span className="check-bullet" aria-hidden="true">
-                        ✓
-                      </span>
-                      <div>
-                        <strong>Flexible Sessions</strong>
-                        <p>
-                          Virtual appointments tailored around your family's
-                          routine.
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="info-card-minimal security-note">
-                  <div className="lock-icon-wrap" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <strong>Privacy & Confidentiality</strong>
-                    <p>
-                      All clinical communications and medical records are
-                      handled with strict professional confidentiality.
+            <WaveDivider />
+            <div className="band booking-band">
+              <div className="section-wrap booking-layout">
+                {submitted ? (
+                  <div className="booking-card success-card" role="status">
+                    <span className="success-icon">
+                      <Icon name="check" size={30} strokeWidth={2.2} />
+                    </span>
+                    <h2>Thank you, your request is in</h2>
+                    <p className="lead">
+                      {therapist.name} will review your details and contact you
+                      shortly to confirm your consultation.
                     </p>
+                    <ol className="next-steps">
+                      <li>
+                        <strong>We review your request</strong>
+                        <span>Usually the same or next working day.</span>
+                      </li>
+                      <li>
+                        <strong>We contact you to confirm</strong>
+                        <span>By phone or WhatsApp, at a time that suits you.</span>
+                      </li>
+                      <li>
+                        <strong>Your first session</strong>
+                        <span>A relaxed intake consultation, fully online.</span>
+                      </li>
+                    </ol>
+                    <div className="action-row">
+                      <button
+                        className="primary-btn"
+                        type="button"
+                        onClick={() => changeView("home")}
+                      >
+                        Back to home
+                      </button>
+                      <button
+                        className="secondary-btn"
+                        type="button"
+                        onClick={() => setSubmitted(false)}
+                      >
+                        Send another request
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </aside>
+                ) : (
+                  <div className="booking-card">
+                    <form className="booking-form" onSubmit={submitAppointment}>
+                      <div className="form-field">
+                        <label className="form-label" htmlFor="form-name">
+                          Full name <span className="req" aria-hidden="true">*</span>
+                        </label>
+                        <input
+                          id="form-name"
+                          name="name"
+                          type="text"
+                          autoComplete="name"
+                          className="form-input"
+                          placeholder="e.g. Sarah Jenkins"
+                          value={form.name}
+                          onChange={updateField}
+                          required
+                        />
+                      </div>
+
+                      <div className="form-row">
+                        <div className="form-field">
+                          <label className="form-label" htmlFor="form-age">
+                            Age (years) <span className="req" aria-hidden="true">*</span>
+                          </label>
+                          <input
+                            id="form-age"
+                            name="age"
+                            type="number"
+                            min="0"
+                            max="120"
+                            inputMode="numeric"
+                            className="form-input"
+                            placeholder="e.g. 5"
+                            value={form.age}
+                            onChange={updateField}
+                            required
+                          />
+                        </div>
+
+                        <div className="form-field">
+                          <label className="form-label" htmlFor="form-gender">
+                            Gender <span className="req" aria-hidden="true">*</span>
+                          </label>
+                          <select
+                            id="form-gender"
+                            name="gender"
+                            className="form-input form-select"
+                            value={form.gender}
+                            onChange={updateField}
+                            required
+                          >
+                            <option value="">Select</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="form-row">
+                        <div className="form-field">
+                          <label className="form-label" htmlFor="form-phone">
+                            Mobile / WhatsApp <span className="req" aria-hidden="true">*</span>
+                          </label>
+                          <input
+                            id="form-phone"
+                            name="phone"
+                            type="tel"
+                            inputMode="tel"
+                            autoComplete="tel"
+                            className="form-input"
+                            placeholder="e.g. +91 98765 43210"
+                            value={form.phone}
+                            onChange={updateField}
+                            required
+                          />
+                        </div>
+
+                        <div className="form-field">
+                          <label className="form-label" htmlFor="form-email">
+                            Email <span className="field-hint">(for instant confirmation)</span>
+                          </label>
+                          <input
+                            id="form-email"
+                            name="email"
+                            type="email"
+                            inputMode="email"
+                            autoComplete="email"
+                            className="form-input"
+                            placeholder="e.g. parent@gmail.com"
+                            value={form.email}
+                            onChange={updateField}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-field">
+                        <div className="label-with-hint">
+                          <label className="form-label" htmlFor="form-concerns">
+                            Primary concerns or goals <span className="req" aria-hidden="true">*</span>
+                          </label>
+                          <span className="field-hint" id="concern-hint">
+                            Tap the topics that apply, or describe in your own words
+                          </span>
+                        </div>
+
+                        <div className="concern-chips" role="group" aria-describedby="concern-hint">
+                          {concernSuggestions.map((tag) => {
+                            const selected = selectedConcerns.includes(tag);
+                            return (
+                              <button
+                                key={tag}
+                                type="button"
+                                className={`concern-chip ${selected ? "selected" : ""}`}
+                                aria-pressed={selected}
+                                onClick={() => toggleConcern(tag)}
+                              >
+                                {selected && <Icon name="check" size={14} strokeWidth={2.4} />}
+                                {tag}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <textarea
+                          id="form-concerns"
+                          name="concerns"
+                          className="form-input form-textarea"
+                          value={form.concerns}
+                          onChange={updateField}
+                          placeholder="Describe the main communication concerns, difficulties or goals..."
+                          rows="4"
+                          required
+                        />
+                      </div>
+
+                      <div className="form-actions">
+                        <button
+                          className="primary-btn submit-btn"
+                          type="submit"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <span className="spinner" aria-hidden="true" />
+                              <span>Sending request...</span>
+                            </>
+                          ) : (
+                            <span>Submit appointment request</span>
+                          )}
+                        </button>
+
+                        <a
+                          className="whatsapp-btn"
+                          href={whatsappLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon name="whatsapp" size={18} />
+                          <span>Or book via WhatsApp</span>
+                        </a>
+                      </div>
+
+                      <div className="status-region" aria-live="polite">
+                        {status && <p className="status-notice">{status}</p>}
+                      </div>
+                    </form>
+                  </div>
+                )}
+
+                <aside className="booking-aside">
+                  <div className="aside-card tint-0">
+                    <h2 className="card-title">What to expect</h2>
+                    <ul className="info-checklist">
+                      <li>
+                        <span className="check-bullet" aria-hidden="true">
+                          <Icon name="check" size={14} strokeWidth={2.4} />
+                        </span>
+                        <div>
+                          <strong>Confidential assessment</strong>
+                          <p>A detailed intake on speech history, milestones and challenges.</p>
+                        </div>
+                      </li>
+                      <li>
+                        <span className="check-bullet" aria-hidden="true">
+                          <Icon name="check" size={14} strokeWidth={2.4} />
+                        </span>
+                        <div>
+                          <strong>Personalised roadmap</strong>
+                          <p>Clear therapy objectives and a realistic milestone timeline.</p>
+                        </div>
+                      </li>
+                      <li>
+                        <span className="check-bullet" aria-hidden="true">
+                          <Icon name="check" size={14} strokeWidth={2.4} />
+                        </span>
+                        <div>
+                          <strong>Flexible sessions</strong>
+                          <p>Online appointments planned around your family's routine.</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="aside-card tint-2 privacy-card">
+                    <span className="icon-badge small">
+                      <Icon name="lock" size={18} />
+                    </span>
+                    <div>
+                      <strong>Privacy &amp; confidentiality</strong>
+                      <p>
+                        All clinical communication and records are handled with
+                        strict professional confidentiality.
+                      </p>
+                    </div>
+                  </div>
+                </aside>
+              </div>
             </div>
+            <WaveDivider flip />
           </section>
         )}
 
         {/* CONTACT VIEW */}
         {activeView === "contact" && (
-          <section className="contact-page section-wrap" id="contact">
-            <div className="section-header-centered">
-              <span className="section-eyebrow">Get In Touch</span>
-              <h1 className="page-main-heading">We are here to help</h1>
-              <p className="page-main-intro">
-                Connect directly with {therapist.name} for inquiries,
-                consultations, or appointment scheduling across all
-                communication channels.
-              </p>
-            </div>
-
-            <div className="contact-editorial-grid">
-              {/* Phone */}
-              <a
-                className="contact-card-minimal"
-                href={`tel:${(therapist.call || "").replace(/\s+/g, "")}`}
-              >
-                <div
-                  className="contact-icon-bubble phone-bubble"
-                  aria-hidden="true"
-                >
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                </div>
-                <div className="contact-card-content">
-                  <span className="contact-category">Phone Consultation</span>
-                  <strong className="contact-headline">{therapist.call}</strong>
-                  <span className="contact-action-text">
-                    Tap to Call Directly →
-                  </span>
-                </div>
-              </a>
-
-              {/* WhatsApp */}
-              <a
-                className="contact-card-minimal"
-                href={`https://wa.me/${(therapist.whatsapp || "").replace(/\D/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div
-                  className="contact-icon-bubble whatsapp-bubble"
-                  aria-hidden="true"
-                >
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M12.031 2c-5.518 0-10 4.475-10 9.993a9.96 9.96 0 0 0 1.543 5.342L2 22l4.814-1.528a9.957 9.957 0 0 0 5.217 1.487h.004c5.518 0 10-4.475 10-9.993 0-2.67-1.04-5.18-2.929-7.069A9.927 9.927 0 0 0 12.031 2zm0 18.286c-1.59 0-3.14-.424-4.502-1.23l-.323-.192-3.342 1.06 1.085-3.256-.21-.334a8.287 8.287 0 0 1-1.271-4.341c0-4.566 3.719-8.28 8.29-8.28a8.243 8.243 0 0 1 5.867 2.43 8.257 8.257 0 0 1 2.428 5.86c0 4.567-3.719 8.28-8.29 8.28zm4.542-6.195c-.249-.125-1.472-.726-1.7-.809-.228-.083-.394-.125-.56.125-.166.249-.643.809-.788.975-.145.166-.29.187-.539.062a6.788 6.788 0 0 1-2.001-1.234 7.494 7.494 0 0 1-1.385-1.724c-.145-.249-.015-.384.11-.508.112-.112.249-.29.373-.435.125-.145.166-.249.249-.415.083-.166.041-.311-.021-.435-.062-.125-.56-1.349-.768-1.847-.202-.485-.407-.419-.56-.427l-.477-.008c-.166 0-.435.062-.663.311-.228.249-.871.851-.871 2.075s.892 2.407 1.016 2.573c.125.166 1.754 2.678 4.249 3.755.594.256 1.058.409 1.42.524.597.19 1.14.163 1.569.099.479-.071 1.472-.602 1.68-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.291z" />
-                  </svg>
-                </div>
-                <div className="contact-card-content">
-                  <span className="contact-category">Instant Chat</span>
-                  <strong className="contact-headline">
-                    {therapist.whatsapp}
-                  </strong>
-                  <span className="contact-action-text">
-                    Chat on WhatsApp →
-                  </span>
-                </div>
-              </a>
-
-              {/* Email */}
-              <a
-                className="contact-card-minimal"
-                href={`mailto:${therapist.email}`}
-              >
-                <div
-                  className="contact-icon-bubble email-bubble"
-                  aria-hidden="true"
-                >
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
-                  </svg>
-                </div>
-                <div className="contact-card-content">
-                  <span className="contact-category">Email Correspondence</span>
-                  <strong className="contact-headline">
-                    {therapist.email}
-                  </strong>
-                  <span className="contact-action-text">Write to Us →</span>
-                </div>
-              </a>
-
-              {/* LinkedIn */}
-              <a
-                className="contact-card-minimal"
-                href={therapist.linkedIn}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div
-                  className="contact-icon-bubble linkedin-bubble"
-                  aria-hidden="true"
-                >
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45c-.9 0-1.63.73-1.63 1.63s.73 1.63 1.63 1.63c.9 0 1.63-.73 1.63-1.63s-.73-1.63-1.63-1.63z" />
-                  </svg>
-                </div>
-                <div className="contact-card-content">
-                  <span className="contact-category">Professional Network</span>
-                  <strong className="contact-headline">
-                    {therapist.linkedInName}
-                  </strong>
-                  <span className="contact-action-text">
-                    View LinkedIn Profile →
-                  </span>
-                </div>
-              </a>
-            </div>
-
-            <div className="contact-service-hours-card">
-              <div className="service-hours-col">
-                <h4>Platform Availability</h4>
-                <p>
-                  Virtual appointments conducted via secure online telepractice.
+          <section className="page-section contact-page" id="contact">
+            <div className="section-wrap">
+              <div className="section-head centered reveal">
+                <span className="eyebrow">Get in touch</span>
+                <h1 className="page-main-heading">We are here to help</h1>
+                <p className="lead">
+                  Reach {therapist.name} directly for questions, consultations or
+                  scheduling, whichever way suits you best.
                 </p>
-                <span className="hours-pill">{availabilityText}</span>
               </div>
-              <div className="service-hours-cta">
+
+              <div className="contact-tiles">
+                <a className="contact-tile tint-0 reveal" href={callHref}>
+                  <span className="icon-badge">
+                    <Icon name="phone" />
+                  </span>
+                  <span className="contact-category">Phone consultation</span>
+                  <strong className="contact-headline">{therapist.call}</strong>
+                  <span className="contact-action">
+                    Call now <Icon name="arrowRight" size={16} />
+                  </span>
+                </a>
+
+                <a
+                  className="contact-tile tint-1 reveal"
+                  href={whatsappDirect}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="icon-badge">
+                    <Icon name="whatsapp" />
+                  </span>
+                  <span className="contact-category">Instant chat</span>
+                  <strong className="contact-headline">{therapist.whatsapp}</strong>
+                  <span className="contact-action">
+                    Chat on WhatsApp <Icon name="arrowRight" size={16} />
+                  </span>
+                </a>
+
+                <a className="contact-tile tint-2 reveal" href={`mailto:${therapist.email}`}>
+                  <span className="icon-badge">
+                    <Icon name="mail" />
+                  </span>
+                  <span className="contact-category">Email</span>
+                  <strong className="contact-headline">{therapist.email}</strong>
+                  <span className="contact-action">
+                    Write to us <Icon name="arrowRight" size={16} />
+                  </span>
+                </a>
+
+                <a
+                  className="contact-tile tint-3 reveal"
+                  href={therapist.linkedIn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="icon-badge">
+                    <Icon name="linkedin" />
+                  </span>
+                  <span className="contact-category">Professional network</span>
+                  <strong className="contact-headline">{therapist.linkedInName}</strong>
+                  <span className="contact-action">
+                    View LinkedIn profile <Icon name="arrowRight" size={16} />
+                  </span>
+                </a>
+              </div>
+
+              <div className="hours-card reveal">
+                <div>
+                  <h2 className="card-title">Availability</h2>
+                  <p>Online appointments through secure telepractice.</p>
+                  <span className="hours-pill">
+                    <Icon name="clock" size={16} />
+                    {availabilityText}
+                  </span>
+                </div>
                 <button
                   className="primary-btn"
                   type="button"
                   onClick={() => changeView("appointment")}
                 >
-                  Book Your Consultation
+                  Book your consultation
                 </button>
               </div>
             </div>
@@ -1305,140 +1669,102 @@ function App() {
         )}
       </main>
 
-      {/* Enhanced Space-Conscious Minimalist Footer */}
+      {/* Footer */}
       <footer className="site-footer">
-        <div className="section-wrap footer-container">
-          {/* Main Footer Row */}
-          <div className="footer-main-row">
-            {/* Column 1: Brand & Clinical Credibility */}
-            <div className="footer-brand-pane">
-              <div className="footer-brand-badge">
-                <img
-                  src={CLINIC_LOGO_URL}
-                  alt="Speech Connect Logo"
-                  className="footer-brand-logo"
-                />
-                <div className="footer-brand-meta">
-                  <span className="footer-brand-name">SPEECH CONNECT</span>
-                  <span className="footer-brand-tagline">Online Speech & Language Telepractice</span>
-                </div>
-              </div>
-              <p className="footer-lead-text">
-                Evidence-based virtual care founded by certified specialist{" "}
-                <strong>{therapist.name || "Najiya P M"}</strong> ({therapist.degrees || "M.Sc. SLP, OPT"}). 
-                Registered under Rehabilitation Council of India (<strong>{therapist.crr || "CRR No: A84512"}</strong>).
-              </p>
+        <div className="section-wrap footer-grid">
+          <div className="footer-brand">
+            <div className="footer-brand-badge">
+              <img src={CLINIC_LOGO_URL} alt="" className="brand-logo-img" />
+              <span className="brand-text-wrap">
+                <span className="brand-title">Speech Connect</span>
+                <span className="brand-sub">Online speech &amp; language telepractice</span>
+              </span>
             </div>
+            <p>
+              Evidence-based online care led by{" "}
+              <strong>{therapist.name || "Najiya P M"}</strong> (
+              {therapist.degrees || "M.Sc. SLP, OPT"}), registered with the
+              Rehabilitation Council of India ({therapist.crr || "CRR No: A84512"}).
+            </p>
+          </div>
 
-            {/* Column 2: Navigation Links */}
-            <div className="footer-links-pane">
-              <span className="footer-pane-heading">Quick Navigation</span>
-              <div className="footer-nav-grid">
-                {navItems.map((item) => (
+          <nav className="footer-col" aria-label="Footer navigation">
+            <h2 className="footer-heading">Explore</h2>
+            <ul className="footer-links">
+              {navItems.map((item) => (
+                <li key={item.id}>
                   <button
-                    key={item.id}
                     type="button"
-                    className={`footer-link-pill ${activeView === item.id ? "active-footer-link" : ""}`}
-                    onClick={() => {
-                      changeView(item.id);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
+                    className={`footer-link ${activeView === item.id ? "active" : ""}`}
+                    onClick={() => changeView(item.id)}
                   >
                     {item.label}
                   </button>
-                ))}
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-            {/* Column 3: Direct Clinic Actions & Top Scroll */}
-            <div className="footer-actions-pane">
-              <span className="footer-pane-heading">Direct Clinical Care</span>
-              <div className="footer-action-buttons">
-                {therapist.whatsapp && (
-                  <a
-                    href={`https://wa.me/${(therapist.whatsapp || "").replace(/\D/g, "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="footer-cta-pill whatsapp"
-                    title="Direct WhatsApp Consultation"
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12.031 2c-5.518 0-10 4.475-10 9.993a9.96 9.96 0 0 0 1.543 5.342L2 22l4.814-1.528a9.957 9.957 0 0 0 5.217 1.487h.004c5.518 0 10-4.475 10-9.993 0-2.67-1.04-5.18-2.929-7.069A9.927 9.927 0 0 0 12.031 2zm0 18.286c-1.59 0-3.14-.424-4.502-1.23l-.323-.192-3.342 1.06 1.085-3.256-.21-.334a8.287 8.287 0 0 1-1.271-4.341c0-4.566 3.719-8.28 8.29-8.28a8.243 8.243 0 0 1 5.867 2.43 8.257 8.257 0 0 1 2.428 5.86c0 4.567-3.719 8.28-8.29 8.28zm4.542-6.195c-.249-.125-1.472-.726-1.7-.809-.228-.083-.394-.125-.56.125-.166.249-.643.809-.788.975-.145.166-.29.187-.539.062a6.788 6.788 0 0 1-2.001-1.234 7.494 7.494 0 0 1-1.385-1.724c-.145-.249-.015-.384.11-.508.112-.112.249-.29.373-.435.125-.145.166-.249.249-.415.083-.166.041-.311-.021-.435-.062-.125-.56-1.349-.768-1.847-.202-.485-.407-.419-.56-.427l-.477-.008c-.166 0-.435.062-.663.311-.228.249-.871.851-.871 2.075s.892 2.407 1.016 2.573c.125.166 1.754 2.678 4.249 3.755.594.256 1.058.409 1.42.524.597.19 1.14.163 1.569.099.479-.071 1.472-.602 1.68-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.291z" />
-                    </svg>
-                    <span>WhatsApp</span>
+          <div className="footer-col">
+            <h2 className="footer-heading">Get in touch</h2>
+            <ul className="footer-links">
+              {therapist.whatsapp && (
+                <li>
+                  <a className="footer-link" href={whatsappDirect} target="_blank" rel="noopener noreferrer">
+                    <Icon name="whatsapp" size={16} /> WhatsApp
                   </a>
-                )}
-                {therapist.call && (
-                  <a
-                    href={`tel:${(therapist.call || "").replace(/\s+/g, "")}`}
-                    className="footer-cta-pill call"
-                    title="Direct Phone Call"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                    </svg>
-                    <span>Direct Call</span>
+                </li>
+              )}
+              {therapist.call && (
+                <li>
+                  <a className="footer-link" href={callHref}>
+                    <Icon name="phone" size={16} /> {therapist.call}
                   </a>
-                )}
-                <button
-                  type="button"
-                  className="footer-top-btn"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  title="Scroll to top of page"
-                  aria-label="Scroll back to top"
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <line x1="12" y1="19" x2="12" y2="5" />
-                    <polyline points="5 12 12 5 19 12" />
-                  </svg>
-                  <span>Top</span>
-                </button>
-              </div>
-            </div>
+                </li>
+              )}
+              {therapist.email && (
+                <li>
+                  <a className="footer-link" href={`mailto:${therapist.email}`}>
+                    <Icon name="mail" size={16} /> Email us
+                  </a>
+                </li>
+              )}
+            </ul>
+            <span className="hours-pill footer-hours">
+              <Icon name="clock" size={15} />
+              {availabilityText}
+            </span>
           </div>
+        </div>
 
-          {/* Hairline Divider */}
-          <div className="footer-hairline" />
-
-          {/* Bottom Bar: Telepractice availability & Copyright */}
-          <div className="footer-bottom-bar">
-            <div className="footer-bottom-meta">
-              <span className="footer-availability-chip">
-                <span className="live-dot" />
-                {availabilityText || "Monday – Saturday • Flexible Timings"}
-              </span>
-              <span className="footer-telepractice-tag">Virtual Telepractice Worldwide</span>
-            </div>
-
-            <div className="footer-copy-text">
-              © {new Date().getFullYear()} Speech Connect. All clinical rights reserved.
-            </div>
-          </div>
+        <div className="section-wrap footer-bottom">
+          <span>© {new Date().getFullYear()} Speech Connect. All rights reserved.</span>
+          <span>Online telepractice, worldwide</span>
         </div>
       </footer>
 
-      {/* Mobile Sticky Quick Action Bar */}
-      <aside className="mobile-sticky-dock" aria-label="Quick mobile actions">
-        <button
-          className="dock-book-btn"
-          type="button"
-          onClick={() => changeView("appointment")}
-        >
-          Book Consultation
-        </button>
-        <a
-          className="dock-whatsapp-btn"
-          href={whatsappLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Direct WhatsApp message"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.031 2c-5.518 0-10 4.475-10 9.993a9.96 9.96 0 0 0 1.543 5.342L2 22l4.814-1.528a9.957 9.957 0 0 0 5.217 1.487h.004c5.518 0 10-4.475 10-9.993 0-2.67-1.04-5.18-2.929-7.069A9.927 9.927 0 0 0 12.031 2zm0 18.286c-1.59 0-3.14-.424-4.502-1.23l-.323-.192-3.342 1.06 1.085-3.256-.21-.334a8.287 8.287 0 0 1-1.271-4.341c0-4.566 3.719-8.28 8.29-8.28a8.243 8.243 0 0 1 5.867 2.43 8.257 8.257 0 0 1 2.428 5.86c0 4.567-3.719 8.28-8.29 8.28zm4.542-6.195c-.249-.125-1.472-.726-1.7-.809-.228-.083-.394-.125-.56.125-.166.249-.643.809-.788.975-.145.166-.29.187-.539.062a6.788 6.788 0 0 1-2.001-1.234 7.494 7.494 0 0 1-1.385-1.724c-.145-.249-.015-.384.11-.508.112-.112.249-.29.373-.435.125-.145.166-.249.249-.415.083-.166.041-.311-.021-.435-.062-.125-.56-1.349-.768-1.847-.202-.485-.407-.419-.56-.427l-.477-.008c-.166 0-.435.062-.663.311-.228.249-.871.851-.871 2.075s.892 2.407 1.016 2.573c.125.166 1.754 2.678 4.249 3.755.594.256 1.058.409 1.42.524.597.19 1.14.163 1.569.099.479-.071 1.472-.602 1.68-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.291z" />
-          </svg>
-          <span>WhatsApp</span>
-        </a>
-      </aside>
+      {/* Mobile sticky quick actions (hidden on the booking page) */}
+      {activeView !== "appointment" && (
+        <aside className="mobile-sticky-dock" aria-label="Quick actions">
+          <button
+            className="dock-book-btn"
+            type="button"
+            onClick={() => changeView("appointment")}
+          >
+            Book a consultation
+          </button>
+          <a
+            className="dock-whatsapp-btn"
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Message on WhatsApp"
+          >
+            <Icon name="whatsapp" size={20} />
+            <span>WhatsApp</span>
+          </a>
+        </aside>
+      )}
 
       {/* Toast Notifications */}
       <div className="toast-container" aria-live="polite">
