@@ -79,6 +79,7 @@
   --blob-sage: #dfeadf;
   --blob-peach: #f8e2d4;
   --path-dots: rgba(63, 111, 91, 0.35);
+  --path-dots-connector: rgba(63, 111, 91, 0.48);
 
   /* Channel colours */
   --wa-tint: rgba(37, 211, 102, 0.09);
@@ -202,6 +203,7 @@
   --blob-sage: rgba(155, 200, 178, 0.1);
   --blob-peach: rgba(233, 168, 138, 0.08);
   --path-dots: rgba(155, 200, 178, 0.35);
+  --path-dots-connector: rgba(155, 200, 178, 0.52);
 
   --wa-tint: rgba(37, 211, 102, 0.12);
   --wa-tint-hover: rgba(37, 211, 102, 0.22);
@@ -1128,7 +1130,18 @@ img {
   width: 72px;
   height: 72px;
   border-radius: 50%;
+  position: relative;
+  z-index: 2;
   box-shadow: 0 0 0 8px var(--bg-primary), var(--shadow-sm);
+}
+
+.step-circle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--bg-surface);
+  z-index: -1;
 }
 
 .step-num {
@@ -2703,22 +2716,17 @@ img {
   }
 
   .steps-list {
+    --step-circle-size: 72px;
+    --step-gap: 28px;
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: var(--step-gap);
     max-width: 520px;
     margin: 0 auto;
-  }
-
-  .steps-list::before {
-    content: "";
-    position: absolute;
-    top: 36px;
-    bottom: 36px;
-    left: 35px;
-    border-left: 2.5px dotted var(--path-dots);
+    position: relative;
   }
 
   .step {
+    position: relative;
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
@@ -2731,7 +2739,31 @@ img {
   }
 
   .step-circle {
+    width: var(--step-circle-size);
+    height: var(--step-circle-size);
     flex-shrink: 0;
+    box-shadow: 0 0 0 6px var(--bg-primary), var(--shadow-sm);
+  }
+
+  /* Elegant connector dots between steps on tablet & mobile */
+  .step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--step-circle-size) / 2);
+    top: calc(var(--step-circle-size) / 2);
+    bottom: calc(-1 * (var(--step-gap) + (var(--step-circle-size) / 2)));
+    width: 4px;
+    transform: translateX(-50%);
+    background-image: radial-gradient(
+      circle,
+      var(--path-dots-connector) 1.8px,
+      transparent 2.1px
+    );
+    background-size: 4px 13px;
+    background-repeat: repeat-y;
+    background-position: center top;
+    z-index: 1;
+    pointer-events: none;
   }
 
   .who-grid {
@@ -3229,14 +3261,10 @@ img {
 
   /* Scaled timeline circles give maximum room to text */
   .steps-list {
-    gap: 24px;
+    --step-circle-size: 54px;
+    --step-gap: 24px;
+    gap: var(--step-gap);
     padding-left: 2px;
-  }
-
-  .steps-list::before {
-    left: 27px;
-    top: 27px;
-    bottom: 27px;
   }
 
   .step {
@@ -3244,9 +3272,19 @@ img {
   }
 
   .step-circle {
-    width: 54px;
-    height: 54px;
+    width: var(--step-circle-size);
+    height: var(--step-circle-size);
     box-shadow: 0 0 0 5px var(--bg-primary), var(--shadow-sm);
+  }
+
+  .step:not(:last-child)::after {
+    width: 3.5px;
+    background-image: radial-gradient(
+      circle,
+      var(--path-dots-connector) 1.6px,
+      transparent 1.85px
+    );
+    background-size: 3.5px 11px;
   }
 
   .step-num {
