@@ -741,7 +741,6 @@ function App() {
         {activeView === "home" && (
           <>
             <section className="hero-section" id="home">
-              <Blob variant={1} className="hero-bg-blob" />
               <div className="section-wrap hero-grid">
                 <div className="hero-text-col">
                   <span className="eyebrow reveal">
@@ -780,7 +779,6 @@ function App() {
                 </div>
 
                 <div className="hero-visual reveal">
-                  <Blob variant={0} className="hero-photo-blob" />
                   <Blob variant={2} className="hero-accent-blob" />
                   <div className="blob-frame hero-photo-frame">
                     <img
