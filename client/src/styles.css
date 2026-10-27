@@ -66,7 +66,7 @@
 
   /* Glass & overlays */
   --header-bg: rgba(247, 245, 240, 0.82);
-  --drawer-bg: rgba(247, 245, 240, 0.98);
+  --drawer-bg: #f7f5f0; /* opaque: the blurred page behind would ghost through */
   --dock-bg: rgba(255, 255, 255, 0.94);
   --toast-bg: rgba(255, 255, 255, 0.98);
   --glass-bg: rgba(255, 255, 255, 0.9);
@@ -79,7 +79,19 @@
   --blob-sage: #dfeadf;
   --blob-peach: #f8e2d4;
   --path-dots: rgba(63, 111, 91, 0.35);
-  --path-dots-connector: rgba(63, 111, 91, 0.48);
+  --glow-sage: rgba(155, 200, 178, 0.34);
+  --glow-peach: rgba(233, 168, 138, 0.2);
+  --ripple: rgba(63, 111, 91, 0.26);
+  --outline-line: rgba(63, 111, 91, 0.32);
+
+  /* Statement band (deep sage, light text in both themes) */
+  --cta-bg: linear-gradient(135deg, #3f6f5b 0%, #2b5242 100%);
+  --cta-text: #ffffff;
+  --cta-text-muted: rgba(255, 255, 255, 0.85);
+  --cta-accent: #f8d3bf;
+  --cta-line: rgba(255, 255, 255, 0.1);
+  --cta-btn-bg: #f7f5f0;
+  --cta-btn-text: #234537;
 
   /* Channel colours */
   --wa-tint: rgba(37, 211, 102, 0.09);
@@ -132,6 +144,8 @@
   --header-height: 76px;
   --header-height-compact: 62px;
   --section-space: clamp(64px, 9vw, 112px);
+  /* Room for the notch on phones held sideways (viewport-fit=cover) */
+  --safe-x: calc(env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
 
   /* Motion */
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
@@ -194,7 +208,7 @@
   --accent-ring-strong: rgba(155, 200, 178, 0.3);
 
   --header-bg: rgba(18, 26, 23, 0.82);
-  --drawer-bg: rgba(18, 26, 23, 0.98);
+  --drawer-bg: #121a17;
   --dock-bg: rgba(24, 35, 31, 0.94);
   --toast-bg: rgba(31, 44, 39, 0.98);
   --glass-bg: rgba(24, 35, 31, 0.9);
@@ -203,7 +217,13 @@
   --blob-sage: rgba(155, 200, 178, 0.1);
   --blob-peach: rgba(233, 168, 138, 0.08);
   --path-dots: rgba(155, 200, 178, 0.35);
-  --path-dots-connector: rgba(155, 200, 178, 0.52);
+  --glow-sage: rgba(155, 200, 178, 0.1);
+  --glow-peach: rgba(233, 168, 138, 0.06);
+  --ripple: rgba(155, 200, 178, 0.24);
+  --outline-line: rgba(155, 200, 178, 0.3);
+
+  --cta-bg: linear-gradient(135deg, #2f5a49 0%, #1d382e 100%);
+  --cta-line: rgba(255, 255, 255, 0.07);
 
   --wa-tint: rgba(37, 211, 102, 0.12);
   --wa-tint-hover: rgba(37, 211, 102, 0.22);
@@ -240,11 +260,14 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* clip, unlike hidden, doesn't make a scroll container, so the sticky header works */
+  overflow-x: clip;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-x: clip;
   font-size: var(--text-base);
   line-height: var(--leading-body);
   background-color: var(--bg-primary);
@@ -254,6 +277,8 @@ a {
   color: inherit;
   text-decoration: none;
   transition: color var(--transition-fast);
+  /* Links get their own :active feedback; drop the grey tap flash on mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 button {
@@ -335,6 +360,21 @@ img {
   line-height: var(--leading-snug);
 }
 
+/* Signature accent: a soft italic phrase inside display headings */
+.hero-heading em,
+.page-main-heading em,
+.section-title em,
+.cta-band h2 em,
+.amp {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.amp {
+  padding: 0 0.04em;
+}
+
 .lead {
   font-size: clamp(1.06rem, 1.4vw, 1.2rem);
   color: var(--color-text-secondary);
@@ -375,7 +415,7 @@ img {
 }
 
 .section-wrap {
-  width: min(var(--max-width), calc(100% - 48px));
+  width: min(var(--max-width), calc(100% - 48px - var(--safe-x)));
   margin: 0 auto;
 }
 
@@ -415,7 +455,6 @@ img {
   justify-content: center;
   gap: 10px;
   min-height: 52px;
-  max-height: 56px;
   padding: 0 26px;
   border-radius: var(--radius-pill);
   font-size: 0.98rem;
@@ -515,10 +554,10 @@ img {
   box-shadow: var(--shadow-sm);
 }
 
-.tint-0 { background-color: var(--tint-sage); --ink: var(--ink-sage); }
-.tint-1 { background-color: var(--tint-peach); --ink: var(--ink-peach); }
-.tint-2 { background-color: var(--tint-sky); --ink: var(--ink-sky); }
-.tint-3 { background-color: var(--tint-lilac); --ink: var(--ink-lilac); }
+.tint-0 { background-color: var(--tint-sage); --tint: var(--tint-sage); --ink: var(--ink-sage); }
+.tint-1 { background-color: var(--tint-peach); --tint: var(--tint-peach); --ink: var(--ink-peach); }
+.tint-2 { background-color: var(--tint-sky); --tint: var(--tint-sky); --ink: var(--ink-sky); }
+.tint-3 { background-color: var(--tint-lilac); --tint: var(--tint-lilac); --ink: var(--ink-lilac); }
 
 .icon-badge {
   display: inline-flex;
@@ -604,13 +643,35 @@ img {
   box-shadow: var(--shadow-sm);
 }
 
+/* Reading progress line, driven by scroll where the browser supports it */
+@supports (animation-timeline: scroll()) {
+  .topbar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent-light), var(--color-warm));
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    animation: scrollProgress linear both;
+    animation-timeline: scroll(root);
+    pointer-events: none;
+  }
+
+  @keyframes scrollProgress {
+    to { transform: scaleX(1); }
+  }
+}
+
 .topbar-inner {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 16px;
   height: var(--header-height);
-  width: min(var(--max-width), calc(100% - 48px));
+  width: min(var(--max-width), calc(100% - 48px - var(--safe-x)));
   margin: 0 auto;
   transition: height var(--transition-smooth);
 }
@@ -867,27 +928,76 @@ img {
   position: relative;
   padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 6vw, 72px);
   overflow: hidden;
+  --glow-sage-at: 78% 34%;
+  --glow-peach-at: 0% 52%;
 }
 
-.hero-bg-blob,
-.hero-photo-blob {
-  display: none !important;
+/* Ambient light: a sage glow behind the portrait, a warm one opposite.
+   Both fade out well inside the section so its edges stay seamless. */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(40% 50% at var(--glow-sage-at), var(--glow-sage), transparent 72%),
+    radial-gradient(28% 40% at var(--glow-peach-at), var(--glow-peach), transparent 72%);
+  pointer-events: none;
 }
 
-.hero-photo-frame {
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 16px 40px -10px rgba(34, 56, 44, 0.16);
-  background-color: var(--bg-subtle);
+.hero-text-col .eyebrow-dot {
+  animation: livePulse 2.6s ease-out infinite;
 }
 
-.hero-photo-frame .blob-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
-  border-radius: 50%;
+@keyframes livePulse {
+  0% { box-shadow: 0 0 0 0 var(--accent-ring-strong); }
+  70%,
+  100% { box-shadow: 0 0 0 7px transparent; }
+}
+
+/* Voice ripples: soft rings that spread out from the portrait like sound */
+.voice-ripples {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.voice-ripples span {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--ripple);
+  border-radius: var(--blob-shape);
+  opacity: 0;
+  animation: voiceRipple 7.5s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+
+.voice-ripples span:nth-child(2) {
+  animation-delay: -2.5s;
+}
+
+.voice-ripples span:nth-child(3) {
+  animation-delay: -5s;
+}
+
+@keyframes voiceRipple {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+.hero-bg-blob {
+  width: min(900px, 90vw);
+  top: -22%;
+  right: -18%;
+  opacity: 0.7;
 }
 
 .hero-grid {
@@ -954,12 +1064,73 @@ img {
   to { opacity: 1; }
 }
 
+/* Hero photos: a native scroll-snap track clipped to the blob frame, so
+   swiping has real touch physics and one swipe moves exactly one photo */
+.hero-photo-frame {
+  isolation: isolate; /* keeps Safari clipping the scrolling photos to the curve */
+}
+
+.hero-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.hero-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* A box-shadow ring would be clipped by the frame, so draw it inside */
+.hero-track:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: -3px;
+  box-shadow: none;
+}
+
+.hero-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* One gentle nudge on touch screens shows there is more to swipe */
+@media (hover: none) and (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .hero-track.swipe-hint .hero-slide {
+    animation: swipeHint 1.4s var(--ease-calm) 1.6s both;
+  }
+}
+
+@keyframes swipeHint {
+  0%,
+  100% { transform: none; }
+  38% { transform: translateX(-16%); }
+}
+
+.hero-photo-blob {
+  --blob-fill: var(--blob-sage);
+  width: 118%;
+  top: -9%;
+  left: -9%;
+}
+
 .hero-accent-blob {
   --blob-fill: var(--blob-peach);
-  width: 44%;
-  bottom: -4%;
-  left: -8%;
-  opacity: 0.85;
+  width: 38%;
+  bottom: -8%;
+  left: -12%;
 }
 
 .floating-card {
@@ -1011,6 +1182,11 @@ img {
   right: -6%;
 }
 
+/* Cards over the photos are labels, not controls: let swipes pass through */
+.hero-visual .floating-card {
+  pointer-events: none;
+}
+
 .photo-dots {
   position: absolute;
   z-index: 2;
@@ -1028,18 +1204,23 @@ img {
   position: relative;
 }
 
+/* Small dot inside a full 44px tap target; the current photo stretches into a pill */
 .photo-dot::after {
   content: "";
   position: absolute;
-  inset: 17px;
-  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-pill);
   background-color: var(--border-accent);
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transform: translate(-50%, -50%);
+  transition: width var(--transition-smooth), background-color var(--transition-fast);
 }
 
 .photo-dot.active::after {
-  background-color: var(--color-primary);
-  transform: scale(1.2);
+  width: 26px;
+  background-color: var(--color-accent);
 }
 
 /* ==========================================================================
@@ -1057,6 +1238,7 @@ img {
 }
 
 .highlight-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -1068,6 +1250,35 @@ img {
 .highlight-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
+}
+
+/* Editorial index numeral, purely decorative */
+.card-num {
+  position: absolute;
+  top: 20px;
+  right: 26px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variation-settings: var(--display-soft);
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.28;
+  transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.highlight-card .icon-badge {
+  transition: transform var(--transition-smooth);
+}
+
+.highlight-card:hover .card-num {
+  opacity: 0.5;
+  transform: translateY(-2px);
+}
+
+.highlight-card:hover .icon-badge {
+  transform: rotate(-8deg) scale(1.06);
 }
 
 .highlight-card p {
@@ -1130,18 +1341,11 @@ img {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  position: relative;
-  z-index: 2;
   box-shadow: 0 0 0 8px var(--bg-primary), var(--shadow-sm);
-}
-
-.step-circle::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-color: var(--bg-surface);
-  z-index: -1;
+  /* Positioned and opaque (tint layered over the page colour) so the
+     connector path always passes behind the number, in both themes */
+  position: relative;
+  background: linear-gradient(var(--tint), var(--tint)) var(--bg-primary);
 }
 
 .step-num {
@@ -1179,17 +1383,34 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  padding: clamp(32px, 5vw, 56px);
+  padding: clamp(36px, 5.5vw, 64px);
   border-radius: var(--radius-xl);
-  background-color: var(--tint-sage);
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  box-shadow: var(--shadow-lg);
+  --focus-ring: 0 0 0 3px rgba(255, 255, 255, 0.75);
+}
+
+/* Ripple rings from the corner, echoing the hero's voice motif */
+.cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-radial-gradient(
+    circle at 100% 0%,
+    transparent 0 44px,
+    var(--cta-line) 44px 45.5px
+  );
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0 25%, transparent 75%);
+  mask-image: radial-gradient(circle at 100% 0%, #000 0 25%, transparent 75%);
+  pointer-events: none;
 }
 
 .cta-blob {
-  --blob-fill: var(--blob-peach);
-  width: 340px;
-  right: -80px;
-  top: -120px;
-  opacity: 0.8;
+  --blob-fill: rgba(255, 255, 255, 0.06);
+  width: 300px;
+  left: -110px;
+  bottom: -170px;
 }
 
 .cta-band-text,
@@ -1199,14 +1420,50 @@ img {
 }
 
 .cta-band h2 {
-  font-size: var(--text-xl);
-  line-height: var(--leading-snug);
-  margin-bottom: 8px;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  line-height: 1.2;
+  margin-bottom: 10px;
+  color: var(--cta-text);
+}
+
+.cta-band h2 em {
+  color: var(--cta-accent);
 }
 
 .cta-band p {
-  color: var(--color-text-secondary);
+  color: var(--cta-text-muted);
   max-width: 48ch;
+}
+
+.cta-band .primary-btn {
+  background-color: var(--cta-btn-bg);
+  color: var(--cta-btn-text);
+}
+
+.cta-band .primary-btn:hover {
+  background-color: #ffffff;
+}
+
+.cta-band .secondary-btn {
+  background-color: transparent;
+  color: var(--cta-text);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.5);
+}
+
+.cta-band .secondary-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--cta-text);
+}
+
+.cta-band .whatsapp-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--cta-text);
+}
+
+.cta-band .whatsapp-btn:hover {
+  background-color: var(--wa-solid);
+  border-color: var(--wa-solid);
 }
 
 .cta-band-actions,
@@ -1246,9 +1503,22 @@ img {
 
 .about-photo-blob {
   --blob-fill: var(--blob-sage);
-  width: 120%;
-  top: -10%;
-  left: -10%;
+  width: 62%;
+  right: -16%;
+  bottom: -10%;
+}
+
+/* Line-art echo of the photo's own shape, slightly turned */
+.about-visual::before,
+.meet-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: 1.5px solid var(--outline-line);
+  border-radius: 46% 54% 42% 58% / 40% 44% 56% 60%;
+  transform: translate(-4%, -3%) rotate(-7deg) scale(1.04);
+  pointer-events: none;
 }
 
 .about-photo-frame {
@@ -1575,6 +1845,8 @@ img {
   margin-top: 6px;
 }
 
+/* Basis auto, not a fixed length: when .form-actions stacks into a column
+   on phones, a length basis becomes the button's height (a giant oval) */
 .submit-btn {
   min-width: 240px;
   flex: 1 1 auto;
@@ -2160,9 +2432,14 @@ img {
 
 .meet-blob {
   --blob-fill: var(--blob-peach);
-  width: 118%;
-  top: -8%;
-  left: -9%;
+  width: 58%;
+  right: -14%;
+  bottom: -8%;
+}
+
+.meet-visual::before {
+  border-radius: 52% 48% 44% 56% / 42% 46% 54% 58%;
+  transform: translate(-5%, -2%) rotate(8deg) scale(1.04);
 }
 
 .meet-photo-frame {
@@ -2299,6 +2576,7 @@ img {
   line-height: 1.45;
   cursor: pointer;
   list-style: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -2394,6 +2672,23 @@ img {
   .float-b {
     animation: none;
   }
+
+  /* Keep the ripples as a still, layered echo */
+  .voice-ripples span {
+    animation: none;
+    opacity: 0.8;
+    transform: scale(1.07) rotate(3deg);
+  }
+
+  .voice-ripples span:nth-child(2) {
+    opacity: 0.5;
+    transform: scale(1.15) rotate(6deg);
+  }
+
+  .voice-ripples span:nth-child(3) {
+    opacity: 0.25;
+    transform: scale(1.23) rotate(9deg);
+  }
 }
 
 /* ==========================================================================
@@ -2462,6 +2757,12 @@ img {
   .hero-visual {
     max-width: 440px;
     margin: 16px auto 0;
+  }
+
+  /* Stacked hero: glow sits behind the portrait below the text */
+  .hero-section {
+    --glow-sage-at: 50% 74%;
+    --glow-peach-at: 0% 30%;
   }
 
   .highlights-grid {
@@ -2534,7 +2835,7 @@ img {
 
   .topbar-inner {
     grid-template-columns: 1fr auto;
-    width: calc(100% - 32px);
+    width: calc(100% - 32px - var(--safe-x));
   }
 
   .desktop-nav {
@@ -2545,14 +2846,12 @@ img {
     display: flex;
   }
 
-  /* Scrim backdrop overlay */
+  /* Scrim backdrop overlay: covers the page but sits under the header,
+     so the menu and its toggle stay on top */
   .mobile-drawer-scrim {
     display: block;
     position: fixed;
-    top: var(--header-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: var(--scrim);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -2561,10 +2860,6 @@ img {
     visibility: hidden;
     pointer-events: none;
     transition: opacity var(--transition-smooth), visibility 0s linear 300ms;
-  }
-
-  .topbar.is-scrolled .mobile-drawer-scrim {
-    top: var(--header-height-compact);
   }
 
   .mobile-drawer-scrim.scrim-open {
@@ -2586,7 +2881,8 @@ img {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+    padding: 16px calc(20px + env(safe-area-inset-right, 0px))
+      calc(24px + env(safe-area-inset-bottom, 0px)) calc(20px + env(safe-area-inset-left, 0px));
     background: var(--drawer-bg);
     box-shadow: var(--shadow-lg);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
@@ -2626,88 +2922,20 @@ img {
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     box-shadow: var(--dock-shadow), var(--shadow-md);
+    transition: transform var(--transition-smooth), opacity var(--transition-smooth);
+  }
+
+  /* Slid away while the hero's own buttons are on screen */
+  .mobile-sticky-dock.is-tucked {
+    transform: translate(-50%, calc(100% + 28px));
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--transition-smooth), opacity var(--transition-smooth),
+      visibility 0s linear 360ms;
   }
 
   .site-footer {
     padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
-  }
-
-  /* Mobile Hero: Heading and Eyebrow ON TOP, followed by round visual */
-  .hero-section {
-    padding: clamp(14px, 3.5vw, 24px) 0 clamp(24px, 4.5vw, 36px);
-  }
-
-  .hero-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    text-align: center;
-  }
-
-  .hero-text-col {
-    display: contents;
-  }
-
-  /* 1. Eyebrow badge ON TOP */
-  .hero-text-col .eyebrow {
-    order: 1;
-    margin: 0 auto;
-    align-self: center;
-  }
-
-  /* 2. Headline ON TOP */
-  .hero-text-col .hero-heading {
-    order: 2;
-    text-align: center;
-    align-self: center;
-    font-size: clamp(1.65rem, 6.8vw, 2.2rem);
-    line-height: 1.2;
-    margin-bottom: 2px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* 3. Round photo visual right below heading */
-  .hero-visual {
-    order: 3;
-    width: 100%;
-    max-width: clamp(230px, 68vw, 275px);
-    margin: 8px auto 16px;
-    justify-self: center;
-  }
-
-  /* 4. Subtitle / lead text */
-  .hero-text-col .lead {
-    order: 4;
-    text-align: center;
-    align-self: center;
-    font-size: 0.98rem;
-    line-height: 1.55;
-    max-width: 520px;
-    margin: 0 auto 4px;
-  }
-
-  /* 5. CTA action buttons */
-  .hero-text-col .hero-cta-group {
-    order: 5;
-    width: 100%;
-    max-width: 440px;
-    margin: 8px auto 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  /* 6. Availability note */
-  .hero-text-col .hero-note {
-    order: 6;
-    margin: 4px auto 0;
-    align-self: center;
-    justify-content: center;
-    text-align: center;
   }
 
   /* Step timeline on tablet */
@@ -2716,17 +2944,22 @@ img {
   }
 
   .steps-list {
-    --step-circle-size: 72px;
-    --step-gap: 28px;
     grid-template-columns: 1fr;
-    gap: var(--step-gap);
+    gap: 28px;
     max-width: 520px;
     margin: 0 auto;
-    position: relative;
+  }
+
+  .steps-list::before {
+    content: "";
+    position: absolute;
+    top: 36px;
+    bottom: 36px;
+    left: 35px;
+    border-left: 2.5px dotted var(--path-dots);
   }
 
   .step {
-    position: relative;
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
@@ -2739,31 +2972,7 @@ img {
   }
 
   .step-circle {
-    width: var(--step-circle-size);
-    height: var(--step-circle-size);
     flex-shrink: 0;
-    box-shadow: 0 0 0 6px var(--bg-primary), var(--shadow-sm);
-  }
-
-  /* Elegant connector dots between steps on tablet & mobile */
-  .step:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: calc(var(--step-circle-size) / 2);
-    top: calc(var(--step-circle-size) / 2);
-    bottom: calc(-1 * (var(--step-gap) + (var(--step-circle-size) / 2)));
-    width: 4px;
-    transform: translateX(-50%);
-    background-image: radial-gradient(
-      circle,
-      var(--path-dots-connector) 1.8px,
-      transparent 2.1px
-    );
-    background-size: 4px 13px;
-    background-repeat: repeat-y;
-    background-position: center top;
-    z-index: 1;
-    pointer-events: none;
   }
 
   .who-grid {
@@ -2787,7 +2996,7 @@ img {
   }
 
   .section-wrap {
-    width: calc(100% - 32px);
+    width: calc(100% - 32px - var(--safe-x));
   }
 
   /* Prevent any decorative overflow causing horizontal jitter */
@@ -2801,23 +3010,31 @@ img {
     overflow-x: clip;
   }
 
-  .hero-bg-blob,
-  .hero-photo-blob {
-    display: none !important;
+  .hero-bg-blob {
+    display: none;
   }
 
-  .meet-blob,
-  .about-photo-blob {
+  .hero-photo-blob {
     width: 104%;
     top: -2%;
     left: -2%;
     opacity: 0.85;
   }
 
+  .meet-blob,
+  .about-photo-blob {
+    right: -6%;
+    bottom: -6%;
+  }
+
+  .about-visual::before,
+  .meet-visual::before {
+    transform: translate(-2%, -2%) rotate(-5deg) scale(1.03);
+  }
+
   .hero-accent-blob {
-    left: -6%;
-    bottom: -4%;
-    width: 44%;
+    left: -2%;
+    bottom: -2%;
   }
 
   /* Topbar brand branding */
@@ -2834,24 +3051,43 @@ img {
     font-size: 0.72rem;
   }
 
-  /* Hero section */
+  /* Hero: eyebrow and heading first, then the swipeable photo, so the
+     photo lands on the first screen; the copy and buttons follow, centred */
   .hero-section {
-    padding: 12px 0 24px;
+    padding-top: 20px;
+    --glow-sage-at: 50% 28%;
+    --glow-peach-at: 0% 6%;
   }
 
-  .hero-heading {
-    font-size: clamp(1.55rem, 6.4vw, 1.95rem);
-    line-height: 1.18;
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
     text-align: center;
   }
 
   .hero-text-col {
-    gap: 12px;
+    display: contents;
   }
 
+  .hero-text-col .eyebrow { order: 1; }
+  .hero-heading { order: 2; }
+  .hero-visual { order: 3; }
+  .hero-text-col .lead { order: 4; }
+  .hero-cta-group { order: 5; }
+  .hero-note { order: 6; }
+
+  .hero-heading {
+    font-size: clamp(1.85rem, 8vw, 2.5rem);
+    line-height: 1.2;
+  }
+
+  /* Sized so heading + photo + dots fit above the fold, even on short phones */
   .hero-visual {
-    max-width: clamp(225px, 66vw, 265px);
-    margin: 8px auto 16px;
+    width: min(76vw, 300px, 42vh);
+    width: min(76vw, 300px, 42svh);
+    margin: 6px auto 30px;
   }
 
   .hero-cta-group {
@@ -2861,26 +3097,24 @@ img {
 
   .hero-cta-group > * {
     flex: 1 1 100%;
-    min-height: 48px;
+    min-height: 50px;
   }
 
   .hero-note {
-    align-items: center;
     justify-content: center;
-    text-align: center;
     line-height: 1.45;
   }
 
   .hero-note svg {
     flex-shrink: 0;
-    margin-top: 2px;
   }
 
   .photo-dots {
-    bottom: -26px;
+    bottom: -38px;
   }
 
-  /* Compact floating cards that frame the circular portrait */
+  /* Compact floating cards that hang off the photo's edges rather than
+     covering the faces in it */
   .floating-card {
     padding: 6px 12px 6px 6px;
     gap: 8px;
@@ -2901,13 +3135,13 @@ img {
   }
 
   .float-a {
-    left: -4%;
     top: 2%;
+    left: -13%;
   }
 
   .float-b {
-    right: -4%;
-    bottom: 4%;
+    right: -13%;
+    bottom: 7%;
   }
 
   /* Swipeable highlight cards */
@@ -3128,10 +3362,7 @@ img {
   }
 
   .form-actions > * {
-    width: 100% !important;
-    min-height: 52px !important;
-    height: auto !important;
-    flex: none !important;
+    flex: none;
   }
 
   .aside-card {
@@ -3261,10 +3492,14 @@ img {
 
   /* Scaled timeline circles give maximum room to text */
   .steps-list {
-    --step-circle-size: 54px;
-    --step-gap: 24px;
-    gap: var(--step-gap);
+    gap: 24px;
     padding-left: 2px;
+  }
+
+  .steps-list::before {
+    left: 27px;
+    top: 27px;
+    bottom: 27px;
   }
 
   .step {
@@ -3272,19 +3507,9 @@ img {
   }
 
   .step-circle {
-    width: var(--step-circle-size);
-    height: var(--step-circle-size);
+    width: 54px;
+    height: 54px;
     box-shadow: 0 0 0 5px var(--bg-primary), var(--shadow-sm);
-  }
-
-  .step:not(:last-child)::after {
-    width: 3.5px;
-    background-image: radial-gradient(
-      circle,
-      var(--path-dots-connector) 1.6px,
-      transparent 1.85px
-    );
-    background-size: 3.5px 11px;
   }
 
   .step-num {
@@ -3328,16 +3553,6 @@ img {
 
   .brand-sub {
     font-size: 0.68rem;
-  }
-
-  .float-a {
-    left: 0;
-    top: 0;
-  }
-
-  .float-b {
-    right: 0;
-    bottom: 2%;
   }
 
   .floating-card {
@@ -3391,11 +3606,11 @@ img {
 /* ---- Ultra-Compact Phones (<= 350px) ---- */
 @media (max-width: 350px) {
   .section-wrap {
-    width: calc(100% - 20px);
+    width: calc(100% - 20px - var(--safe-x));
   }
 
   .topbar-inner {
-    width: calc(100% - 20px);
+    width: calc(100% - 20px - var(--safe-x));
   }
 
   .brand-sub {
@@ -3406,6 +3621,12 @@ img {
     font-size: 0.96rem;
   }
 
+  /* Keep the credentials badge on one line */
+  .hero-text-col .eyebrow {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+  }
+
   .dock-book-btn {
     font-size: 0.8rem;
     padding: 0 8px;
@@ -3414,6 +3635,48 @@ img {
   .dock-whatsapp-btn {
     font-size: 0.8rem;
     padding: 0 8px;
+  }
+}
+
+/* ---- Phones held sideways: side-by-side hero, photo sized to the short screen ---- */
+@media (min-width: 641px) and (max-width: 960px) and (max-height: 520px) and (orientation: landscape) {
+  .hero-section {
+    --glow-sage-at: 78% 34%;
+    --glow-peach-at: 0% 52%;
+  }
+
+  /* Photo level with the heading, not centred on the long text column */
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .hero-visual {
+    max-width: min(300px, 62vh);
+    margin: 12px auto 0;
+  }
+
+  /* A slim dock in the corner: a full-width bar would cover a fifth of
+     the screen at this height */
+  .mobile-sticky-dock {
+    left: auto;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    width: auto;
+    max-width: none;
+    padding: 6px;
+    transform: none;
+  }
+
+  .mobile-sticky-dock.is-tucked {
+    transform: translateY(calc(100% + 28px));
+  }
+
+  .dock-book-btn,
+  .dock-whatsapp-btn {
+    min-height: 40px;
+    padding: 0 16px;
+    font-size: 0.88rem;
   }
 }
 
