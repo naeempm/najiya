@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 
 const getApiUrl = () => {
@@ -35,7 +35,21 @@ function readSavedTheme() {
   }
 }
 
-const CLINIC_LOGO_URL ="https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg";
+// Cloudinary serves a resized, auto-format (WebP/AVIF) copy when a
+// transformation sits before the version segment. Other URLs pass through.
+function cdnImage(url, width) {
+  if (typeof url !== "string") return url;
+  return url.replace(
+    /(res\.cloudinary\.com\/[^/]+\/image\/upload\/)(?=v\d+\/)/,
+    `$1f_auto,q_auto,c_limit,w_${width}/`
+  );
+}
+
+// Shown at 44px, so a small copy instead of the 1254px original
+const CLINIC_LOGO_URL = cdnImage(
+  "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg",
+  144
+);
 
 const DEFAULT_CONTENT = {
   therapist: {
@@ -283,6 +297,19 @@ const EMPTY_FORM = {
   concerns: "",
 };
 
+// Sets "&" in the display italic; works on admin-edited titles too
+function withAmpersand(text = "") {
+  return text.split(/(&)/).map((part, i) =>
+    part === "&" ? (
+      <span className="amp" key={i}>
+        &amp;
+      </span>
+    ) : (
+      part
+    )
+  );
+}
+
 function splitConcerns(text) {
   return text
     .split(",")
@@ -310,6 +337,10 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [expandedServices, setExpandedServices] = useState(() => new Set());
+  const [swipeHintDone, setSwipeHintDone] = useState(false);
+  const [heroCtaInView, setHeroCtaInView] = useState(true);
+  const heroTrackRef = useRef(null);
+  const heroCtaRef = useRef(null);
 
   // Compact header once the page scrolls
   useEffect(() => {
@@ -318,6 +349,45 @@ function App() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // While the mobile menu is open: hold the page still, close on Escape,
+  // and close if the window grows past the mobile breakpoint
+  useEffect(() => {
+    if (!menuOpen) return;
+    const root = document.documentElement;
+    root.style.overflow = "hidden";
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    const desktop = window.matchMedia("(min-width: 861px)");
+    const onDesktop = (e) => {
+      if (e.matches) setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", onDesktop);
+    return () => {
+      root.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", onDesktop);
+    };
+  }, [menuOpen]);
+
+  // Tuck the mobile quick-action dock away while the hero's own buttons
+  // are on screen, so the same two actions never show twice
+  useEffect(() => {
+    const target = heroCtaRef.current;
+    if (activeView !== "home" || !target || !("IntersectionObserver" in window)) {
+      setHeroCtaInView(false);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroCtaInView(entry.isIntersecting),
+      // Buttons hidden under the sticky header don't count as on screen
+      { rootMargin: "-64px 0px 0px 0px" }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [activeView]);
 
   // Gentle fade-up reveal as sections enter the viewport. Content stays
   // visible when IntersectionObserver is missing or motion is reduced.
@@ -496,8 +566,27 @@ function App() {
   const availabilityText =
     content.availabilityText || DEFAULT_CONTENT.availabilityText;
 
-  // Hero photos change only when the visitor picks one (no auto-rotation)
-  const activeHeroPhoto = heroPhotos[heroIndex % heroPhotos.length];
+  // Hero photos change only when the visitor swipes or picks a dot (no
+  // auto-rotation). The track is a native scroll-snap carousel, so the
+  // scroll position is the source of truth and the dots follow it.
+  const activeHeroIndex = Math.min(heroIndex, heroPhotos.length - 1);
+
+  function handleHeroScroll(event) {
+    const track = event.currentTarget;
+    if (!track.clientWidth) return;
+    setHeroIndex(Math.round(track.scrollLeft / track.clientWidth));
+    setSwipeHintDone(true);
+  }
+
+  function goToHeroPhoto(index) {
+    const track = heroTrackRef.current;
+    if (!track) return;
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    track.scrollTo({
+      left: index * track.clientWidth,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }
 
   function showToast(message, type = "success") {
     const id = Date.now();
@@ -553,6 +642,8 @@ function App() {
     setStatus("");
     setSubmitted(false);
     setMenuOpen(false);
+    // The hero track remounts at its first photo, so the dots must too
+    setHeroIndex(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -736,6 +827,13 @@ function App() {
         </div>
       </header>
 
+      {/* Dims the page behind the mobile menu; tapping it closes the menu */}
+      <div
+        className={`mobile-drawer-scrim ${menuOpen ? "scrim-open" : ""}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
+
       <main className="main-content" id="main" tabIndex={-1}>
         {/* HOME VIEW */}
         {activeView === "home" && (
@@ -748,11 +846,11 @@ function App() {
                     {hero.badge}
                   </span>
 
-                  <h1 className="hero-heading reveal">{hero.title}</h1>
+                  <h1 className="hero-heading reveal">{withAmpersand(hero.title)}</h1>
 
                   <p className="lead reveal">{hero.description}</p>
 
-                  <div className="hero-cta-group reveal">
+                  <div className="hero-cta-group reveal" ref={heroCtaRef}>
                     <button
                       className="primary-btn"
                       type="button"
@@ -779,16 +877,35 @@ function App() {
                 </div>
 
                 <div className="hero-visual reveal">
+                  <span className="voice-ripples" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
                   <Blob variant={2} className="hero-accent-blob" />
                   <div className="blob-frame hero-photo-frame">
-                    <img
-                      key={activeHeroPhoto}
-                      src={activeHeroPhoto}
-                      alt={`${therapist.name}, speech-language pathologist, during an online session`}
-                      className="blob-photo"
-                      loading="eager"
-                      fetchPriority="high"
-                    />
+                    {/* Swipe on touch screens (one photo per swipe); the dots scroll it too */}
+                    <div
+                      ref={heroTrackRef}
+                      className={`hero-track ${heroPhotos.length > 1 && !swipeHintDone ? "swipe-hint" : ""}`}
+                      onScroll={handleHeroScroll}
+                      onPointerDown={() => setSwipeHintDone(true)}
+                      onAnimationEnd={(e) => {
+                        if (e.animationName === "swipeHint") setSwipeHintDone(true);
+                      }}
+                    >
+                      {heroPhotos.map((photo, index) => (
+                        <img
+                          key={photo}
+                          src={cdnImage(photo, 900)}
+                          alt={`${therapist.name}, speech-language pathologist, during an online session`}
+                          className="hero-slide"
+                          loading={index < 2 ? "eager" : "lazy"}
+                          fetchPriority={index === 0 ? "high" : "auto"}
+                          draggable={false}
+                        />
+                      ))}
+                    </div>
                   </div>
 
                   <div className="floating-card float-a">
@@ -816,10 +933,10 @@ function App() {
                         <button
                           key={photo}
                           type="button"
-                          className={`photo-dot ${index === heroIndex ? "active" : ""}`}
+                          className={`photo-dot ${index === activeHeroIndex ? "active" : ""}`}
                           aria-label={`Show photo ${index + 1}`}
-                          aria-pressed={index === heroIndex}
-                          onClick={() => setHeroIndex(index)}
+                          aria-pressed={index === activeHeroIndex}
+                          onClick={() => goToHeroPhoto(index)}
                         />
                       ))}
                     </div>
@@ -851,7 +968,7 @@ function App() {
                 <div className="section-head centered reveal">
                   <span className="eyebrow">Who we help</span>
                   <h2 className="section-title" id="who-title">
-                    Support for every stage of life
+                    Support for every <em>stage of life</em>
                   </h2>
                   <p className="lead">
                     Whether it is a toddler's first words or an adult relearning
@@ -894,7 +1011,7 @@ function App() {
                 <div className="section-head centered reveal">
                   <span className="eyebrow">Our clinical approach</span>
                   <h2 className="section-title" id="approach-title">
-                    Care designed around you
+                    Care designed <em>around you</em>
                   </h2>
                   <p className="lead">
                     Evidence-based therapy, delivered with warmth and tailored to
@@ -909,6 +1026,9 @@ function App() {
                       key={item.num || idx}
                       role="listitem"
                     >
+                      <span className="card-num" aria-hidden="true">
+                        {item.num || String(idx + 1).padStart(2, "0")}
+                      </span>
                       <span className="icon-badge">
                         <Icon name={iconFor(item.title)} />
                       </span>
@@ -928,7 +1048,7 @@ function App() {
                   <Blob variant={1} className="meet-blob" />
                   <div className="blob-frame meet-photo-frame">
                     <img
-                      src={therapist.aboutPhoto || therapist.photo}
+                      src={cdnImage(therapist.aboutPhoto || therapist.photo, 900)}
                       alt={`${therapist.name}, ${therapist.role}`}
                       className="blob-photo"
                       loading="lazy"
@@ -938,7 +1058,7 @@ function App() {
                 <div className="meet-body">
                   <span className="eyebrow reveal">Meet your therapist</span>
                   <h2 className="section-title reveal" id="meet-title">
-                    Hello, I'm {therapist.name}
+                    Hello, I'm <em>{therapist.name}</em>
                   </h2>
                   <p className="meet-role reveal">{therapist.role}</p>
                   {therapist.bioParagraphs?.[1] && (
@@ -974,7 +1094,7 @@ function App() {
                 <div className="section-head centered reveal">
                   <span className="eyebrow">How online therapy works</span>
                   <h2 className="section-title" id="steps-title">
-                    Four gentle steps to clearer communication
+                    Four gentle steps to <em>clearer communication</em>
                   </h2>
                 </div>
 
@@ -1027,7 +1147,7 @@ function App() {
                 <div className="benefits-body">
                   <span className="eyebrow reveal">Therapy from home</span>
                   <h2 className="section-title reveal" id="benefits-title">
-                    Real progress, right where life happens
+                    Real progress, <em>right where life happens</em>
                   </h2>
                   <ul className="benefit-list">
                     {HOME_BENEFITS.map((benefit, idx) => (
@@ -1052,7 +1172,7 @@ function App() {
                 <div className="section-head faq-head reveal">
                   <span className="eyebrow">Questions parents ask</span>
                   <h2 className="section-title" id="faq-title">
-                    Frequently asked questions
+                    Frequently asked <em>questions</em>
                   </h2>
                   <p className="lead">
                     Can't find your answer? Message us on WhatsApp and we will
@@ -1089,7 +1209,9 @@ function App() {
               <div className="cta-band reveal">
                 <Blob variant={2} className="cta-blob" />
                 <div className="cta-band-text">
-                  <h2>Every voice deserves to be heard</h2>
+                  <h2>
+                    Every voice deserves <em>to be heard</em>
+                  </h2>
                   <p>
                     Take the first step today. Tell us a little about your
                     concerns and we will guide you to the right therapy plan.
@@ -1124,7 +1246,7 @@ function App() {
                 <Blob variant={2} className="about-photo-blob" />
                 <div className="blob-frame about-photo-frame">
                   <img
-                    src={therapist.aboutPhoto || therapist.photo}
+                    src={cdnImage(therapist.aboutPhoto || therapist.photo, 900)}
                     alt={`${therapist.name}, ${therapist.role}`}
                     className="blob-photo"
                   />
@@ -1202,7 +1324,9 @@ function App() {
             <div className="section-wrap">
               <div className="section-head centered reveal">
                 <span className="eyebrow">Our clinical services</span>
-                <h1 className="page-main-heading">Comprehensive telepractice care</h1>
+                <h1 className="page-main-heading">
+                  Comprehensive <em>telepractice care</em>
+                </h1>
                 <p className="lead">
                   Specialised evaluation and individualised therapy programmes,
                   delivered online for toddlers, school-age children, teens and
@@ -1267,7 +1391,9 @@ function App() {
               <div className="cta-band reveal">
                 <Blob variant={0} className="cta-blob" />
                 <div className="cta-band-text">
-                  <h2>Unsure which service fits?</h2>
+                  <h2>
+                    Unsure which service <em>fits?</em>
+                  </h2>
                   <p>
                     Reach out for an initial consultation and we will guide you
                     to the right therapeutic plan.
@@ -1301,7 +1427,9 @@ function App() {
           <section className="booking-page" id="appointment">
             <div className="section-wrap section-head centered reveal booking-head">
               <span className="eyebrow">Consultation booking</span>
-              <h1 className="page-main-heading">Book an appointment</h1>
+              <h1 className="page-main-heading">
+                Book an <em>appointment</em>
+              </h1>
               <p className="lead">
                 Share a few details and we will get in touch promptly to confirm
                 a time that suits you.
@@ -1582,7 +1710,9 @@ function App() {
             <div className="section-wrap">
               <div className="section-head centered reveal">
                 <span className="eyebrow">Get in touch</span>
-                <h1 className="page-main-heading">We are here to help</h1>
+                <h1 className="page-main-heading">
+                  We are <em>here to help</em>
+                </h1>
                 <p className="lead">
                   Reach {therapist.name} directly for questions, consultations or
                   scheduling, whichever way suits you best.
@@ -1743,7 +1873,10 @@ function App() {
 
       {/* Mobile sticky quick actions (hidden on the booking page) */}
       {activeView !== "appointment" && (
-        <aside className="mobile-sticky-dock" aria-label="Quick actions">
+        <aside
+          className={`mobile-sticky-dock ${heroCtaInView ? "is-tucked" : ""}`}
+          aria-label="Quick actions"
+        >
           <button
             className="dock-book-btn"
             type="button"
