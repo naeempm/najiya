@@ -2177,7 +2177,41 @@ img {
 }
 
 .footer-hours {
+  align-items: flex-start;
+  gap: 10px;
   margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  line-height: 1.35;
+}
+
+.footer-hours svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.footer-hours-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-hours-text span {
+  white-space: nowrap;
+}
+
+/* Narrowest four-column footer (just above the mobile layout) */
+@media (max-width: 1080px) and (min-width: 861px) {
+  .footer-hours {
+    gap: 8px;
+    padding: 12px;
+    font-size: var(--text-xs);
+  }
+}
+
+.footer-hours-text span + span {
+  font-weight: 500;
+  color: var(--color-text-secondary);
 }
 
 .footer-bottom {
