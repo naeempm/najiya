@@ -928,7 +928,8 @@ img {
 
 .hero-section {
   position: relative;
-  padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 6vw, 72px);
+  /* Light bottom padding: the trust strip closing the hero carries the gap */
+  padding: clamp(40px, 6vw, 80px) 0 clamp(8px, 1.5vw, 16px);
   overflow: hidden;
   --glow-sage-at: 78% 34%;
   --glow-peach-at: 0% 52%;
@@ -2829,7 +2830,8 @@ img {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  margin-top: clamp(24px, 3vw, 40px);
+  /* Clear of the hero buttons, so it reads as its own band */
+  margin-top: clamp(40px, 5vw, 64px);
   padding: 14px;
   border-radius: var(--radius-xl);
   background-color: var(--bg-surface);
@@ -3588,6 +3590,7 @@ img {
      photo lands on the first screen; the copy and buttons follow, centred */
   .hero-section {
     padding-top: 20px;
+    padding-bottom: 28px;
     --glow-sage-at: 50% 28%;
     --glow-peach-at: 0% 6%;
   }
@@ -4006,7 +4009,7 @@ img {
     grid-template-columns: 1fr;
     gap: 8px;
     padding: 10px;
-    margin-top: 28px;
+    margin-top: 36px;
     border-radius: var(--radius-lg);
   }
 
