@@ -168,8 +168,13 @@ export function BlogPost({ post, posts, therapist, linkTo, whatsappLink }) {
         </aside>
 
         <div className="blog-author reveal">
-          {therapist.photo && (
-            <img src={cdnImage(therapist.photo, 160)} alt={therapist.name} className="blog-author-photo" />
+          {/* The About photo is Najiya's portrait; "photo" may be a hero image */}
+          {(therapist.aboutPhoto || therapist.photo) && (
+            <img
+              src={cdnImage(therapist.aboutPhoto || therapist.photo, 160)}
+              alt={therapist.name}
+              className="blog-author-photo"
+            />
           )}
           <div>
             <strong>{therapist.name}</strong>
