@@ -1,27 +1,12 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 import { PrivacyPolicy, TermsAndConditions } from "./legal.jsx";
-
-const getApiUrl = () => {
-  const isLocal =
-    typeof window !== "undefined" &&
-    (window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname.startsWith("192.168."));
-  if (isLocal) {
-    const envUrl = import.meta.env.VITE_API_URL;
-    if (envUrl && (envUrl.includes("localhost") || envUrl.includes("127.0.0.1"))) {
-      let clean = envUrl.replace(/\/$/, "");
-      return clean.endsWith("/api") ? clean : `${clean}/api`;
-    }
-    return "http://127.0.0.1:5001/api";
-  }
-  let url = import.meta.env.VITE_API_URL || "https://najiya.vercel.app";
-  url = url.replace(/\/$/, "");
-  return url.endsWith("/api") ? url : `${url}/api`;
-};
-
-const API_URL = getApiUrl();
+import { API_URL, PAGE_PATHS, cdnImage, legacyHashPath, resolvePath } from "./site.js";
+import { FAQS } from "./content/faqs.js";
+import { LANDING_PAGES } from "./content/landingPages.js";
+import { applySeo, buildSeo } from "./seo.js";
+import LandingPage from "./LandingPage.jsx";
+import { BlogIndex, BlogPost, NotFound } from "./blog.jsx";
 
 // v2: the old key was written on every visit (defaulting to dark), so it
 // can't distinguish a real choice from the old default.
@@ -36,23 +21,13 @@ function readSavedTheme() {
   }
 }
 
-// Cloudinary serves a resized, auto-format (WebP/AVIF) copy when a
-// transformation sits before the version segment. Other URLs pass through.
-function cdnImage(url, width) {
-  if (typeof url !== "string") return url;
-  return url.replace(
-    /(res\.cloudinary\.com\/[^/]+\/image\/upload\/)(?=v\d+\/)/,
-    `$1f_auto,q_auto,c_limit,w_${width}/`
-  );
-}
-
 // Shown at 44px, so a small copy instead of the 1254px original
 const CLINIC_LOGO_URL = cdnImage(
   "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg",
   144
 );
 
-const DEFAULT_CONTENT = {
+export const DEFAULT_CONTENT = {
   therapist: {
     name: "Najiya P M",
     degrees: "M.Sc. SLP, OPT",
@@ -257,38 +232,6 @@ const HOME_BENEFITS = [
   { icon: "globe", title: "Care that travels with you", desc: "Continue therapy wherever your family is in the world." },
 ];
 
-// Mirrors the FAQPage JSON-LD in index.html; keep the two in sync.
-const FAQS = [
-  {
-    q: "What is online speech therapy and how does teletherapy work?",
-    a: "Online speech therapy (teletherapy) is the delivery of professional speech-language pathology services via secure, interactive video conferencing. At Speech Connect, Lead SLP Najiya P M provides live, one-on-one virtual evaluations and therapy sessions with digital activities, parent coaching, and real-time guidance, making premier therapy accessible from the comfort of your home anywhere in the world.",
-  },
-  {
-    q: "How does Speech Connect treat language delay and early intervention in toddlers?",
-    a: "Our Early Intervention Programme targets speech and language delays in toddlers and preschoolers through naturalistic, play-based stimulation. We assess receptive understanding, expressive vocabulary, and communicative intent, equipping parents with daily conversational home routines to accelerate language milestones.",
-  },
-  {
-    q: "What is Oral Placement Therapy (OPT) and who needs it?",
-    a: "Oral Placement Therapy (OPT) is a specialized tactile-proprioceptive approach that builds structural muscle strength, stability, and coordination in the jaw, lips, and tongue. It bridges the gap between oral motor control and clear speech sound production, especially beneficial for children and adults with dysarthria, apraxia, Down syndrome, or persistent misarticulation.",
-  },
-  {
-    q: "How is stuttering and stammering treated online?",
-    a: "Speech Connect utilizes holistic fluency therapy combining evidence-based fluency shaping, stuttering modification, breathing coordination, and psychological confidence-building. We help individuals speak smoothly and comfortably while reducing anxiety around speaking.",
-  },
-  {
-    q: "How does Speech Connect support autistic children through neurodiversity affirmation?",
-    a: "Our neurodiversity-affirming approach honors each individual's unique communicative style. Rather than forcing conformity, we foster authentic connection, self-advocacy, multimodal communication (including AAC where appropriate), and regulation, supporting individuals on the Autism Spectrum Disorder (ASD) to thrive.",
-  },
-  {
-    q: "Can adults receive stroke rehabilitation and aphasia recovery through online telepractice?",
-    a: "Yes. Clinical research confirms telepractice is highly effective for adult neurological rehabilitation. We provide targeted therapies for post-stroke aphasia (word retrieval and sentence formulation), dysarthria (muscle weakness), and cognitive-communication deficits to regain independence in daily conversations.",
-  },
-  {
-    q: "What is misarticulation and how can online therapy fix it?",
-    a: "Misarticulation refers to difficulty correctly pronouncing specific speech sounds (such as 'r', 's', 'l', 'k', or 'th'), leading to lisping, sound substitutions, or omissions. Through visual modeling, auditory discrimination, and oral placement guidance, our online therapy systematically teaches correct tongue placement and establishes crisp, clear articulation.",
-  },
-];
-
 const EMPTY_FORM = {
   name: "",
   email: "",
@@ -323,25 +266,82 @@ const navItems = [
   { id: "about", label: "About" },
   { id: "services", label: "Services" },
   { id: "appointment", label: "Appointment" },
+  { id: "blog", label: "Blog" },
   { id: "contact", label: "Contact" },
 ];
 
-// Legal pages have their own URLs so they can be linked to directly
-const LEGAL_PATHS = {
-  privacy: "/privacy-policy",
-  terms: "/terms-and-conditions",
-};
-
-function viewFromPath() {
-  if (typeof window === "undefined") return "home";
-  const path = window.location.pathname.replace(/\/+$/, "");
-  const match = Object.entries(LEGAL_PATHS).find(([, legalPath]) => legalPath === path);
-  return match ? match[0] : "home";
+// Admin-edited content over the defaults; empty lists keep the previous value
+export function mergeContent(prev, liveData) {
+  return {
+    ...DEFAULT_CONTENT,
+    ...liveData,
+    therapist: {
+      ...DEFAULT_CONTENT.therapist,
+      ...(liveData.therapist || {}),
+      bioParagraphs:
+        Array.isArray(liveData.therapist?.bioParagraphs) && liveData.therapist.bioParagraphs.length
+          ? liveData.therapist.bioParagraphs
+          : (prev.therapist?.bioParagraphs || DEFAULT_CONTENT.therapist.bioParagraphs),
+    },
+    hero: {
+      ...DEFAULT_CONTENT.hero,
+      ...(liveData.hero || {}),
+      photos:
+        Array.isArray(liveData.hero?.photos) && liveData.hero.photos.length
+          ? liveData.hero.photos
+          : (prev.hero?.photos || DEFAULT_CONTENT.hero.photos),
+    },
+    highlights:
+      Array.isArray(liveData.highlights)
+        ? liveData.highlights
+        : (prev.highlights || DEFAULT_CONTENT.highlights),
+    services:
+      Array.isArray(liveData.services)
+        ? liveData.services
+        : (prev.services || DEFAULT_CONTENT.services),
+    specializations:
+      Array.isArray(liveData.specializations)
+        ? liveData.specializations
+        : (prev.specializations || DEFAULT_CONTENT.specializations),
+    concernSuggestions:
+      Array.isArray(liveData.concernSuggestions)
+        ? liveData.concernSuggestions
+        : (prev.concernSuggestions || DEFAULT_CONTENT.concernSuggestions),
+    availabilityText:
+      liveData.availabilityText || prev.availabilityText || DEFAULT_CONTENT.availabilityText,
+  };
 }
 
-function App() {
-  const [content, setContent] = useState(DEFAULT_CONTENT);
-  const [activeView, setActiveView] = useState(viewFromPath);
+function currentPath() {
+  return typeof window === "undefined" ? "/" : window.location.pathname;
+}
+
+// Opens in-site links without a page reload. Modified clicks (new tab etc.)
+// fall through to the browser, and crawlers just follow the href.
+function isPlainClick(event) {
+  return !(
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  );
+}
+
+// initialPath/initialData come from the prerender step (entry-server.jsx)
+// or from window.__PRERENDER_DATA__ in the browser.
+function App({ initialPath, initialData = {} }) {
+  const [content, setContent] = useState(() =>
+    initialData.content ? mergeContent(DEFAULT_CONTENT, initialData.content) : DEFAULT_CONTENT
+  );
+  const [path, setPath] = useState(() => initialPath || currentPath());
+  const route = useMemo(() => resolvePath(path), [path]);
+  const activeView = route.view;
+  const [posts, setPosts] = useState(initialData.posts || null);
+  const [postCache, setPostCache] = useState(() =>
+    initialData.post ? { [initialData.post.slug]: initialData.post } : {}
+  );
   const [heroIndex, setHeroIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -364,9 +364,14 @@ function App() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Browser back/forward between the legal pages and the rest of the site
+  // Browser back/forward, and old #section links from before pages had URLs
   useEffect(() => {
-    const onPopState = () => setActiveView(viewFromPath());
+    const legacy = window.location.pathname === "/" && legacyHashPath(window.location.hash);
+    if (legacy) {
+      window.history.replaceState(null, "", legacy);
+      setPath(legacy);
+    }
+    const onPopState = () => setPath(currentPath());
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
@@ -431,7 +436,7 @@ function App() {
     );
     document.querySelectorAll(".reveal:not(.is-visible)").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [activeView, submitted]);
+  }, [path, submitted, posts, postCache]);
 
   // Theme: explicit user choice wins, otherwise follow the OS preference.
   // The inline script in index.html applies the same rule before first paint.
@@ -478,44 +483,7 @@ function App() {
         if (response.ok) {
           const liveData = await response.json();
           if (liveData && typeof liveData === "object") {
-            setContent((prev) => ({
-              ...DEFAULT_CONTENT,
-              ...liveData,
-              therapist: {
-                ...DEFAULT_CONTENT.therapist,
-                ...(liveData.therapist || {}),
-                bioParagraphs:
-                  Array.isArray(liveData.therapist?.bioParagraphs) && liveData.therapist.bioParagraphs.length
-                    ? liveData.therapist.bioParagraphs
-                    : (prev.therapist?.bioParagraphs || DEFAULT_CONTENT.therapist.bioParagraphs),
-              },
-              hero: {
-                ...DEFAULT_CONTENT.hero,
-                ...(liveData.hero || {}),
-                photos:
-                  Array.isArray(liveData.hero?.photos) && liveData.hero.photos.length
-                    ? liveData.hero.photos
-                    : (prev.hero?.photos || DEFAULT_CONTENT.hero.photos),
-              },
-              highlights:
-                Array.isArray(liveData.highlights)
-                  ? liveData.highlights
-                  : (prev.highlights || DEFAULT_CONTENT.highlights),
-              services:
-                Array.isArray(liveData.services)
-                  ? liveData.services
-                  : (prev.services || DEFAULT_CONTENT.services),
-              specializations:
-                Array.isArray(liveData.specializations)
-                  ? liveData.specializations
-                  : (prev.specializations || DEFAULT_CONTENT.specializations),
-              concernSuggestions:
-                Array.isArray(liveData.concernSuggestions)
-                  ? liveData.concernSuggestions
-                  : (prev.concernSuggestions || DEFAULT_CONTENT.concernSuggestions),
-              availabilityText:
-                liveData.availabilityText || prev.availabilityText || DEFAULT_CONTENT.availabilityText,
-            }));
+            setContent((prev) => mergeContent(prev, liveData));
           }
         }
       } catch (err) {
@@ -586,6 +554,46 @@ function App() {
       : DEFAULT_CONTENT.concernSuggestions;
   const availabilityText =
     content.availabilityText || DEFAULT_CONTENT.availabilityText;
+
+  // Blog posts: the list feeds /blog plus "related reading" on landing and
+  // post pages. A post cached as null was not found.
+  const needsPosts = ["blog", "landing", "post"].includes(activeView);
+  useEffect(() => {
+    if (!needsPosts || posts) return;
+    let cancelled = false;
+    fetch(`${API_URL}/blog`)
+      .then((res) => (res.ok ? res.json() : []))
+      .catch(() => [])
+      .then((list) => {
+        if (!cancelled) setPosts(Array.isArray(list) ? list : []);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [needsPosts, posts]);
+
+  const postSlug = route.view === "post" ? route.slug : null;
+  const currentPost = postSlug ? postCache[postSlug] : undefined;
+  useEffect(() => {
+    if (!postSlug || postSlug in postCache) return;
+    let cancelled = false;
+    fetch(`${API_URL}/blog/${postSlug}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .catch(() => null)
+      .then((post) => {
+        if (!cancelled) setPostCache((cache) => ({ ...cache, [postSlug]: post }));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [postSlug, postCache]);
+
+  useEffect(() => {
+    applySeo(buildSeo(route, { therapist, post: currentPost }));
+  }, [route, therapist, currentPost]);
+
+  // A blog post keeps "Blog" highlighted in the navigation
+  const navActive = activeView === "post" ? "blog" : activeView;
 
   // Hero photos change only when the visitor swipes or picks a dot (no
   // auto-rotation). The track is a native scroll-snap carousel, so the
@@ -658,11 +666,10 @@ function App() {
     });
   }
 
-  function changeView(view) {
-    setActiveView(view);
-    const path = LEGAL_PATHS[view] || "/";
-    if (window.location.pathname !== path) {
-      window.history.pushState(null, "", path);
+  function navigate(nextPath) {
+    setPath(nextPath);
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState(null, "", nextPath);
     }
     setStatus("");
     setSubmitted(false);
@@ -670,6 +677,22 @@ function App() {
     // The hero track remounts at its first photo, so the dots must too
     setHeroIndex(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function changeView(view) {
+    navigate(PAGE_PATHS[view]);
+  }
+
+  // Props for an in-site <a>: a real href for crawlers, no reload for people
+  function linkTo(targetPath) {
+    return {
+      href: targetPath,
+      onClick: (event) => {
+        if (!isPlainClick(event)) return;
+        event.preventDefault();
+        navigate(targetPath);
+      },
+    };
   }
 
   function bookForService(serviceTitle) {
@@ -724,12 +747,7 @@ function App() {
       {/* Header */}
       <header className={`topbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="topbar-inner">
-          <button
-            className="brand-link"
-            type="button"
-            onClick={() => changeView("home")}
-            aria-label="Speech Connect home"
-          >
+          <a className="brand-link" {...linkTo("/")} aria-label="Speech Connect home">
             <img
               src={CLINIC_LOGO_URL}
               alt=""
@@ -739,19 +757,18 @@ function App() {
               <span className="brand-title">Speech Connect</span>
               <span className="brand-sub">Online therapy</span>
             </span>
-          </button>
+          </a>
 
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navItems.map((item) => (
-              <button
-                className={`nav-btn ${activeView === item.id ? "active-nav" : ""}`}
+              <a
+                className={`nav-btn ${navActive === item.id ? "active-nav" : ""}`}
                 key={item.id}
-                type="button"
-                aria-current={activeView === item.id ? "page" : undefined}
-                onClick={() => changeView(item.id)}
+                aria-current={navActive === item.id ? "page" : undefined}
+                {...linkTo(PAGE_PATHS[item.id])}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </nav>
 
@@ -796,16 +813,15 @@ function App() {
         >
           <nav className="mobile-nav-links" aria-label="Mobile navigation">
             {navItems.map((item) => (
-              <button
-                className={`mobile-nav-btn ${activeView === item.id ? "active-mobile-nav" : ""}`}
+              <a
+                className={`mobile-nav-btn ${navActive === item.id ? "active-mobile-nav" : ""}`}
                 key={item.id}
-                type="button"
-                aria-current={activeView === item.id ? "page" : undefined}
-                onClick={() => changeView(item.id)}
+                aria-current={navActive === item.id ? "page" : undefined}
+                {...linkTo(PAGE_PATHS[item.id])}
               >
                 <span>{item.label}</span>
                 <Icon name="arrowRight" size={18} className="mobile-nav-arrow" />
-              </button>
+              </a>
             ))}
           </nav>
 
@@ -874,6 +890,14 @@ function App() {
                   <h1 className="hero-heading reveal">{withAmpersand(hero.title)}</h1>
 
                   <p className="lead reveal">{hero.description}</p>
+
+                  <p className="hero-location reveal">
+                    <Icon name="map" size={16} />
+                    <span>
+                      Based in Thrissur, Kerala, offering online therapy across India
+                      and worldwide.
+                    </span>
+                  </p>
 
                   <div className="hero-cta-group reveal" ref={heroCtaRef}>
                     <button
@@ -1671,13 +1695,8 @@ function App() {
 
                       <p className="form-legal-note">
                         By submitting, you agree to our{" "}
-                        <button type="button" onClick={() => changeView("terms")}>
-                          Terms &amp; Conditions
-                        </button>{" "}
-                        and{" "}
-                        <button type="button" onClick={() => changeView("privacy")}>
-                          Privacy Policy
-                        </button>
+                        <a {...linkTo(PAGE_PATHS.terms)}>Terms &amp; Conditions</a> and{" "}
+                        <a {...linkTo(PAGE_PATHS.privacy)}>Privacy Policy</a>
                         .
                       </p>
 
@@ -1833,6 +1852,29 @@ function App() {
           </section>
         )}
 
+        {activeView === "landing" && (
+          <LandingPage
+            key={route.landing.id}
+            page={route.landing}
+            therapist={therapist}
+            posts={posts}
+            linkTo={linkTo}
+            whatsappLink={whatsappLink}
+          />
+        )}
+        {activeView === "blog" && <BlogIndex posts={posts} linkTo={linkTo} />}
+        {activeView === "post" && (
+          <BlogPost
+            key={postSlug}
+            post={currentPost}
+            posts={posts}
+            therapist={therapist}
+            linkTo={linkTo}
+            whatsappLink={whatsappLink}
+          />
+        )}
+        {activeView === "notFound" && <NotFound linkTo={linkTo} />}
+
         {activeView === "privacy" && <PrivacyPolicy therapist={therapist} />}
         {activeView === "terms" && <TermsAndConditions therapist={therapist} />}
       </main>
@@ -1861,13 +1903,28 @@ function App() {
             <ul className="footer-links">
               {navItems.map((item) => (
                 <li key={item.id}>
-                  <button
-                    type="button"
-                    className={`footer-link ${activeView === item.id ? "active" : ""}`}
-                    onClick={() => changeView(item.id)}
+                  <a
+                    className={`footer-link ${navActive === item.id ? "active" : ""}`}
+                    {...linkTo(PAGE_PATHS[item.id])}
                   >
                     {item.label}
-                  </button>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="footer-col" aria-label="Areas we serve">
+            <h2 className="footer-heading">Areas we serve</h2>
+            <ul className="footer-links">
+              {LANDING_PAGES.map((page) => (
+                <li key={page.id}>
+                  <a
+                    className={`footer-link ${route.landing?.id === page.id ? "active" : ""}`}
+                    {...linkTo(page.path)}
+                  >
+                    {page.navLabel}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -1908,20 +1965,12 @@ function App() {
         <div className="section-wrap footer-bottom">
           <span>© {new Date().getFullYear()} Speech Connect. All rights reserved.</span>
           <nav className="footer-legal" aria-label="Legal">
-            <button
-              type="button"
-              className={activeView === "privacy" ? "active" : ""}
-              onClick={() => changeView("privacy")}
-            >
+            <a className={activeView === "privacy" ? "active" : ""} {...linkTo(PAGE_PATHS.privacy)}>
               Privacy Policy
-            </button>
-            <button
-              type="button"
-              className={activeView === "terms" ? "active" : ""}
-              onClick={() => changeView("terms")}
-            >
+            </a>
+            <a className={activeView === "terms" ? "active" : ""} {...linkTo(PAGE_PATHS.terms)}>
               Terms &amp; Conditions
-            </button>
+            </a>
           </nav>
         </div>
       </footer>
