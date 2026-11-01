@@ -892,10 +892,10 @@ function App({ initialPath, initialData = {} }) {
                   <p className="lead reveal">{hero.description}</p>
 
                   <p className="hero-location reveal">
-                    <Icon name="map" size={16} />
+                    <Icon name="globe" size={16} />
                     <span>
-                      Based in Thrissur, Kerala, offering online therapy across India
-                      and worldwide.
+                      Based in India, offering online therapy across India and the
+                      Arab countries
                     </span>
                   </p>
 

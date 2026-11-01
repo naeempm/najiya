@@ -2274,18 +2274,21 @@ img {
    ========================================================================== */
 
 .hero-location {
-  display: flex;
-  align-items: flex-start;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
   gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background-color: var(--tint-sage);
+  color: var(--ink-sage);
   font-size: var(--text-sm);
   font-weight: 550;
-  color: var(--color-text-secondary);
+  line-height: 1.4;
 }
 
 .hero-location svg {
   flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--color-accent);
 }
 
 .breadcrumbs {
@@ -3569,8 +3572,9 @@ img {
   .hero-heading { order: 2; }
   .hero-visual { order: 3; }
   .hero-text-col .lead { order: 4; }
-  .hero-cta-group { order: 5; }
-  .hero-note { order: 6; }
+  .hero-location { order: 5; }
+  .hero-cta-group { order: 6; }
+  .hero-note { order: 7; }
 
   .hero-heading {
     font-size: clamp(1.85rem, 8vw, 2.5rem);
@@ -3597,6 +3601,15 @@ img {
   .hero-note {
     justify-content: center;
     line-height: 1.45;
+  }
+
+  .hero-location {
+    align-self: center;
+    max-width: 100%;
+    padding: 8px 14px;
+    font-size: var(--text-xs);
+    text-align: left;
+    text-wrap: balance;
   }
 
   .hero-note svg {
