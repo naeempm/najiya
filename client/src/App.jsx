@@ -27,7 +27,7 @@ const CLINIC_LOGO_URL = cdnImage(
   144
 );
 
-const DEFAULT_CONTENT = {
+export const DEFAULT_CONTENT = {
   therapist: {
     name: "Najiya P M",
     degrees: "M.Sc. SLP, OPT",
@@ -271,7 +271,7 @@ const navItems = [
 ];
 
 // Admin-edited content over the defaults; empty lists keep the previous value
-function mergeContent(prev, liveData) {
+export function mergeContent(prev, liveData) {
   return {
     ...DEFAULT_CONTENT,
     ...liveData,
