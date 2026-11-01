@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
+import { PrivacyPolicy, TermsAndConditions } from "./legal.jsx";
 
 const getApiUrl = () => {
   const isLocal =
@@ -325,9 +326,22 @@ const navItems = [
   { id: "contact", label: "Contact" },
 ];
 
+// Legal pages have their own URLs so they can be linked to directly
+const LEGAL_PATHS = {
+  privacy: "/privacy-policy",
+  terms: "/terms-and-conditions",
+};
+
+function viewFromPath() {
+  if (typeof window === "undefined") return "home";
+  const path = window.location.pathname.replace(/\/+$/, "");
+  const match = Object.entries(LEGAL_PATHS).find(([, legalPath]) => legalPath === path);
+  return match ? match[0] : "home";
+}
+
 function App() {
   const [content, setContent] = useState(DEFAULT_CONTENT);
-  const [activeView, setActiveView] = useState("home");
+  const [activeView, setActiveView] = useState(viewFromPath);
   const [heroIndex, setHeroIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -348,6 +362,13 @@ function App() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Browser back/forward between the legal pages and the rest of the site
+  useEffect(() => {
+    const onPopState = () => setActiveView(viewFromPath());
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
   // While the mobile menu is open: hold the page still, close on Escape,
@@ -639,6 +660,10 @@ function App() {
 
   function changeView(view) {
     setActiveView(view);
+    const path = LEGAL_PATHS[view] || "/";
+    if (window.location.pathname !== path) {
+      window.history.pushState(null, "", path);
+    }
     setStatus("");
     setSubmitted(false);
     setMenuOpen(false);
@@ -1644,6 +1669,18 @@ function App() {
                         </a>
                       </div>
 
+                      <p className="form-legal-note">
+                        By submitting, you agree to our{" "}
+                        <button type="button" onClick={() => changeView("terms")}>
+                          Terms &amp; Conditions
+                        </button>{" "}
+                        and{" "}
+                        <button type="button" onClick={() => changeView("privacy")}>
+                          Privacy Policy
+                        </button>
+                        .
+                      </p>
+
                       <div className="status-region" aria-live="polite">
                         {status && <p className="status-notice">{status}</p>}
                       </div>
@@ -1795,6 +1832,9 @@ function App() {
             </div>
           </section>
         )}
+
+        {activeView === "privacy" && <PrivacyPolicy therapist={therapist} />}
+        {activeView === "terms" && <TermsAndConditions therapist={therapist} />}
       </main>
 
       {/* Footer */}
@@ -1867,7 +1907,22 @@ function App() {
 
         <div className="section-wrap footer-bottom">
           <span>© {new Date().getFullYear()} Speech Connect. All rights reserved.</span>
-          <span>Online telepractice, worldwide</span>
+          <nav className="footer-legal" aria-label="Legal">
+            <button
+              type="button"
+              className={activeView === "privacy" ? "active" : ""}
+              onClick={() => changeView("privacy")}
+            >
+              Privacy Policy
+            </button>
+            <button
+              type="button"
+              className={activeView === "terms" ? "active" : ""}
+              onClick={() => changeView("terms")}
+            >
+              Terms &amp; Conditions
+            </button>
+          </nav>
         </div>
       </footer>
 
