@@ -1955,9 +1955,19 @@ function App({ initialPath, initialData = {} }) {
                 </li>
               )}
             </ul>
+            {/* The footer column is too narrow for one line, so split the
+                days from the timings ("Monday – Saturday • Flexible Timings") */}
             <span className="hours-pill footer-hours">
-              <Icon name="clock" size={15} />
-              {availabilityText}
+              <Icon name="clock" size={16} />
+              <span className="footer-hours-text">
+                {availabilityText
+                  .split("•")
+                  .map((part) => part.trim())
+                  .filter(Boolean)
+                  .map((part) => (
+                    <span key={part}>{part}</span>
+                  ))}
+              </span>
             </span>
           </div>
         </div>
