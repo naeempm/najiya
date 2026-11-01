@@ -84,7 +84,7 @@ It is also worth checking your child's hearing. Repeated ear infections, which a
 
 An assessment does not commit you to months of therapy. Often it simply reassures you that your child is on track, or gives you a few targeted strategies to use at home. If your child does need support, starting early gives them the best chance to catch up.
 
-Speech Connect offers [online speech therapy for families in Thrissur](/online-speech-therapy-thrissur) and [across Kerala](/online-speech-therapy-kerala), as well as for [Malayali families abroad](/online-speech-therapy-for-malayali-families-abroad). If you are unsure about your child's speech, [book a consultation](/appointment) and we will talk it through with you.`,
+Speech Connect offers [online speech therapy across Kerala](/online-speech-therapy-kerala) and [India](/online-speech-therapy-india), as well as for families in the [UAE](/online-speech-therapy-uae) and the [UK](/online-speech-therapy-uk). If you are unsure about your child's speech, [book a consultation](/appointment) and we will talk it through with you.`,
   },
   {
     slug: 'is-online-speech-therapy-effective-for-children',
@@ -242,6 +242,6 @@ At Speech Connect, we take a neurodiversity-affirming approach. That means we se
 
 ## Getting started
 
-If you are worried about your child's speech or development, an assessment is the best next step. Speech Connect offers online assessments and therapy for families [in Thrissur](/online-speech-therapy-thrissur), [across Kerala](/online-speech-therapy-kerala) and [abroad](/online-speech-therapy-for-malayali-families-abroad). [Book a consultation](/appointment) and we will help you understand what your child needs and what to do next.`,
+If you are worried about your child's speech or development, an assessment is the best next step. Speech Connect offers online assessments and therapy for families [across Kerala](/online-speech-therapy-kerala), [India](/online-speech-therapy-india), the [UAE](/online-speech-therapy-uae) and the [UK](/online-speech-therapy-uk). [Book a consultation](/appointment) and we will help you understand what your child needs and what to do next.`,
   },
 ];

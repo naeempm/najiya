@@ -1,5 +1,17 @@
 {
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/online-speech-therapy-thrissur",
+      "destination": "/online-speech-therapy-kerala",
+      "permanent": true
+    },
+    {
+      "source": "/online-speech-therapy-for-malayali-families-abroad",
+      "destination": "/online-speech-therapy-uae",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

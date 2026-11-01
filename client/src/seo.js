@@ -18,6 +18,8 @@ const DEFAULT_AREA = [
   { "@type": "City", name: "Thrissur", containedInPlace: KERALA },
   KERALA,
   { "@type": "Country", name: "India" },
+  { "@type": "Country", name: "United Arab Emirates" },
+  { "@type": "Country", name: "United Kingdom" },
 ];
 
 const SERVICES = [

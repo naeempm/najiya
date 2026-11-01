@@ -182,8 +182,8 @@ export function BlogPost({ post, posts, therapist, linkTo, whatsappLink }) {
               {therapist.degrees} · {therapist.council} ({therapist.crr})
             </span>
             <p>
-              Founder of Speech Connect, offering online speech therapy from Thrissur,
-              Kerala, for families across India and abroad.
+              Founder of Speech Connect, offering online speech therapy from Kerala
+              for families across India, the UAE and the UK.
             </p>
           </div>
         </div>

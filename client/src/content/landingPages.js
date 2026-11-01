@@ -7,94 +7,6 @@ const INDIA = { "@type": "Country", name: "India" };
 
 export const LANDING_PAGES = [
   {
-    id: "thrissur",
-    path: "/online-speech-therapy-thrissur",
-    navLabel: "Thrissur",
-    seoTitle: "Online Speech Therapy in Thrissur | Speech Connect",
-    seoDescription:
-      "RCI-registered online speech therapy in Thrissur for children and adults. Live video sessions for speech delay, autism, stuttering and stroke recovery.",
-    eyebrow: "Thrissur, Kerala",
-    heading: ["Online speech therapy", "in Thrissur"],
-    intro:
-      "Speech Connect is based in Thrissur. Families across the district can work with an RCI-registered speech-language pathologist through live video sessions, without the drive into town, the parking or the waiting room.",
-    areaServed: [{ "@type": "City", name: "Thrissur", containedInPlace: KERALA }, KERALA],
-    sections: [
-      {
-        heading: "Speech therapy that fits a Thrissur family's week",
-        paragraphs: [
-          "Most parents we hear from in Thrissur have already done the maths: a forty-minute drive each way, a school pickup to squeeze in, a younger sibling who needs a nap, and a session that lasts less time than the journey. Over a few months, that is often the reason therapy stops before it has had a chance to work.",
-          "Online sessions take the journey out of the week. Whether you live in Thrissur town, Guruvayur, Kunnamkulam, Irinjalakuda, Chalakudy, Kodungallur or Wadakkanchery, the session is the same: you open a video call at home, and your child works with the therapist in the room where they already feel most at ease.",
-        ],
-      },
-      {
-        heading: "How an online session works",
-        paragraphs: [
-          "Each session is a live, one-to-one video call with Najiya P M. It is not a recorded programme or an app. For young children, sessions are built around play: picture games, songs, storybooks, toys you already have at home and on-screen activities chosen for your child's goals. Older children and adults work through structured exercises, conversation practice and real-life speaking tasks.",
-          "A parent or caregiver usually joins younger children. That is deliberate. You see every strategy as it is used, you can ask questions in the moment, and you leave with a short list of things to practise during meals, bath time and the drive to school. Most progress happens between sessions, and that is where you make the difference.",
-        ],
-      },
-      {
-        heading: "Who we work with in Thrissur",
-        paragraphs: [
-          "Speech Connect supports people of every age, from toddlers to older adults. Families in Thrissur most often get in touch about:",
-        ],
-        points: [
-          "Toddlers who are late to talk or use only a few words",
-          "Autistic children, with neurodiversity-affirming support for communication in whatever form works for them",
-          "Stuttering or stammering in children, teenagers and adults",
-          "Unclear speech and misarticulation, such as difficulty with r, s, l or k sounds",
-          "Adults rebuilding speech and language after a stroke, including aphasia and dysarthria",
-        ],
-      },
-      {
-        heading: "What progress looks like",
-        paragraphs: [
-          "Therapy is not a fixed course of a set number of sessions. After the first assessment you get a plan with a small number of clear goals, written in plain language: for a toddler, that might be using ten new words to ask for things, or joining two words together. For an adult after a stroke, it might be naming everyday objects or holding a short phone conversation.",
-          "Goals are reviewed regularly, so you always know what is improving and what comes next. When a goal is met, a new one takes its place. When something is not working, the approach changes. Parents often notice the first changes at home before anyone else does, which is one more reason home practice matters so much.",
-        ],
-      },
-      {
-        heading: "A note on language",
-        paragraphs: [
-          "Sessions are conducted in English. Many Thrissur families speak Malayalam at home, and that is not a barrier. Keep using the language your family speaks most comfortably. The core strategies parents learn in sessions, such as modelling short phrases, expanding on what your child says and giving them time to respond, work in any language you use at home.",
-        ],
-      },
-      {
-        heading: "Qualified, registered care",
-        paragraphs: [
-          "Najiya P M holds an M.Sc. in Speech-Language Pathology, is certified in Oral Placement Therapy (OPT) and is registered with the Rehabilitation Council of India (CRR No: A84512). Every plan starts with an assessment of your child's or your own communication, followed by clear goals you can track from month to month.",
-        ],
-      },
-    ],
-    faqs: [
-      {
-        q: "Do you have a clinic in Thrissur I can visit?",
-        a: "No. Speech Connect is based in Thrissur but works entirely online, so every session takes place by live video call. This lets families anywhere in the district attend without travelling.",
-      },
-      {
-        q: "Can online speech therapy work for a toddler?",
-        a: "Yes. For toddlers, sessions are play-based and a parent takes part. Much of the work is coaching you to use language-building strategies during everyday routines, which is where young children learn to talk.",
-      },
-      {
-        q: "Are sessions in Malayalam?",
-        a: "Sessions are conducted in English. Parents are encouraged to keep using Malayalam at home, and the strategies you learn in sessions can be used in whichever language your family speaks.",
-      },
-      {
-        q: "What do I need for an online session?",
-        a: "A laptop or tablet with a camera, a reliable internet connection and a quiet space where your child can sit with you. A phone can work, but a larger screen is easier for activities.",
-      },
-      {
-        q: "How do I book a first session from Thrissur?",
-        a: "Fill in the appointment form on this website or message us on WhatsApp. We will contact you to arrange an initial consultation at a time that suits you, Monday to Saturday.",
-      },
-    ],
-    relatedPosts: [
-      "speech-milestones-by-age-kerala-parents",
-      "is-online-speech-therapy-effective-for-children",
-    ],
-  },
-
-  {
     id: "kerala",
     path: "/online-speech-therapy-kerala",
     navLabel: "Kerala",
@@ -183,6 +95,191 @@ export const LANDING_PAGES = [
   },
 
   {
+    id: "uae",
+    path: "/online-speech-therapy-uae",
+    navLabel: "UAE",
+    seoTitle: "Online Speech Therapy in the UAE | Speech Connect",
+    seoDescription:
+      "Online speech therapy for families in Dubai, Abu Dhabi, Sharjah and across the UAE. Live English sessions with an RCI-registered speech therapist.",
+    eyebrow: "United Arab Emirates",
+    heading: ["Online speech therapy", "in the UAE"],
+    intro:
+      "Families in Dubai, Abu Dhabi, Sharjah, Ajman, Al Ain and across the Emirates can work with an RCI-registered speech-language pathologist by live video call, at times that fit around school, work and weekend plans.",
+    areaServed: [
+      { "@type": "Country", name: "United Arab Emirates" },
+      { "@type": "City", name: "Dubai" },
+      { "@type": "City", name: "Abu Dhabi" },
+      { "@type": "City", name: "Sharjah" },
+    ],
+    sections: [
+      {
+        heading: "Why UAE families choose online therapy",
+        paragraphs: [
+          "Parents in the UAE often tell us the same story. They noticed their child was slow to talk, found that clinic sessions were expensive or hard to book at a sensible hour, and then spent more time in traffic on Sheikh Zayed Road or the Sharjah–Dubai commute than in the therapy room itself. After a few months, the routine became too much to keep up.",
+          "Online sessions remove the commute entirely. Your child works with the therapist from home, in a room they know, with their own toys and books close at hand. For many families that means sessions can happen every week without fail, and consistency is one of the strongest predictors of progress in speech therapy.",
+        ],
+      },
+      {
+        heading: "Time zones that work",
+        paragraphs: [
+          "India is only one and a half hours ahead of the UAE, so scheduling is simple. Sessions run Monday to Saturday with flexible timings, and after-school slots in the UAE fall in the Indian late afternoon or early evening. Saturday sessions suit families who prefer to keep weekday evenings free.",
+          "If you work shifts or travel often, tell us when you get in touch. We will agree a regular slot that suits your week and adjust it when your schedule changes.",
+        ],
+      },
+      {
+        heading: "Growing up with more than one language",
+        paragraphs: [
+          "Many children in the UAE hear two or three languages every day: one at home, English at nursery or school, and often Arabic as well. Parents sometimes worry that this is why their child is late to talk. Research consistently shows that growing up with more than one language does not cause speech or language delay. Bilingual children reach their milestones within the same broad timeframes, although their words may be split across languages.",
+          "If a child is genuinely delayed, the delay shows up in every language they hear, and it deserves attention rather than waiting. Sessions with Speech Connect are conducted in English. We will never ask you to stop using your home language; a strong home language supports your child's overall development and keeps them close to family.",
+        ],
+      },
+      {
+        heading: "Who we help in the UAE",
+        paragraphs: ["Families and adults across the Emirates most often come to us about:"],
+        points: [
+          "Toddlers and preschoolers who are late to talk or use only a few words",
+          "Autistic children, with neurodiversity-affirming support for how they communicate",
+          "Stuttering or stammering in children, teenagers and adults",
+          "Unclear speech and misarticulation, such as difficulty with r, s, l or k sounds",
+          "Parents or grandparents rebuilding speech and language after a stroke",
+        ],
+      },
+      {
+        heading: "How sessions work",
+        paragraphs: [
+          "Each session is a live, one-to-one video call with Najiya P M, not a recorded programme or an app. For young children, sessions are play-based, and a parent or caregiver joins so they can learn the strategies used and practise them during meals, bath time and the school run. Older children and adults work through structured exercises and real-life speaking practice.",
+          "A nanny or grandparent who helps care for your child is welcome to join sessions too, so everyone at home uses the same approach. If your family travels back to India or elsewhere for the summer, sessions can continue wherever you are, as long as you have a stable internet connection.",
+        ],
+      },
+      {
+        heading: "Your therapist",
+        paragraphs: [
+          "Najiya P M holds an M.Sc. in Speech-Language Pathology, is certified in Oral Placement Therapy (OPT) and is registered with the Rehabilitation Council of India (CRR No: A84512). She works with every family directly, from the first consultation to the last session, and provides therapy online from India.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Can we start therapy from anywhere in the UAE?",
+        a: "Yes. Sessions are online, so families in Dubai, Abu Dhabi, Sharjah, Ajman, Ras Al Khaimah, Fujairah, Umm Al Quwain and Al Ain can all book, as long as they have a device with a camera and a stable internet connection.",
+      },
+      {
+        q: "What time are sessions in UAE time?",
+        a: "India is one and a half hours ahead of the UAE. Sessions run Monday to Saturday with flexible timings, and we will agree a regular slot that suits your family's schedule.",
+      },
+      {
+        q: "Are you licensed in the UAE?",
+        a: "Najiya P M is registered with the Rehabilitation Council of India and provides therapy online from India. If your school or insurer requires a UAE-licensed provider, please check with them before booking.",
+      },
+      {
+        q: "Does speaking more than one language at home cause speech delay?",
+        a: "No. Being bilingual or multilingual does not cause speech delay. Sessions are in English, and we encourage you to keep using your home language with your child.",
+      },
+      {
+        q: "How do we get started from the UAE?",
+        a: "Fill in the appointment form or message us on WhatsApp, and mention that you are in the UAE. We will arrange an initial consultation at a time that works for you.",
+      },
+    ],
+    relatedPosts: [
+      "how-to-help-a-late-talker-at-home",
+      "is-online-speech-therapy-effective-for-children",
+      "speech-delay-vs-autism-early-signs",
+    ],
+  },
+
+  {
+    id: "uk",
+    path: "/online-speech-therapy-uk",
+    navLabel: "UK",
+    seoTitle: "Online Speech Therapy in the UK | Speech Connect",
+    seoDescription:
+      "Online speech and language therapy for families in London, Birmingham, Manchester and across the UK. Live English sessions with Najiya P M.",
+    eyebrow: "United Kingdom",
+    heading: ["Online speech therapy", "in the UK"],
+    intro:
+      "Families in London, Birmingham, Manchester, Leicester and across England, Scotland, Wales and Northern Ireland can work with an RCI-registered speech-language pathologist by live video call, without months on a waiting list before the first session.",
+    areaServed: [
+      { "@type": "Country", name: "United Kingdom" },
+      { "@type": "City", name: "London" },
+    ],
+    sections: [
+      {
+        heading: "When the wait feels too long",
+        paragraphs: [
+          "Many UK parents reach out to us after a referral to speech and language therapy and a long wait for the first appointment. Others have had an initial assessment, then a block of a few sessions, and are left wondering what to do while they wait for the next one. For a toddler who is late to talk, months matter: the early years are when language grows fastest.",
+          "Online sessions with Speech Connect can run alongside local services or bridge the gap while you wait. You get regular, one-to-one sessions with the same therapist each week and a clear plan you can follow at home between appointments.",
+        ],
+      },
+      {
+        heading: "Fitting sessions into a UK day",
+        paragraphs: [
+          "India is five and a half hours ahead of the UK in winter and four and a half hours ahead during British Summer Time. Sessions run Monday to Saturday with flexible timings, so Indian afternoon and evening slots fall in your morning or early afternoon. That works well for toddlers and preschoolers who are not yet in full-time school, for adults working flexible hours and for Saturday morning sessions.",
+          "Tell us where you are and what your week looks like when you get in touch, and we will find a regular slot that suits you.",
+        ],
+      },
+      {
+        heading: "Bilingual families",
+        paragraphs: [
+          "Many families we work with in the UK speak Malayalam, Hindi, Tamil, Urdu or another language at home while their children learn English at nursery and school. Parents are sometimes told, or worry, that this is why their child is late to talk. It is not. Research consistently shows that growing up with two or more languages does not cause speech or language delay.",
+          "Sessions are conducted in English, and we will always encourage you to keep using your home language. A strong home language supports your child's overall development, and the strategies you learn in sessions can be used in any language your family speaks.",
+        ],
+      },
+      {
+        heading: "What we help with",
+        paragraphs: ["Children and adults across the UK work with Speech Connect on:"],
+        points: [
+          "Late talking and language delay in toddlers and young children",
+          "Communication support for autistic children, delivered in a neurodiversity-affirming way",
+          "Stammering and stuttering at any age",
+          "Speech sound difficulties and unclear speech",
+          "Aphasia and dysarthria after a stroke or brain injury",
+          "Parent coaching and home practice plans",
+        ],
+      },
+      {
+        heading: "How sessions work",
+        paragraphs: [
+          "Every session is a live, one-to-one video call with Najiya P M. Young children learn through play, using toys, books and picture games, with a parent alongside to learn each strategy as it is used. Older children and adults work on structured exercises and everyday speaking practice. After each session you leave with a short list of things to practise at home, because that is where most progress happens.",
+          "Goals are written in plain language and reviewed regularly, so you always know what is improving and what comes next.",
+        ],
+      },
+      {
+        heading: "Your therapist",
+        paragraphs: [
+          "Najiya P M holds an M.Sc. in Speech-Language Pathology, is certified in Oral Placement Therapy (OPT) and is registered with the Rehabilitation Council of India (CRR No: A84512). She provides therapy online from India and works with each family directly.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Can we book from anywhere in the UK?",
+        a: "Yes. Sessions are online, so families in England, Scotland, Wales and Northern Ireland can all book, as long as they have a device with a camera and a stable internet connection.",
+      },
+      {
+        q: "Are you registered with the HCPC?",
+        a: "No. Najiya P M is registered with the Rehabilitation Council of India, the regulator for speech-language pathologists in India, and provides therapy online from India. If you need reports for NHS services, an EHCP or a school, please check what they require before booking.",
+      },
+      {
+        q: "Can online sessions run alongside NHS speech and language therapy?",
+        a: "Yes. Many families use online sessions while they wait for NHS therapy or between NHS blocks. Let us know about any other therapy your child receives so the plans work together.",
+      },
+      {
+        q: "What time are sessions in UK time?",
+        a: "India is four and a half to five and a half hours ahead of the UK, depending on the time of year. Sessions run Monday to Saturday, and most UK families choose a morning or early afternoon slot.",
+      },
+      {
+        q: "How do we get started from the UK?",
+        a: "Fill in the appointment form or message us on WhatsApp, and mention that you are in the UK. We will arrange an initial consultation at a time that suits you.",
+      },
+    ],
+    relatedPosts: [
+      "how-to-help-a-late-talker-at-home",
+      "is-online-speech-therapy-effective-for-children",
+      "speech-milestones-by-age-kerala-parents",
+    ],
+  },
+
+  {
     id: "india",
     path: "/online-speech-therapy-india",
     navLabel: "India",
@@ -264,104 +361,6 @@ export const LANDING_PAGES = [
     relatedPosts: [
       "is-online-speech-therapy-effective-for-children",
       "speech-milestones-by-age-kerala-parents",
-    ],
-  },
-
-  {
-    id: "abroad",
-    path: "/online-speech-therapy-for-malayali-families-abroad",
-    navLabel: "Families abroad",
-    seoTitle: "Online Speech Therapy for Malayali Families Abroad",
-    seoDescription:
-      "Online speech therapy from Kerala for Malayali families in the Gulf, UK, US and beyond. Live video sessions with an RCI-registered speech therapist.",
-    eyebrow: "For families abroad",
-    heading: ["Speech therapy for Malayali families", "living abroad"],
-    intro:
-      "Living in Dubai, Doha, London or Toronto shouldn't mean waiting months for a speech therapist or paying for care that never fits your family's routine. Speech Connect offers live online therapy from Kerala for Malayali and Indian families wherever they have settled.",
-    areaServed: [
-      { "@type": "Country", name: "United Arab Emirates" },
-      { "@type": "Country", name: "Saudi Arabia" },
-      { "@type": "Country", name: "Qatar" },
-      { "@type": "Country", name: "Oman" },
-      { "@type": "Country", name: "Kuwait" },
-      { "@type": "Country", name: "Bahrain" },
-      { "@type": "Country", name: "United Kingdom" },
-      { "@type": "Country", name: "United States" },
-      { "@type": "Country", name: "Canada" },
-      { "@type": "Country", name: "Australia" },
-    ],
-    sections: [
-      {
-        heading: "Why families abroad look for therapy from home",
-        paragraphs: [
-          "Parents who have moved overseas often tell us the same story. They noticed their child was slow to talk, joined a long waiting list, and found that when an appointment finally came it was expensive, infrequent or hard to fit around shift work. Some also wanted a therapist who understood the realities of a Malayali family: grandparents who visit for months at a time, holidays back in Kerala, and a home where more than one language is spoken.",
-          "Online therapy with Speech Connect gives you a consistent therapist from Kerala, regular sessions and a plan that travels with you, including on visits home. You also get to talk through your concerns with someone who understands the family context you come from, without having to explain it first.",
-        ],
-      },
-      {
-        heading: "Time zones that work",
-        paragraphs: [
-          "Sessions run Monday to Saturday on Indian Standard Time with flexible timings. For families in the Gulf, India is only one and a half to two and a half hours ahead, so after-school sessions are easy to arrange. In the UK and Europe, Indian afternoon and evening slots fall in your morning or early afternoon, which works well for younger children who are not yet at school and for weekend sessions.",
-          "Families in North America and Australia need a little more planning, but early-morning or evening slots on your side can often be arranged. Tell us where you are when you get in touch and we will look at what fits.",
-        ],
-      },
-      {
-        heading: "Bilingual children and late talking",
-        paragraphs: [
-          "Many parents abroad worry that speaking Malayalam at home while their child learns English at nursery is the reason their child is slow to talk. Research consistently shows that growing up with two languages does not cause speech or language delay. Bilingual children reach their milestones within the same broad timeframes as children learning one language, although their vocabulary may be split across both.",
-          "If a bilingual child is genuinely delayed, the delay shows up in both languages, and it deserves attention rather than a wait-and-see approach. Sessions with Speech Connect are conducted in English. We will never ask you to stop speaking Malayalam at home: a strong home language helps your child's overall development and keeps them connected to family back in Kerala.",
-        ],
-      },
-      {
-        heading: "Therapy that moves with your family",
-        paragraphs: [
-          "Families abroad move more than most: a new job in another emirate, a contract ending, a long summer back in Kerala, or a relocation to another country altogether. With an in-person therapist, each move means starting again with someone new. With online therapy, the therapist, the plan and the progress notes stay the same wherever you go.",
-          "We also keep in mind the people who help care for your child. Grandparents who stay for a few months, a nanny or a relative can join sessions to learn the strategies you use, so your child hears the same approach from everyone at home.",
-        ],
-      },
-      {
-        heading: "Who we help",
-        paragraphs: ["Families overseas most often come to us about:"],
-        points: [
-          "Toddlers and preschoolers who are late to talk",
-          "Autistic children, with communication support that respects how they naturally communicate",
-          "Stuttering and stammering in children and adults",
-          "Unclear speech and misarticulation",
-          "Parents or grandparents recovering communication after a stroke",
-        ],
-      },
-      {
-        heading: "Your therapist",
-        paragraphs: [
-          "Najiya P M is an RCI-registered Speech-Language Pathologist (CRR No: A84512) with an M.Sc. in Speech-Language Pathology and certification in Oral Placement Therapy. She works with every family directly, from the first consultation to the last session.",
-        ],
-      },
-    ],
-    faqs: [
-      {
-        q: "Can we start therapy from the Gulf, the UK or the US?",
-        a: "Yes. Sessions are online, so you can join from any country with a reliable internet connection. We schedule sessions in Indian Standard Time and work with you to find a slot that suits your time zone.",
-      },
-      {
-        q: "Is it a problem that we speak Malayalam at home?",
-        a: "No. Being bilingual does not cause speech delay. Sessions are in English, and we encourage you to keep using Malayalam at home, since a strong home language supports your child's development.",
-      },
-      {
-        q: "Can therapy continue when we visit Kerala?",
-        a: "Yes. As long as you have a stable internet connection, sessions continue as normal wherever you are, so holidays at home don't have to interrupt progress.",
-      },
-      {
-        q: "Should I wait to see if my bilingual child catches up?",
-        a: "If you are worried, it is better to get an assessment than to wait. Early support makes a real difference, and an assessment will tell you whether your child needs therapy at all.",
-      },
-      {
-        q: "How do we get started from abroad?",
-        a: "Fill in the appointment form or message us on WhatsApp, and mention the country and time zone you are in. We will arrange an initial consultation at a time that works for both sides.",
-      },
-    ],
-    relatedPosts: [
-      "speech-milestones-by-age-kerala-parents",
-      "speech-delay-vs-autism-early-signs",
     ],
   },
 ];
