@@ -123,7 +123,7 @@ function personEntity(therapist) {
     name: therapist.name,
     jobTitle: therapist.role,
     honorificSuffix: therapist.degrees,
-    image: therapist.photo || DEFAULT_IMAGE,
+    image: therapist.aboutPhoto || therapist.photo || DEFAULT_IMAGE,
     worksFor: { "@id": CLINIC_ID },
     knowsAbout: SERVICES,
     hasCredential: [

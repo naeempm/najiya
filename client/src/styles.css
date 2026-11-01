@@ -2665,6 +2665,8 @@ img {
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
+  /* Portraits: keep the face, not the shoulders, in the circle */
+  object-position: center 20%;
   flex-shrink: 0;
 }
 
