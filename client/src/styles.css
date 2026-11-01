@@ -2190,6 +2190,83 @@ img {
   color: var(--color-text-muted);
 }
 
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+
+.footer-legal button {
+  font-size: inherit;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+.footer-legal button:hover,
+.footer-legal button.active {
+  color: var(--color-accent);
+}
+
+/* ==========================================================================
+   LEGAL PAGES
+   ========================================================================== */
+
+.legal-wrap {
+  max-width: 820px;
+}
+
+.legal-updated {
+  margin-top: 12px;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.legal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.legal-section h2 {
+  font-size: 1.2rem;
+  color: var(--color-text-main);
+  margin-bottom: 10px;
+}
+
+.legal-section p + p,
+.legal-section p + ul,
+.legal-section ul + p {
+  margin-top: 10px;
+}
+
+.legal-section ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.legal-section li + li {
+  margin-top: 6px;
+}
+
+.legal-section a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.form-legal-note {
+  margin-top: 14px;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.form-legal-note button {
+  font-size: inherit;
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
 /* ==========================================================================
    MOBILE DOCK & TOASTS
    ========================================================================== */

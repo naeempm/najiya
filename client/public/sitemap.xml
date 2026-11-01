@@ -52,4 +52,18 @@
     <priority>0.80</priority>
   </url>
 
+  <!-- Legal -->
+  <url>
+    <loc>https://www.speechconnect.in/privacy-policy</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+  <url>
+    <loc>https://www.speechconnect.in/terms-and-conditions</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+
 </urlset>
