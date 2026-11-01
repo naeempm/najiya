@@ -2119,3 +2119,82 @@ button, input, textarea, select {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   BLOG MANAGER
+   ========================================================================== */
+
+.blog-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.blog-admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.blog-admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+}
+
+.blog-admin-row-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.blog-admin-row-main strong {
+  color: var(--text-primary);
+}
+
+.pill-status.draft {
+  background: var(--accent-amber-subtle);
+  color: var(--accent-amber);
+}
+
+.blog-admin-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.blog-admin-cover {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.blog-admin-content {
+  margin-top: 20px;
+}
+
+.blog-admin-content textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+}
+
+.blog-over-limit {
+  color: var(--accent-amber);
+}
+
+@media (max-width: 720px) {
+  .blog-admin-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

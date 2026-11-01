@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { v2 as cloudinary } from 'cloudinary';
 import { sendAppointmentNotificationEmails } from './emailService.js';
+import { registerBlogRoutes } from './blog.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -389,47 +390,9 @@ Host: https://www.speechconnect.in
 `);
 });
 
+// The sitemap is generated with the website build; send crawlers there
 app.get('/sitemap.xml', (_request, response) => {
-  response.type('application/xml');
-  response.send(`<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.speechconnect.in/</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.00</priority>
-  </url>
-  <url>
-    <loc>https://www.speechconnect.in/#services</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
-    <loc>https://www.speechconnect.in/#appointment</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
-    <loc>https://www.speechconnect.in/#about</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.speechconnect.in/#faq</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.speechconnect.in/#contact</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-</urlset>`);
+  response.redirect(301, 'https://www.speechconnect.in/sitemap.xml');
 });
 
 app.post('/api/upload', authenticateToken, async (request, response) => {
@@ -580,6 +543,8 @@ app.put('/api/content', authenticateToken, async (request, response, next) => {
     next(error);
   }
 });
+
+registerBlogRoutes(app, authenticateToken);
 
 app.get('/api/appointments', authenticateToken, async (_request, response, next) => {
   try {

@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
+import BlogManager from './BlogManager.jsx';
 
 const CLINIC_LOGO_URL = 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg';
 
@@ -195,6 +196,8 @@ const getClientUrl = () => {
 
 const API_URL = getApiUrl();
 const CLIENT_URL = getClientUrl();
+// Blog "View" links go to the public domain, or the local site in development
+const PUBLIC_SITE_URL = CLIENT_URL.includes('127.0.0.1') ? CLIENT_URL : 'https://www.speechconnect.in';
 
 function AdminApp() {
   const [token, setToken] = useState(() => localStorage.getItem('admin_token') || '');
@@ -204,7 +207,7 @@ function AdminApp() {
   const [loggingIn, setLoggingIn] = useState(false);
 
   // App navigation
-  const [activeTab, setActiveTab] = useState('content'); // 'content' | 'requests' | 'overview' | 'settings'
+  const [activeTab, setActiveTab] = useState('content'); // 'content' | 'requests' | 'blog' | 'overview' | 'settings'
   const [contentSection, setContentSection] = useState('therapist'); // 'therapist' | 'hero' | 'services' | 'highlights' | 'tags' | 'availability'
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -1004,6 +1007,21 @@ function AdminApp() {
 
           <button
             type="button"
+            className={`nav-item ${activeTab === 'blog' ? 'active' : ''}`}
+            onClick={() => {
+              setActiveTab('blog');
+              setSidebarOpen(false);
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+            <span>Blog</span>
+          </button>
+
+          <button
+            type="button"
             className={`nav-item ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => {
               setActiveTab('overview');
@@ -1093,6 +1111,7 @@ function AdminApp() {
             <span className="crumb-current">
               {activeTab === 'content' && 'Site Content Manager'}
               {activeTab === 'requests' && 'Patient Inquiries'}
+              {activeTab === 'blog' && 'Blog'}
               {activeTab === 'overview' && 'System Overview'}
               {activeTab === 'settings' && 'System Settings'}
             </span>
@@ -2082,6 +2101,17 @@ function AdminApp() {
         )}
 
         {/* SECTION 3: SYSTEM OVERVIEW & METRICS */}
+        {activeTab === 'blog' && (
+          <main className="min-content-area">
+            <BlogManager
+              apiUrl={API_URL}
+              token={token}
+              clientUrl={PUBLIC_SITE_URL}
+              showToast={showToast}
+            />
+          </main>
+        )}
+
         {activeTab === 'overview' && (
           <main className="min-content-area">
             <div className="pane-header">
