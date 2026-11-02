@@ -15,7 +15,6 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 
 const KERALA = { "@type": "State", name: "Kerala" };
 const DEFAULT_AREA = [
-  { "@type": "City", name: "Thrissur", containedInPlace: KERALA },
   KERALA,
   { "@type": "Country", name: "India" },
   { "@type": "Country", name: "United Arab Emirates" },
@@ -36,36 +35,36 @@ const SERVICES = [
 
 const STATIC_PAGES = {
   home: {
-    title: "Online Speech Therapy in Thrissur, Kerala | Speech Connect",
+    title: "Online Speech Therapy in Kerala, India, UAE & UK | Speech Connect",
     description:
-      "RCI-registered online speech therapy from Thrissur, Kerala. Live video sessions for children and adults across India and worldwide with Najiya P M.",
+      "RCI-registered online speech therapy with Najiya P M. Live video sessions for children and adults in Kerala, across India, the UAE and the UK.",
   },
   about: {
-    title: "Najiya P M, Speech Therapist in Thrissur | Speech Connect",
+    title: "Najiya P M, RCI-Registered Speech Therapist | Speech Connect",
     description:
-      "Meet Najiya P M, M.Sc. SLP, OPT, an RCI-registered speech-language pathologist based in Thrissur, Kerala, offering online therapy for all ages.",
+      "Meet Najiya P M, M.Sc. SLP, OPT, an RCI-registered speech-language pathologist from Kerala, offering online therapy in India, the UAE and the UK.",
     crumb: "About",
   },
   services: {
-    title: "Online Speech Therapy Services in Kerala | Speech Connect",
+    title: "Online Speech Therapy Services | Speech Connect",
     description:
-      "Online therapy for language delay, autism, stuttering, misarticulation, OPT, aphasia and stroke recovery, for families in Kerala, India and abroad.",
+      "Online therapy for language delay, autism, stuttering, misarticulation, OPT, aphasia and stroke recovery, for families in Kerala, India, the UAE and UK.",
     crumb: "Services",
   },
   appointment: {
-    title: "Book Online Speech Therapy, Kerala | Speech Connect",
+    title: "Book Online Speech Therapy | Speech Connect",
     description:
-      "Request an online speech therapy consultation with Najiya P M. Sessions Monday to Saturday for families in Thrissur, across Kerala and worldwide.",
+      "Request an online speech therapy consultation with Najiya P M. Sessions Monday to Saturday for families in Kerala, India, the UAE and the UK.",
     crumb: "Book an appointment",
   },
   contact: {
-    title: "Contact | Online Speech Therapy in Kerala | Speech Connect",
+    title: "Contact | Online Speech Therapy | Speech Connect",
     description:
-      "Contact Speech Connect by WhatsApp, phone or email to ask about online speech therapy from Thrissur, Kerala, for children and adults.",
+      "Contact Speech Connect by WhatsApp, phone or email about online speech therapy for children and adults in Kerala, India, the UAE and the UK.",
     crumb: "Contact",
   },
   blog: {
-    title: "Speech Therapy Blog for Kerala Parents | Speech Connect",
+    title: "Speech Therapy Blog for Parents | Speech Connect",
     description:
       "Practical guides on speech milestones, language delay, autism, stuttering and online therapy from Najiya P M, RCI-registered speech therapist.",
     crumb: "Blog",
@@ -95,7 +94,7 @@ function clinicEntity(therapist, areaServed = DEFAULT_AREA) {
     logo: LOGO,
     image: DEFAULT_IMAGE,
     description:
-      "Online speech and language therapy based in Thrissur, Kerala, for toddlers, children and adults across India and worldwide.",
+      "Online speech and language therapy from Kerala, India, for toddlers, children and adults across India, the UAE and the UK.",
     telephone: (therapist.call || "").replace(/\s+/g, ""),
     email: therapist.email,
     medicalSpecialty: "SpeechPathology",

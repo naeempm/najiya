@@ -51,7 +51,7 @@ export const DEFAULT_CONTENT = {
     badge: "Certified Telepractice • RCI Registered",
     title: "Empowering Speech & Language Through Expert Care",
     description:
-      "Personalized, evidence-based online speech therapy led by certified specialist Najiya P M (M.Sc. SLP, OPT). Transforming communication for toddlers, children, and adults worldwide.",
+      "Personalized, evidence-based online speech therapy led by certified specialist Najiya P M (M.Sc. SLP, OPT). Transforming communication for toddlers, children, and adults in Kerala, across India, the UAE and the UK.",
     photos: [
       "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043691/speech_connect/najiya-pm.jpg",
       "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043693/speech_connect/najiya-pm-2.jpg",
