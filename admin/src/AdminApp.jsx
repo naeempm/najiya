@@ -1,14 +1,14 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import BlogManager from './BlogManager.jsx';
 
-const CLINIC_LOGO_URL = 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg';
+const CLINIC_LOGO_URL = 'https://res.cloudinary.com/c4qcrdad/image/upload/v1793698975/speech_connect/logo.jpg';
 
 const PRESET_PHOTOS = [
   { label: 'Profile 1 (Hero)', url: 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043691/speech_connect/najiya-pm.jpg' },
   { label: 'Profile 2 (Alt Hero)', url: 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043693/speech_connect/najiya-pm-2.jpg' },
   { label: 'About Portrait', url: 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043695/speech_connect/najiya-pm-about.jpg' },
   { label: 'Brown Background Portrait', url: 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043697/speech_connect/najiya-pm-brown-bg.jpg' },
-  { label: 'Clinic Logo', url: 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg' },
+  { label: 'Clinic Logo', url: 'https://res.cloudinary.com/c4qcrdad/image/upload/v1793698975/speech_connect/logo.jpg' },
 ];
 
 const DEFAULT_CONTENT = {

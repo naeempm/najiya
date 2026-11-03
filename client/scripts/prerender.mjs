@@ -9,7 +9,7 @@
 import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = path.join(root, "dist");
@@ -24,7 +24,7 @@ const {
   renderSeoHead,
   resolvePath,
   siteContent,
-} = await import(ssrEntry);
+} = await import(pathToFileURL(ssrEntry).href);
 
 function apiBase() {
   const url = (process.env.PRERENDER_API_URL || process.env.VITE_API_URL || "https://najiya.vercel.app").replace(/\/$/, "");

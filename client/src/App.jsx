@@ -23,7 +23,7 @@ function readSavedTheme() {
 
 // Shown at 44px, so a small copy instead of the 1254px original
 const CLINIC_LOGO_URL = cdnImage(
-  "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg",
+  "https://res.cloudinary.com/c4qcrdad/image/upload/v1793698975/speech_connect/logo.jpg",
   144
 );
 

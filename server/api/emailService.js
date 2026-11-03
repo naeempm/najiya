@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
-const CLINIC_LOGO_URL = 'https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg';
+const CLINIC_LOGO_URL = 'https://res.cloudinary.com/c4qcrdad/image/upload/v1793698975/speech_connect/logo.jpg';
 
 function getResendConfig() {
   const apiKey = process.env.RESEND_API_KEY?.replace(/^["']|["']$/g, '').trim();

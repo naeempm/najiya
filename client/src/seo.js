@@ -7,7 +7,7 @@ import { PAGE_PATHS, SITE_NAME, SITE_URL, blogPostPath } from "./site.js";
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043691/speech_connect/najiya-pm.jpg";
 const LOGO =
-  "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043690/speech_connect/logo.jpg";
+  "https://res.cloudinary.com/c4qcrdad/image/upload/v1793698975/speech_connect/logo.jpg";
 
 const CLINIC_ID = `${SITE_URL}/#clinic`;
 const PERSON_ID = `${SITE_URL}/#najiya`;
