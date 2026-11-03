@@ -355,6 +355,7 @@ function App({ initialPath, initialData = {} }) {
   const [heroCtaInView, setHeroCtaInView] = useState(true);
   const heroTrackRef = useRef(null);
   const heroCtaRef = useRef(null);
+  const isFirstRender = useRef(true);
 
   // Compact header once the page scrolls
   useEffect(() => {
@@ -577,6 +578,13 @@ function App({ initialPath, initialData = {} }) {
 
   useEffect(() => {
     applySeo(buildSeo(route, { therapist, post: currentPost }));
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "PageView");
+    }
   }, [route, therapist, currentPost]);
 
   // A blog post keeps "Blog" highlighted in the navigation
@@ -710,6 +718,9 @@ function App({ initialPath, initialData = {} }) {
       showToast("Appointment request submitted successfully!", "success");
       setForm(EMPTY_FORM);
       setSubmitted(true);
+      if (typeof window !== "undefined" && typeof window.fbq === "function") {
+        window.fbq("track", "Lead");
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setStatus("Unable to connect to server. Redirecting you to WhatsApp...");
