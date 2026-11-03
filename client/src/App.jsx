@@ -10,7 +10,7 @@ import { BlogIndex, BlogPost, NotFound } from "./blog.jsx";
 
 // v2: the old key was written on every visit (defaulting to dark), so it
 // can't distinguish a real choice from the old default.
-const THEME_STORAGE_KEY = "speech_connect_theme_v2";
+const THEME_STORAGE_KEY = "speech_connect_theme_v3";
 
 function readSavedTheme() {
   try {
@@ -438,29 +438,16 @@ function App({ initialPath, initialData = {} }) {
     return () => observer.disconnect();
   }, [path, submitted, posts, postCache]);
 
-  // Theme: explicit user choice wins, otherwise follow the OS preference.
-  // The inline script in index.html applies the same rule before first paint.
+  // Theme: defaults to light mode. Explicit user choice is saved and respected.
   const [theme, setTheme] = useState(() => {
     if (typeof window === "undefined") return "light";
     const saved = readSavedTheme();
-    if (saved) return saved;
-    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return saved || "light";
   });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
-
-  // Track OS theme changes until the visitor picks one explicitly
-  useEffect(() => {
-    const media = window.matchMedia?.("(prefers-color-scheme: dark)");
-    if (!media) return;
-    const handleChange = (e) => {
-      if (!readSavedTheme()) setTheme(e.matches ? "dark" : "light");
-    };
-    media.addEventListener("change", handleChange);
-    return () => media.removeEventListener("change", handleChange);
-  }, []);
 
   function chooseTheme(next) {
     setTheme(next);
