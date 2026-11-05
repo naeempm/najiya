@@ -4273,3 +4273,115 @@ img {
 .contact-tile:active {
   transform: scale(0.975);
 }
+
+/* ==========================================================================
+   Enquiry popup
+   ========================================================================== */
+
+html:has(.enquiry-dialog[open]) {
+  overflow: hidden;
+}
+
+.enquiry-dialog {
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  color: var(--color-text-main);
+  box-shadow: var(--shadow-lg);
+}
+
+.enquiry-dialog::backdrop {
+  background: var(--scrim);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enquiry-dialog[open] {
+    animation: enquiryIn 0.3s var(--ease-calm) both;
+  }
+}
+
+@keyframes enquiryIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.enquiry-panel {
+  position: relative;
+  padding: 28px;
+}
+
+.enquiry-panel h2 {
+  margin: 0 36px 8px 0;
+  font-size: 1.4rem;
+  line-height: 1.25;
+}
+
+.enquiry-lead {
+  margin: 0 0 18px;
+  color: var(--color-text-secondary);
+}
+
+.enquiry-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.enquiry-close:hover {
+  background: var(--hover-wash);
+}
+
+.enquiry-form {
+  display: grid;
+  gap: 14px;
+}
+
+.enquiry-form .submit-btn {
+  width: 100%;
+}
+
+.enquiry-form .form-legal-note {
+  margin: 0;
+}
+
+.enquiry-form .status-region:empty {
+  display: none;
+}
+
+.enquiry-sent {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 16px 0 4px;
+  text-align: center;
+}
+
+.enquiry-sent h2 {
+  margin: 8px 0 0;
+}
+
+.enquiry-sent p {
+  margin: 0 0 12px;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 480px) {
+  .enquiry-panel {
+    padding: 22px 20px;
+  }
+}
