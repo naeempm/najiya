@@ -6,6 +6,7 @@ import { FAQS } from "./content/faqs.js";
 import { LANDING_PAGES } from "./content/landingPages.js";
 import { applySeo, buildSeo } from "./seo.js";
 import LandingPage from "./LandingPage.jsx";
+import EnquiryPopup from "./EnquiryPopup.jsx";
 import { BlogIndex, BlogPost, NotFound } from "./blog.jsx";
 
 // v2: the old key was written on every visit (defaulting to dark), so it
@@ -2008,6 +2009,11 @@ function App({ initialPath, initialData = {} }) {
           </a>
         </aside>
       )}
+
+      <EnquiryPopup
+        paused={activeView === "appointment" || submitted || menuOpen}
+        whatsappLink={whatsappLink}
+      />
 
       {/* Toast Notifications */}
       <div className="toast-container" aria-live="polite">

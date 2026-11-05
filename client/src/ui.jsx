@@ -103,6 +103,7 @@ const STROKE_ICONS = {
     </>
   ),
   check: <path d="M20 6 9 17l-5-5" />,
+  close: <path d="M18 6 6 18M6 6l12 12" />,
   activity: <path d="M22 12h-4l-3 9L9 3l-3 9H2" />,
   globe: (
     <>
