@@ -59,7 +59,12 @@ export default function EnquiryPopup({ paused, whatsappLink }) {
       const response = await fetch(`${API_URL}/appointments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, service: "Website enquiry" }),
+        body: JSON.stringify({
+          ...form,
+          // The API requires concerns, but the message is optional here
+          concerns: form.concerns.trim() || "No message left",
+          service: "Website enquiry",
+        }),
       });
       if (!response.ok) throw new Error("Request failed");
 
@@ -149,7 +154,7 @@ export default function EnquiryPopup({ paused, whatsappLink }) {
 
               <div className="form-field">
                 <label className="form-label" htmlFor="enquiry-concerns">
-                  How can we help? <span className="req" aria-hidden="true">*</span>
+                  How can we help? <span className="field-hint">(optional)</span>
                 </label>
                 <textarea
                   id="enquiry-concerns"
@@ -159,7 +164,6 @@ export default function EnquiryPopup({ paused, whatsappLink }) {
                   placeholder="e.g. My 3-year-old is not talking yet"
                   value={form.concerns}
                   onChange={updateField}
-                  required
                 />
               </div>
 
