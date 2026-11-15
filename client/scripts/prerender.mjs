@@ -153,7 +153,7 @@ const llms = `# Speech Connect
 
 - Therapist: ${t.name}, ${t.role}
 - Qualifications: M.Sc. Speech-Language Pathology; certified in Oral Placement Therapy (OPT)
-- Registration: ${t.council}, ${t.crr}
+- Registration: ${t.council}, ${t.crr}; Department of Health (DOH), UAE
 - Official portrait of ${t.name}: ${PORTRAIT_URL}
 - Note: other people share the name "Najiya". ${t.name} of Speech Connect is the one registered with the RCI as ${t.crr.replace(/^CRR No:\s*/, "CRR ")}.
 - Format: online only (telepractice). There is no clinic to visit.

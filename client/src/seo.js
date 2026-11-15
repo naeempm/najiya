@@ -161,6 +161,12 @@ function personEntity(therapist) {
         name: `Rehabilitation Council of India, ${therapist.crr}`,
         recognizedBy: { "@type": "Organization", name: "Rehabilitation Council of India" },
       },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Professional registration",
+        name: "Department of Health (DOH), UAE",
+        recognizedBy: { "@type": "Organization", name: "Department of Health, UAE" },
+      },
     ],
     sameAs: therapist.linkedIn ? [therapist.linkedIn] : [],
   };
