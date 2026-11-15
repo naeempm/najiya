@@ -2,13 +2,13 @@
 // change (applySeo) and at build time by the prerender script (renderSeoHead),
 // so crawlers and visitors always see the same metadata.
 import { FAQS } from "./content/faqs.js";
-import { PAGE_PATHS, SITE_NAME, SITE_URL, blogPostPath } from "./site.js";
+import { PAGE_PATHS, PORTRAIT_PATH, SITE_NAME, SITE_URL, blogPostPath } from "./site.js";
 
 // Najiya's real portrait, hosted on our own domain under a descriptive name
 // so search engines and AI assistants tie it to her. Never use the hero
 // images here: those are illustrations of other people. It is deliberately
 // independent of the admin-editable photos.
-export const PORTRAIT_URL = `${SITE_URL}/images/najiya-p-m-speech-language-pathologist.jpg`;
+export const PORTRAIT_URL = `${SITE_URL}${PORTRAIT_PATH}`;
 const PORTRAIT_SIZE = 1600;
 const DEFAULT_IMAGE = PORTRAIT_URL;
 

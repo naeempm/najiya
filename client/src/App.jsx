@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 import { PrivacyPolicy, TermsAndConditions } from "./legal.jsx";
-import { API_URL, PAGE_PATHS, cdnImage, legacyHashPath, resolvePath } from "./site.js";
+import { API_URL, PAGE_PATHS, PORTRAIT_PATH, cdnImage, legacyHashPath, resolvePath } from "./site.js";
 import { FAQS } from "./content/faqs.js";
 import { LANDING_PAGES } from "./content/landingPages.js";
 import { applySeo, buildSeo } from "./seo.js";
@@ -1120,7 +1120,7 @@ function App({ initialPath, initialData = {} }) {
                   <Blob variant={1} className="meet-blob" />
                   <div className="blob-frame meet-photo-frame">
                     <img
-                      src={cdnImage(therapist.aboutPhoto || therapist.photo, 900)}
+                      src={PORTRAIT_PATH}
                       alt={`${therapist.name}, ${therapist.role}`}
                       className="blob-photo"
                       loading="lazy"
@@ -1318,7 +1318,7 @@ function App({ initialPath, initialData = {} }) {
                 <Blob variant={2} className="about-photo-blob" />
                 <div className="blob-frame about-photo-frame">
                   <img
-                    src={cdnImage(therapist.aboutPhoto || therapist.photo, 900)}
+                    src={PORTRAIT_PATH}
                     alt={`${therapist.name}, ${therapist.role}`}
                     className="blob-photo"
                   />
