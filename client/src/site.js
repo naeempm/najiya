@@ -50,6 +50,7 @@ export const PAGE_PATHS = {
   blog: "/blog",
   privacy: "/privacy-policy",
   terms: "/terms-and-conditions",
+  areas: "/areas-we-serve",
 };
 
 // Old #section links (from the previous sitemap) map onto the new pages

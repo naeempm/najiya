@@ -2,12 +2,15 @@
 // don't reuse paragraphs across pages with only the place name swapped.
 // Sessions are offered in English and Malayalam; don't promise any other language.
 
+import { ABROAD_PAGES } from "./landingPagesAbroad.js";
+
 const KERALA = { "@type": "State", name: "Kerala" };
 const INDIA = { "@type": "Country", name: "India" };
 
-export const LANDING_PAGES = [
+const HOME_PAGES = [
   {
     id: "kerala",
+    region: "India",
     path: "/online-speech-therapy-kerala",
     navLabel: "Kerala",
     seoTitle: "Online Speech Therapy in Kerala | Speech Connect",
@@ -96,6 +99,7 @@ export const LANDING_PAGES = [
 
   {
     id: "uae",
+    region: "Middle East",
     path: "/online-speech-therapy-uae",
     navLabel: "UAE",
     seoTitle: "Online Speech Therapy in the UAE | Speech Connect",
@@ -190,6 +194,7 @@ export const LANDING_PAGES = [
 
   {
     id: "uk",
+    region: "Europe",
     path: "/online-speech-therapy-uk",
     navLabel: "UK",
     seoTitle: "Online Speech Therapy in the UK | Speech Connect",
@@ -282,6 +287,7 @@ export const LANDING_PAGES = [
 
   {
     id: "india",
+    region: "India",
     path: "/online-speech-therapy-india",
     navLabel: "India",
     seoTitle: "Online Speech Therapy in India | RCI-Registered SLP",
@@ -365,3 +371,12 @@ export const LANDING_PAGES = [
     ],
   },
 ];
+
+// Display order: the footer shows FOOTER_AREA_IDS, then "View more" links to
+// /areas-we-serve, which lists every page grouped by AREA_REGIONS.
+const ORDER = ["kerala", "india", "uae", "uk", "us", "saudi-arabia", "qatar", "oman", "kuwait", "bahrain", "canada", "australia", "ireland"];
+const ALL_PAGES = [...HOME_PAGES, ...ABROAD_PAGES];
+
+export const LANDING_PAGES = ORDER.map((id) => ALL_PAGES.find((page) => page.id === id));
+export const FOOTER_AREA_IDS = ["kerala", "india", "uae", "uk", "us"];
+export const AREA_REGIONS = ["India", "Middle East", "Europe", "North America", "Asia-Pacific"];

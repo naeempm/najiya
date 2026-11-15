@@ -32,6 +32,15 @@ const DEFAULT_AREA = [
   { "@type": "Country", name: "India" },
   { "@type": "Country", name: "United Arab Emirates" },
   { "@type": "Country", name: "United Kingdom" },
+  { "@type": "Country", name: "United States" },
+  { "@type": "Country", name: "Saudi Arabia" },
+  { "@type": "Country", name: "Qatar" },
+  { "@type": "Country", name: "Oman" },
+  { "@type": "Country", name: "Kuwait" },
+  { "@type": "Country", name: "Bahrain" },
+  { "@type": "Country", name: "Canada" },
+  { "@type": "Country", name: "Australia" },
+  { "@type": "Country", name: "Ireland" },
 ];
 
 const SERVICES = [
@@ -81,6 +90,12 @@ const STATIC_PAGES = {
     description:
       "Practical guides on speech milestones, language delay, autism, stuttering and online therapy from Najiya P M, RCI-registered speech therapist.",
     crumb: "Blog",
+  },
+  areas: {
+    title: "Areas We Serve | Online Speech Therapy | Speech Connect",
+    description:
+      "Online speech therapy in English or Malayalam for families in Kerala, India, the UAE, the Gulf, the UK, Ireland, the US, Canada and Australia.",
+    crumb: "Areas we serve",
   },
   privacy: {
     title: "Privacy Policy | Speech Connect",
