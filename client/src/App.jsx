@@ -313,6 +313,28 @@ export function mergeContent(prev, liveData) {
   };
 }
 
+const WHATSAPP_GREETING = "Hi, I would like to enquire about Speech & Language Therapy Services";
+const EMAIL_SUBJECT = "Speech & Language Therapy enquiry";
+
+// mailto: does nothing on computers without a mail app set up, so on
+// desktop the link opens a Gmail draft in a new tab instead. Phones keep
+// mailto:, which opens their mail app.
+function emailLinkProps(email) {
+  const subject = encodeURIComponent(EMAIL_SUBJECT);
+  return {
+    href: `mailto:${email}?subject=${subject}`,
+    onClick: (event) => {
+      if (!isPlainClick(event) || !window.matchMedia("(pointer: fine)").matches) return;
+      event.preventDefault();
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${subject}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    },
+  };
+}
+
 function currentPath() {
   return typeof window === "undefined" ? "/" : window.location.pathname;
 }
@@ -623,7 +645,7 @@ function App({ initialPath, initialData = {} }) {
 
   const whatsappLink = useMemo(() => {
     const textParts = [
-      `Hello ${therapist.name ? therapist.name.split(" ")[0] : "Najiya"}, I would like to enquire about Speech Therapy consultation.`,
+      WHATSAPP_GREETING,
       form.name ? `Name: ${form.name}` : "",
       form.email ? `Email: ${form.email}` : "",
       form.age ? `Age: ${form.age}` : "",
@@ -734,7 +756,8 @@ function App({ initialPath, initialData = {} }) {
     }
   }
 
-  const whatsappDirect = `https://wa.me/${(therapist.whatsapp || "").replace(/\D/g, "")}`;
+  const whatsappDirect = `https://wa.me/${(therapist.whatsapp || "919349412153").replace(/\D/g, "")}?text=${encodeURIComponent(WHATSAPP_GREETING)}`;
+  const emailLink = emailLinkProps(therapist.email);
   const callHref = `tel:${(therapist.call || "").replace(/\s+/g, "")}`;
 
   return (
@@ -1803,7 +1826,7 @@ function App({ initialPath, initialData = {} }) {
                   </span>
                 </a>
 
-                <a className="contact-tile tint-2 reveal" href={`mailto:${therapist.email}`}>
+                <a className="contact-tile tint-2 reveal" {...emailLink}>
                   <span className="icon-badge">
                     <Icon name="mail" />
                   </span>
@@ -1894,7 +1917,8 @@ function App({ initialPath, initialData = {} }) {
               Evidence-based online care led by{" "}
               <strong>{therapist.name || "Najiya P M"}</strong> (
               {therapist.degrees || "M.Sc. SLP, OPT"}), registered with the
-              Rehabilitation Council of India ({therapist.crr || "CRR No: A84512"}).
+              Rehabilitation Council of India (RCI) &amp; Department of Health
+              (DOH), UAE.
             </p>
           </div>
 
@@ -1949,7 +1973,7 @@ function App({ initialPath, initialData = {} }) {
               )}
               {therapist.email && (
                 <li>
-                  <a className="footer-link" href={`mailto:${therapist.email}`}>
+                  <a className="footer-link" {...emailLink}>
                     <Icon name="mail" size={16} /> Email us
                   </a>
                 </li>

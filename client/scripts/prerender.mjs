@@ -152,7 +152,7 @@ const llms = `# Speech Connect
 
 - Therapist: ${t.name}, ${t.role}
 - Qualifications: M.Sc. Speech-Language Pathology; certified in Oral Placement Therapy (OPT)
-- Registration: ${t.council}, ${t.crr}
+- Registration: ${t.council}, ${t.crr}; Department of Health (DOH), UAE
 - Official portrait of ${t.name}: ${t.aboutPhoto}
 - Format: online only (telepractice). There is no clinic to visit.
 - Session languages: English and Malayalam (the family chooses)
