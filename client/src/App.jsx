@@ -3,9 +3,10 @@ import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 import { PrivacyPolicy, TermsAndConditions } from "./legal.jsx";
 import { API_URL, PAGE_PATHS, PORTRAIT_PATH, cdnImage, legacyHashPath, resolvePath } from "./site.js";
 import { FAQS } from "./content/faqs.js";
-import { LANDING_PAGES } from "./content/landingPages.js";
+import { FOOTER_AREA_IDS, LANDING_PAGES } from "./content/landingPages.js";
 import { applySeo, buildSeo } from "./seo.js";
 import LandingPage from "./LandingPage.jsx";
+import AreasPage from "./AreasPage.jsx";
 import EnquiryPopup from "./EnquiryPopup.jsx";
 import { BlogIndex, BlogPost, NotFound } from "./blog.jsx";
 
@@ -1910,6 +1911,7 @@ function App({ initialPath, initialData = {} }) {
           />
         )}
         {activeView === "notFound" && <NotFound linkTo={linkTo} />}
+        {activeView === "areas" && <AreasPage linkTo={linkTo} />}
 
         {activeView === "privacy" && <PrivacyPolicy therapist={therapist} />}
         {activeView === "terms" && <TermsAndConditions therapist={therapist} />}
@@ -1954,7 +1956,7 @@ function App({ initialPath, initialData = {} }) {
           <nav className="footer-col" aria-label="Areas we serve">
             <h2 className="footer-heading">Areas we serve</h2>
             <ul className="footer-links">
-              {LANDING_PAGES.map((page) => (
+              {LANDING_PAGES.filter((page) => FOOTER_AREA_IDS.includes(page.id)).map((page) => (
                 <li key={page.id}>
                   <a
                     className={`footer-link ${route.landing?.id === page.id ? "active" : ""}`}
@@ -1964,6 +1966,14 @@ function App({ initialPath, initialData = {} }) {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  className={`footer-link footer-link-more ${activeView === "areas" ? "active" : ""}`}
+                  {...linkTo(PAGE_PATHS.areas)}
+                >
+                  View more <Icon name="arrowRight" size={14} />
+                </a>
+              </li>
             </ul>
           </nav>
 

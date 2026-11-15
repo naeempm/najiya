@@ -4385,3 +4385,19 @@ html:has(.enquiry-dialog[open]) {
     padding: 22px 20px;
   }
 }
+
+/* Areas we serve page and footer "View more" link */
+.areas-region + .areas-region {
+  margin-top: clamp(40px, 6vw, 72px);
+}
+
+.areas-region .section-title {
+  margin-bottom: 20px;
+}
+
+.footer-link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
