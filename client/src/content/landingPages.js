@@ -1,6 +1,6 @@
 // Local landing pages. Each page's copy is written for its own audience;
 // don't reuse paragraphs across pages with only the place name swapped.
-// Sessions are in English only, so no page should promise another language.
+// Sessions are offered in English and Malayalam; don't promise any other language.
 
 const KERALA = { "@type": "State", name: "Kerala" };
 const INDIA = { "@type": "Country", name: "India" };
@@ -56,7 +56,7 @@ export const LANDING_PAGES = [
         heading: "The first steps",
         paragraphs: [
           "Everything starts with a conversation. After you request a session, we arrange an intake consultation to understand your concerns, your child's development or your medical history, and what you most want to change. From there, Najiya P M carries out an assessment and builds a therapy plan with clear, measurable goals.",
-          "Sessions are conducted in English. Parents who speak Malayalam at home should keep doing so, since a strong home language supports a child's overall language development, and the strategies we coach can be used in any language.",
+          "Sessions are available in English or Malayalam, so you can choose the language your family is most comfortable with. Whichever you choose, keep using your home language with your child: a strong home language supports overall language development, and the strategies we coach work in any language.",
         ],
       },
       {
@@ -81,7 +81,7 @@ export const LANDING_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Sessions are conducted in English. You are encouraged to keep speaking Malayalam at home, and the strategies you learn work in any language.",
+        a: "Yes. Sessions are available in English or Malayalam. Choose the language your child and family are most comfortable with, and keep using it at home.",
       },
       {
         q: "Do you treat adults as well as children?",
@@ -100,7 +100,7 @@ export const LANDING_PAGES = [
     navLabel: "UAE",
     seoTitle: "Online Speech Therapy in the UAE | Speech Connect",
     seoDescription:
-      "Online speech therapy for families in Dubai, Abu Dhabi, Sharjah and across the UAE. Live English sessions with an RCI-registered speech therapist.",
+      "Online speech therapy for families in Dubai, Abu Dhabi, Sharjah and across the UAE. English or Malayalam sessions with an RCI-registered therapist.",
     eyebrow: "United Arab Emirates",
     heading: ["Online speech therapy", "in the UAE"],
     intro:
@@ -130,7 +130,7 @@ export const LANDING_PAGES = [
         heading: "Growing up with more than one language",
         paragraphs: [
           "Many children in the UAE hear two or three languages every day: one at home, English at nursery or school, and often Arabic as well. Parents sometimes worry that this is why their child is late to talk. Research consistently shows that growing up with more than one language does not cause speech or language delay. Bilingual children reach their milestones within the same broad timeframes, although their words may be split across languages.",
-          "If a child is genuinely delayed, the delay shows up in every language they hear, and it deserves attention rather than waiting. Sessions with Speech Connect are conducted in English. We will never ask you to stop using your home language; a strong home language supports your child's overall development and keeps them close to family.",
+          "If a child is genuinely delayed, the delay shows up in every language they hear, and it deserves attention rather than waiting. Sessions with Speech Connect are available in English or Malayalam. We will never ask you to stop using your home language; a strong home language supports your child's overall development and keeps them close to family.",
         ],
       },
       {
@@ -173,7 +173,7 @@ export const LANDING_PAGES = [
       },
       {
         q: "Does speaking more than one language at home cause speech delay?",
-        a: "No. Being bilingual or multilingual does not cause speech delay. Sessions are in English, and we encourage you to keep using your home language with your child.",
+        a: "No. Being bilingual or multilingual does not cause speech delay. Sessions are available in English or Malayalam, and we encourage you to keep using your home language with your child.",
       },
       {
         q: "How do we get started from the UAE?",
@@ -193,7 +193,7 @@ export const LANDING_PAGES = [
     navLabel: "UK",
     seoTitle: "Online Speech Therapy in the UK | Speech Connect",
     seoDescription:
-      "Online speech and language therapy for families in London, Birmingham, Manchester and across the UK. Live English sessions with Najiya P M.",
+      "Online speech and language therapy for families in London, Birmingham, Manchester and across the UK. English or Malayalam sessions with Najiya P M.",
     eyebrow: "United Kingdom",
     heading: ["Online speech therapy", "in the UK"],
     intro:
@@ -221,7 +221,7 @@ export const LANDING_PAGES = [
         heading: "Bilingual families",
         paragraphs: [
           "Many families we work with in the UK speak Malayalam, Hindi, Tamil, Urdu or another language at home while their children learn English at nursery and school. Parents are sometimes told, or worry, that this is why their child is late to talk. It is not. Research consistently shows that growing up with two or more languages does not cause speech or language delay.",
-          "Sessions are conducted in English, and we will always encourage you to keep using your home language. A strong home language supports your child's overall development, and the strategies you learn in sessions can be used in any language your family speaks.",
+          "Sessions are available in English or Malayalam, and we will always encourage you to keep using your home language. A strong home language supports your child's overall development, and the strategies you learn in sessions can be used in any language your family speaks.",
         ],
       },
       {
@@ -285,11 +285,11 @@ export const LANDING_PAGES = [
     navLabel: "India",
     seoTitle: "Online Speech Therapy in India | RCI-Registered SLP",
     seoDescription:
-      "Online speech therapy anywhere in India with an RCI-registered speech-language pathologist. English sessions for children and adults, Monday to Saturday.",
+      "Online speech therapy anywhere in India with an RCI-registered speech-language pathologist. English or Malayalam sessions for all ages.",
     eyebrow: "Anywhere in India",
     heading: ["Online speech therapy", "anywhere in India"],
     intro:
-      "Whether you live in a metro or a small town, Speech Connect offers live, one-to-one speech and language therapy by video call with an RCI-registered speech-language pathologist, in English, at times that fit around your family.",
+      "Whether you live in a metro or a small town, Speech Connect offers live, one-to-one speech and language therapy by video call with an RCI-registered speech-language pathologist, in English or Malayalam, at times that fit around your family.",
     areaServed: [INDIA],
     sections: [
       {
@@ -308,9 +308,9 @@ export const LANDING_PAGES = [
         ],
       },
       {
-        heading: "Sessions in English",
+        heading: "Sessions in English or Malayalam",
         paragraphs: [
-          "All sessions are conducted in English. This suits families who use English at home or whose children attend English-medium schools, and it suits adults who are comfortable working in English. If your family speaks another language at home, keep using it. Children can learn more than one language, and the home strategies you are coached in are designed to carry over into whichever language you speak.",
+          "Sessions are available in English or Malayalam. English suits families whose children attend English-medium schools and adults who are comfortable working in English; Malayalam suits Malayali families who speak it at home. If your family speaks another language at home, keep using it. Children can learn more than one language, and the home strategies you are coached in are designed to carry over into whichever language you speak.",
         ],
       },
       {
@@ -351,7 +351,7 @@ export const LANDING_PAGES = [
       },
       {
         q: "What language are sessions in?",
-        a: "All sessions are conducted in English. Families who speak another language at home are encouraged to keep doing so.",
+        a: "Sessions are available in English or Malayalam. Families who speak another language at home are encouraged to keep using it with their child.",
       },
       {
         q: "What are your session timings?",

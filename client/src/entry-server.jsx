@@ -4,7 +4,8 @@ import { renderToString } from "react-dom/server";
 import App, { DEFAULT_CONTENT, mergeContent } from "./App.jsx";
 
 export { buildSeo, renderSeoHead } from "./seo.js";
-export { STATIC_PATHS, SITE_URL, blogPostPath, resolvePath } from "./site.js";
+export { PAGE_PATHS, STATIC_PATHS, SITE_URL, blogPostPath, resolvePath } from "./site.js";
+export { LANDING_PAGES } from "./content/landingPages.js";
 
 export function siteContent(liveContent) {
   return liveContent ? mergeContent(DEFAULT_CONTENT, liveContent) : DEFAULT_CONTENT;

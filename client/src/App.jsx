@@ -946,7 +946,8 @@ function App({ initialPath, initialData = {} }) {
                         <img
                           key={photo}
                           src={cdnImage(photo, 900)}
-                          alt={`${therapist.name}, speech-language pathologist, during an online session`}
+                          // Hero images are illustrations, not photos of Najiya
+                          alt="Illustration of an online speech therapy session by video call"
                           className="hero-slide"
                           loading={index < 2 ? "eager" : "lazy"}
                           fetchPriority={index === 0 ? "high" : "auto"}

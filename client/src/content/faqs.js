@@ -21,6 +21,10 @@ export const FAQS = [
     a: "Our neurodiversity-affirming approach honors each individual's unique communicative style. Rather than forcing conformity, we foster authentic connection, self-advocacy, multimodal communication (including AAC where appropriate), and regulation, supporting individuals on the Autism Spectrum Disorder (ASD) to thrive.",
   },
   {
+    q: "What languages are therapy sessions available in?",
+    a: "Sessions are available in English and Malayalam. Families choose the language their child or family member is most comfortable with, and we encourage everyone to keep using their home language every day.",
+  },
+  {
     q: "Can adults receive stroke rehabilitation and aphasia recovery through online telepractice?",
     a: "Yes. Clinical research confirms telepractice is highly effective for adult neurological rehabilitation. We provide targeted therapies for post-stroke aphasia (word retrieval and sentence formulation), dysarthria (muscle weakness), and cognitive-communication deficits to regain independence in daily conversations.",
   },

@@ -25,6 +25,28 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
+# AI assistants and AI search (ChatGPT, Claude, Perplexity, Gemini)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 # Sitemap Location
 Sitemap: https://www.speechconnect.in/sitemap.xml
 Host: https://www.speechconnect.in

@@ -4,8 +4,19 @@
 import { FAQS } from "./content/faqs.js";
 import { PAGE_PATHS, SITE_NAME, SITE_URL, blogPostPath } from "./site.js";
 
+// Najiya's real portrait. Search engines and AI assistants take the page
+// image as her photo, so never fall back to the hero images: those are
+// illustrations of other people.
 const DEFAULT_IMAGE =
-  "https://res.cloudinary.com/c4qcrdad/image/upload/v1791043691/speech_connect/najiya-pm.jpg";
+  "https://res.cloudinary.com/c4qcrdad/image/upload/v1793879605/speech_connect/micrguddsleiatxlj7li.jpg";
+
+function portraitOf(therapist = {}) {
+  return therapist.aboutPhoto || DEFAULT_IMAGE;
+}
+
+function portraitAlt(therapist = {}) {
+  return `${therapist.name || "Najiya P M"}, speech-language pathologist and founder of Speech Connect`;
+}
 const LOGO =
   "https://res.cloudinary.com/c4qcrdad/image/upload/v1793698975/speech_connect/logo.jpg";
 
@@ -92,7 +103,7 @@ function clinicEntity(therapist, areaServed = DEFAULT_AREA) {
     name: SITE_NAME,
     url: `${SITE_URL}/`,
     logo: LOGO,
-    image: DEFAULT_IMAGE,
+    image: portraitOf(therapist),
     description:
       "Online speech and language therapy from Kerala, India, for toddlers, children and adults across India, the UAE and the UK.",
     telephone: (therapist.call || "").replace(/\s+/g, ""),
@@ -124,7 +135,14 @@ function personEntity(therapist) {
     name: therapist.name,
     jobTitle: therapist.role,
     honorificSuffix: therapist.degrees,
-    image: therapist.aboutPhoto || therapist.photo || DEFAULT_IMAGE,
+    image: {
+      "@type": "ImageObject",
+      url: portraitOf(therapist),
+      contentUrl: portraitOf(therapist),
+      caption: portraitAlt(therapist),
+    },
+    description: `${therapist.name} is an RCI-registered speech-language pathologist (${therapist.crr}) from Kerala, India, and the founder of Speech Connect. She offers online speech therapy in English and Malayalam for children and adults in India, the UAE and the UK.`,
+    knowsLanguage: ["English", "Malayalam"],
     worksFor: { "@id": CLINIC_ID },
     knowsAbout: SERVICES,
     hasCredential: [
@@ -195,6 +213,8 @@ export function buildSeo(route, { therapist, post } = {}) {
       title: page.seoTitle,
       description: page.seoDescription,
       url,
+      image: portraitOf(therapist),
+      imageAlt: portraitAlt(therapist),
       jsonLd: graph(
         clinicEntity(therapist, page.areaServed),
         personEntity(therapist),
@@ -215,12 +235,13 @@ export function buildSeo(route, { therapist, post } = {}) {
         noindex: post === null,
       };
     }
-    const image = post.coverImage || DEFAULT_IMAGE;
+    const image = post.coverImage || portraitOf(therapist);
     return {
       title: post.metaTitle || `${post.title} | ${SITE_NAME}`,
       description: post.metaDescription || post.excerpt,
       url,
       image,
+      imageAlt: post.coverImage ? post.coverAlt || post.title : portraitAlt(therapist),
       type: "article",
       jsonLd: graph(
         {
@@ -268,12 +289,20 @@ export function buildSeo(route, { therapist, post } = {}) {
         ];
   if (route.view === "about") nodes.push(personEntity(therapist));
 
-  return { title: page.title, description: page.description, url, jsonLd: graph(...nodes) };
+  return {
+    title: page.title,
+    description: page.description,
+    url,
+    image: portraitOf(therapist),
+    imageAlt: portraitAlt(therapist),
+    jsonLd: graph(...nodes),
+  };
 }
 
 // Tag list shared by the browser and the prerenderer
 function seoTags(seo) {
   const image = seo.image || DEFAULT_IMAGE;
+  const imageAlt = seo.imageAlt || portraitAlt();
   return [
     ["meta", { name: "description", content: seo.description }],
     ["meta", { name: "robots", content: seo.noindex ? "noindex, follow" : "index, follow, max-image-preview:large" }],
@@ -283,9 +312,11 @@ function seoTags(seo) {
     ["meta", { property: "og:title", content: seo.title }],
     ["meta", { property: "og:description", content: seo.description }],
     ["meta", { property: "og:image", content: image }],
+    ["meta", { property: "og:image:alt", content: imageAlt }],
     ["meta", { name: "twitter:title", content: seo.title }],
     ["meta", { name: "twitter:description", content: seo.description }],
     ["meta", { name: "twitter:image", content: image }],
+    ["meta", { name: "twitter:image:alt", content: imageAlt }],
   ];
 }
 

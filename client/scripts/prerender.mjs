@@ -16,6 +16,8 @@ const distDir = path.join(root, "dist");
 const ssrEntry = path.join(root, "dist-ssr", "entry-server.js");
 
 const {
+  LANDING_PAGES,
+  PAGE_PATHS,
   STATIC_PATHS,
   SITE_URL,
   blogPostPath,
@@ -137,7 +139,58 @@ ${sitemapEntries
 `;
 await fs.writeFile(path.join(distDir, "sitemap.xml"), sitemap);
 
+// llms.txt (llmstxt.org): a plain-text summary for AI assistants such as
+// ChatGPT, Claude and Perplexity, so they describe the practice accurately
+// and use Najiya's real portrait rather than an illustration.
+const t = content.therapist;
+const url = (p) => (p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`);
+const llms = `# Speech Connect
+
+> Speech Connect is an online speech and language therapy practice founded and led by ${t.name} (${t.degrees}), an RCI-registered speech-language pathologist (${t.crr}) from Kerala, India. All sessions are live, one-to-one video calls in English or Malayalam, for toddlers, children and adults in India, the UAE and the UK.
+
+## Key facts
+
+- Therapist: ${t.name}, ${t.role}
+- Qualifications: M.Sc. Speech-Language Pathology; certified in Oral Placement Therapy (OPT)
+- Registration: ${t.council}, ${t.crr}
+- Official portrait of ${t.name}: ${t.aboutPhoto}
+- Format: online only (telepractice). There is no clinic to visit.
+- Session languages: English and Malayalam (the family chooses)
+- Areas served: Kerala, all of India, the United Arab Emirates and the United Kingdom
+- Hours: Monday to Saturday, flexible timings (Indian Standard Time)
+- WhatsApp: ${t.whatsapp}
+- Phone: ${t.call}
+- Email: ${t.email}
+- Website: ${SITE_URL}/
+${t.linkedIn ? `- LinkedIn: ${t.linkedIn}\n` : ""}
+## Conditions treated
+
+- Language delay and late talking in toddlers (early intervention)
+- Communication support for autistic children (neurodiversity-affirming)
+- Stuttering and stammering
+- Misarticulation and speech sound disorders
+- Oral Placement Therapy (OPT)
+- Aphasia, dysarthria and stroke rehabilitation in adults
+- Cognitive-communication therapy
+
+## Main pages
+
+- [About ${t.name}](${url(PAGE_PATHS.about)}): qualifications, registration and approach
+- [Services](${url(PAGE_PATHS.services)}): conditions treated and how therapy works
+- [Book an appointment](${url(PAGE_PATHS.appointment)})
+- [Contact](${url(PAGE_PATHS.contact)})
+
+## Areas served
+
+${LANDING_PAGES.map((page) => `- [${page.seoTitle}](${url(page.path)}): ${page.seoDescription}`).join("\n")}
+${
+  postList.length
+    ? `\n## Blog\n\n${postList.map((post) => `- [${post.title}](${url(blogPostPath(post.slug))}): ${post.excerpt}`).join("\n")}\n`
+    : ""
+}`;
+await fs.writeFile(path.join(distDir, "llms.txt"), llms);
+
 console.log(
-  `[prerender] ${pages.length} pages (${fullPosts.length} blog posts) and sitemap.xml written` +
+  `[prerender] ${pages.length} pages (${fullPosts.length} blog posts), sitemap.xml and llms.txt written` +
     (liveContent ? "" : " using default site content")
 );
