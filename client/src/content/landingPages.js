@@ -154,7 +154,7 @@ export const LANDING_PAGES = [
       {
         heading: "Your therapist",
         paragraphs: [
-          "Najiya P M holds an M.Sc. in Speech-Language Pathology, is certified in Oral Placement Therapy (OPT) and is registered with the Rehabilitation Council of India (CRR No: A84512). She works with every family directly, from the first consultation to the last session, and provides therapy online from India.",
+          "Najiya P M holds an M.Sc. in Speech-Language Pathology, is certified in Oral Placement Therapy (OPT) and is registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE. She works with every family directly, from the first consultation to the last session.",
         ],
       },
     ],
@@ -169,7 +169,7 @@ export const LANDING_PAGES = [
       },
       {
         q: "Are you licensed in the UAE?",
-        a: "Najiya P M is registered with the Rehabilitation Council of India and provides therapy online from India. If your school or insurer requires a UAE-licensed provider, please check with them before booking.",
+        a: "Yes. Najiya P M is registered with the Department of Health (DOH), UAE, as well as the Rehabilitation Council of India (RCI). If your school or insurer has specific requirements, please check with them before booking.",
       },
       {
         q: "Does speaking more than one language at home cause speech delay?",
