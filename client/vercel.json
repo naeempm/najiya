@@ -2,6 +2,16 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/images/najiya-pm.jpg",
+      "destination": "/images/najiya-p-m-speech-language-pathologist.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/images/najiya-pm-2.jpg",
+      "destination": "/images/najiya-p-m-speech-language-pathologist.jpg",
+      "permanent": true
+    },
+    {
       "source": "/online-speech-therapy-thrissur",
       "destination": "/online-speech-therapy-kerala",
       "permanent": true

@@ -17,6 +17,7 @@ const ssrEntry = path.join(root, "dist-ssr", "entry-server.js");
 
 const {
   LANDING_PAGES,
+  PORTRAIT_URL,
   PAGE_PATHS,
   STATIC_PATHS,
   SITE_URL,
@@ -153,7 +154,8 @@ const llms = `# Speech Connect
 - Therapist: ${t.name}, ${t.role}
 - Qualifications: M.Sc. Speech-Language Pathology; certified in Oral Placement Therapy (OPT)
 - Registration: ${t.council}, ${t.crr}; Department of Health (DOH), UAE
-- Official portrait of ${t.name}: ${t.aboutPhoto}
+- Official portrait of ${t.name}: ${PORTRAIT_URL}
+- Note: other people share the name "Najiya". ${t.name} of Speech Connect is the one registered with the RCI as ${t.crr.replace(/^CRR No:\s*/, "CRR ")}.
 - Format: online only (telepractice). There is no clinic to visit.
 - Session languages: English and Malayalam (the family chooses)
 - Areas served: Kerala, all of India, the United Arab Emirates and the United Kingdom
@@ -189,6 +191,29 @@ ${
     : ""
 }`;
 await fs.writeFile(path.join(distDir, "llms.txt"), llms);
+
+// IndexNow: tell Bing (which powers ChatGPT search) and other engines that
+// the pages changed, so they re-crawl soon instead of on their own schedule.
+// Production deploys only; a failure never breaks the build.
+const INDEXNOW_KEY = "c81381397600157cdbe5846a8ee91cef"; // also public/<key>.txt
+if (process.env.VERCEL_ENV === "production") {
+  try {
+    const response = await fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        host: new URL(SITE_URL).host,
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+        urlList: [...sitemapEntries.map((entry) => entry.loc), `${SITE_URL}/llms.txt`, PORTRAIT_URL],
+      }),
+      signal: AbortSignal.timeout(10000),
+    });
+    console.log(`[prerender] IndexNow: HTTP ${response.status}`);
+  } catch (error) {
+    console.warn(`[prerender] IndexNow ping failed: ${error.message}`);
+  }
+}
 
 console.log(
   `[prerender] ${pages.length} pages (${fullPosts.length} blog posts), sitemap.xml and llms.txt written` +

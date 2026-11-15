@@ -4,14 +4,16 @@
 import { FAQS } from "./content/faqs.js";
 import { PAGE_PATHS, SITE_NAME, SITE_URL, blogPostPath } from "./site.js";
 
-// Najiya's real portrait. Search engines and AI assistants take the page
-// image as her photo, so never fall back to the hero images: those are
-// illustrations of other people.
-const DEFAULT_IMAGE =
-  "https://res.cloudinary.com/c4qcrdad/image/upload/v1793879605/speech_connect/micrguddsleiatxlj7li.jpg";
+// Najiya's real portrait, hosted on our own domain under a descriptive name
+// so search engines and AI assistants tie it to her. Never use the hero
+// images here: those are illustrations of other people. It is deliberately
+// independent of the admin-editable photos.
+export const PORTRAIT_URL = `${SITE_URL}/images/najiya-p-m-speech-language-pathologist.jpg`;
+const PORTRAIT_SIZE = 1600;
+const DEFAULT_IMAGE = PORTRAIT_URL;
 
-function portraitOf(therapist = {}) {
-  return therapist.aboutPhoto || DEFAULT_IMAGE;
+function portraitOf() {
+  return PORTRAIT_URL;
 }
 
 function portraitAlt(therapist = {}) {
@@ -139,6 +141,8 @@ function personEntity(therapist) {
       "@type": "ImageObject",
       url: portraitOf(therapist),
       contentUrl: portraitOf(therapist),
+      width: PORTRAIT_SIZE,
+      height: PORTRAIT_SIZE,
       caption: portraitAlt(therapist),
     },
     description: `${therapist.name} is an RCI-registered speech-language pathologist (${therapist.crr}) from Kerala, India, and the founder of Speech Connect. She offers online speech therapy in English and Malayalam for children and adults in India, the UAE and the UK.`,
@@ -290,7 +294,15 @@ export function buildSeo(route, { therapist, post } = {}) {
     route.view === "home"
       ? [clinicEntity(therapist), personEntity(therapist), websiteEntity(), faqEntity(FAQS, url)]
       : [
-          { "@type": "WebPage", "@id": url, url, name: page.title, isPartOf: { "@id": WEBSITE_ID } },
+          {
+            // The About page is Najiya's profile page
+            "@type": route.view === "about" ? "ProfilePage" : "WebPage",
+            "@id": url,
+            url,
+            name: page.title,
+            isPartOf: { "@id": WEBSITE_ID },
+            ...(route.view === "about" && { mainEntity: { "@id": PERSON_ID } }),
+          },
           breadcrumbEntity([HOME_CRUMB, { name: page.crumb, path: route.path }]),
         ];
   if (route.view === "about") nodes.push(personEntity(therapist));
