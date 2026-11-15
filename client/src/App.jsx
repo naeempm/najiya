@@ -362,6 +362,10 @@ function App({ initialPath, initialData = {} }) {
   const route = useMemo(() => resolvePath(path), [path]);
   const activeView = route.view;
   const [posts, setPosts] = useState(initialData.posts || null);
+  // Prerendered posts date from the last build, so fetch the live list once
+  // per page load even when we already have some.
+  const [postsLoaded, setPostsLoaded] = useState(false);
+  const prerenderedSlug = useRef(initialData.post?.slug);
   const [postCache, setPostCache] = useState(() =>
     initialData.post ? { [initialData.post.slug]: initialData.post } : {}
   );
@@ -570,29 +574,38 @@ function App({ initialPath, initialData = {} }) {
   // post pages. A post cached as null was not found.
   const needsPosts = ["blog", "landing", "post"].includes(activeView);
   useEffect(() => {
-    if (!needsPosts || posts) return;
+    if (!needsPosts || postsLoaded) return;
     let cancelled = false;
     fetch(`${API_URL}/blog`)
-      .then((res) => (res.ok ? res.json() : []))
-      .catch(() => [])
+      .then((res) => (res.ok ? res.json() : null))
+      .catch(() => null)
       .then((list) => {
-        if (!cancelled) setPosts(Array.isArray(list) ? list : []);
+        if (cancelled) return;
+        // If the API is unreachable, keep the prerendered list
+        setPosts((current) => (Array.isArray(list) ? list : current || []));
+        setPostsLoaded(true);
       });
     return () => {
       cancelled = true;
     };
-  }, [needsPosts, posts]);
+  }, [needsPosts, postsLoaded]);
 
   const postSlug = route.view === "post" ? route.slug : null;
   const currentPost = postSlug ? postCache[postSlug] : undefined;
   useEffect(() => {
-    if (!postSlug || postSlug in postCache) return;
+    // A prerendered post is refetched once in case it was edited since the build
+    const stale = postSlug && postSlug === prerenderedSlug.current;
+    if (!postSlug || (postSlug in postCache && !stale)) return;
     let cancelled = false;
     fetch(`${API_URL}/blog/${postSlug}`)
       .then((res) => (res.ok ? res.json() : null))
       .catch(() => null)
       .then((post) => {
-        if (!cancelled) setPostCache((cache) => ({ ...cache, [postSlug]: post }));
+        if (cancelled) return;
+        if (stale) prerenderedSlug.current = null;
+        // Keep the prerendered copy if the refetch fails
+        if (stale && !post) return;
+        setPostCache((cache) => ({ ...cache, [postSlug]: post }));
       });
     return () => {
       cancelled = true;
