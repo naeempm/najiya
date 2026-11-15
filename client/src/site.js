@@ -1,6 +1,12 @@
 import { LANDING_PAGES } from "./content/landingPages.js";
 
 export const SITE_URL = "https://www.speechconnect.in";
+
+// Najiya's portrait, served from our own domain (not Cloudinary) at one
+// fixed, descriptive URL. Every page, the share tags and the schema use this
+// same file, so search engines and AI assistants (ChatGPT etc.) learn that
+// this is her photo. To change it, replace the file under public/images.
+export const PORTRAIT_PATH = "/images/najiya-p-m-speech-language-pathologist.jpg";
 export const SITE_NAME = "Speech Connect";
 
 const getApiUrl = () => {
