@@ -146,7 +146,7 @@ const t = content.therapist;
 const url = (p) => (p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`);
 const llms = `# Speech Connect
 
-> Speech Connect is an online speech and language therapy practice founded and led by ${t.name} (${t.degrees}), an RCI-registered speech-language pathologist (${t.crr}) from Kerala, India. All sessions are live, one-to-one video calls in English, for toddlers, children and adults in India, the UAE and the UK.
+> Speech Connect is an online speech and language therapy practice founded and led by ${t.name} (${t.degrees}), an RCI-registered speech-language pathologist (${t.crr}) from Kerala, India. All sessions are live, one-to-one video calls in English or Malayalam, for toddlers, children and adults in India, the UAE and the UK.
 
 ## Key facts
 
@@ -155,7 +155,7 @@ const llms = `# Speech Connect
 - Registration: ${t.council}, ${t.crr}
 - Official portrait of ${t.name}: ${t.aboutPhoto}
 - Format: online only (telepractice). There is no clinic to visit.
-- Session language: English only
+- Session languages: English and Malayalam (the family chooses)
 - Areas served: Kerala, all of India, the United Arab Emirates and the United Kingdom
 - Hours: Monday to Saturday, flexible timings (Indian Standard Time)
 - WhatsApp: ${t.whatsapp}
