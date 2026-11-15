@@ -181,6 +181,7 @@ export const LANDING_PAGES = [
       },
     ],
     relatedPosts: [
+      "malayalam-speech-therapy-uae-bilingual-children",
       "how-to-help-a-late-talker-at-home",
       "is-online-speech-therapy-effective-for-children",
       "speech-delay-vs-autism-early-signs",
