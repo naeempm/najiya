@@ -926,10 +926,10 @@ function App({ initialPath, initialData = {} }) {
                   </span>
 
                   <h1 className="hero-heading reveal">
-                    {/* Fixed keyword line, so the page's main heading says what
-                        and where even if the admin edits the title below */}
-                    <span className="hero-kicker">Online speech therapy from Kerala</span>
                     {withAmpersand(hero.title)}
+                    {/* Fixed keyword line, so the page's main heading says what
+                        and where even if the admin edits the title above */}
+                    <span className="hero-subtitle">Online speech therapy from Kerala</span>
                   </h1>
 
                   <p className="lead reveal">{hero.description}</p>
