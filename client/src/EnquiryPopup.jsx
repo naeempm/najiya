@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./ui.jsx";
-import { API_URL, PAGE_PATHS } from "./site.js";
+import { API_URL, COUNTRY_OPTIONS, PAGE_PATHS } from "./site.js";
 
 const DELAY_MS = 10000;
 const SEEN_KEY = "enquiry-popup-seen"; // sessionStorage: once per visit
 const SENT_KEY = "enquiry-popup-sent"; // localStorage: never after an enquiry
 
-const EMPTY_ENQUIRY = { name: "", phone: "", concerns: "" };
+const EMPTY_ENQUIRY = { name: "", phone: "", country: "", concerns: "" };
 
 function alreadyHandled() {
   try {
@@ -150,6 +150,28 @@ export default function EnquiryPopup({ paused, whatsappLink }) {
                   onChange={updateField}
                   required
                 />
+              </div>
+
+              <div className="form-field">
+                <label className="form-label" htmlFor="enquiry-country">
+                  Country <span className="field-hint">(optional)</span>
+                </label>
+                <input
+                  id="enquiry-country"
+                  name="country"
+                  type="text"
+                  list="enquiry-country-options"
+                  autoComplete="country-name"
+                  className="form-input"
+                  placeholder="e.g. India, United Arab Emirates"
+                  value={form.country}
+                  onChange={updateField}
+                />
+                <datalist id="enquiry-country-options">
+                  {COUNTRY_OPTIONS.map((name) => (
+                    <option key={name} value={name} />
+                  ))}
+                </datalist>
               </div>
 
               <div className="form-field">

@@ -6,6 +6,7 @@ import App, { DEFAULT_CONTENT, mergeContent } from "./App.jsx";
 export { PORTRAIT_URL, buildSeo, renderSeoHead } from "./seo.js";
 export { PAGE_PATHS, STATIC_PATHS, SITE_URL, blogPostPath, resolvePath } from "./site.js";
 export { LANDING_PAGES } from "./content/landingPages.js";
+export { FAQS } from "./content/faqs.js";
 
 export function siteContent(liveContent) {
   return liveContent ? mergeContent(DEFAULT_CONTENT, liveContent) : DEFAULT_CONTENT;

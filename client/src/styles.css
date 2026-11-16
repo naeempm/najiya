@@ -343,6 +343,18 @@ img {
   line-height: var(--leading-tight);
 }
 
+/* Small keyword line at the top of the home h1 */
+.hero-kicker {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: var(--color-accent);
+}
+
 .page-main-heading,
 .bio-title {
   font-size: var(--text-3xl);

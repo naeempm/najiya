@@ -802,6 +802,7 @@ function AdminApp() {
         !q ||
         (app.name && app.name.toLowerCase().includes(q)) ||
         (app.phone && app.phone.toLowerCase().includes(q)) ||
+        (app.country && app.country.toLowerCase().includes(q)) ||
         (app.concerns && app.concerns.toLowerCase().includes(q)) ||
         (app.service && app.service.toLowerCase().includes(q));
       return matchesStatus && matchesSearch;
@@ -1998,6 +1999,10 @@ function AdminApp() {
                         <div className="meta-col">
                           <span className="field-lbl">Email</span>
                           <span className="field-val">{app.email || '—'}</span>
+                        </div>
+                        <div className="meta-col">
+                          <span className="field-lbl">Country</span>
+                          <span className="field-val">{app.country || '—'}</span>
                         </div>
                         <div className="meta-col">
                           <span className="field-lbl">Age / Gender</span>
