@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './styles.css';
 
@@ -7,10 +7,18 @@ import './styles.css';
 // render matches the HTML already on screen.
 const initialData = window.__PRERENDER_DATA__ || {};
 
-// createRoot (not hydrateRoot) replaces the prerendered markup, which avoids
-// hydration mismatches from per-visitor state such as the saved theme.
-createRoot(document.getElementById('root')).render(
+const app = (
   <React.StrictMode>
     <App initialData={initialData} />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
+
+// Prerendered pages are hydrated, so the HTML already on screen is reused
+// rather than redrawn (much faster first paint). app-shell.html, used for
+// pages that weren't prerendered, has an empty root and renders normally.
+const root = document.getElementById('root');
+if (root.hasChildNodes()) {
+  hydrateRoot(root, app);
+} else {
+  createRoot(root).render(app);
+}
