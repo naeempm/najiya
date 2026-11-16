@@ -9,6 +9,22 @@ export const SITE_URL = "https://www.speechconnect.in";
 export const PORTRAIT_PATH = "/images/najiya-p-m-speech-language-pathologist.jpg";
 export const SITE_NAME = "Speech Connect";
 
+// Suggestions for the country field; visitors can type any country
+export const COUNTRY_OPTIONS = [
+  "India",
+  "United Arab Emirates",
+  "Saudi Arabia",
+  "Qatar",
+  "Oman",
+  "Kuwait",
+  "Bahrain",
+  "United Kingdom",
+  "Ireland",
+  "United States",
+  "Canada",
+  "Australia",
+];
+
 const getApiUrl = () => {
   const isLocal =
     typeof window !== "undefined" &&

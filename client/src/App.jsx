@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 import { PrivacyPolicy, TermsAndConditions } from "./legal.jsx";
-import { API_URL, PAGE_PATHS, PORTRAIT_PATH, cdnImage, legacyHashPath, resolvePath } from "./site.js";
+import { API_URL, COUNTRY_OPTIONS, PAGE_PATHS, PORTRAIT_PATH, cdnImage, legacyHashPath, resolvePath } from "./site.js";
 import { FAQS } from "./content/faqs.js";
 import { FOOTER_AREA_IDS, LANDING_PAGES } from "./content/landingPages.js";
 import { applySeo, buildSeo } from "./seo.js";
@@ -240,6 +240,7 @@ const EMPTY_FORM = {
   age: "",
   gender: "",
   phone: "",
+  country: "",
   concerns: "",
 };
 
@@ -665,6 +666,7 @@ function App({ initialPath, initialData = {} }) {
       form.age ? `Age: ${form.age}` : "",
       form.gender ? `Gender: ${form.gender}` : "",
       form.phone ? `Mobile: ${form.phone}` : "",
+      form.country ? `Country: ${form.country}` : "",
       form.concerns ? `Concern: ${form.concerns}` : "",
     ].filter(Boolean);
 
@@ -923,7 +925,12 @@ function App({ initialPath, initialData = {} }) {
                     {hero.badge}
                   </span>
 
-                  <h1 className="hero-heading reveal">{withAmpersand(hero.title)}</h1>
+                  <h1 className="hero-heading reveal">
+                    {/* Fixed keyword line, so the page's main heading says what
+                        and where even if the admin edits the title below */}
+                    <span className="hero-kicker">Online speech therapy from Kerala</span>
+                    {withAmpersand(hero.title)}
+                  </h1>
 
                   <p className="lead reveal">{hero.description}</p>
 
@@ -1661,6 +1668,29 @@ function App({ initialPath, initialData = {} }) {
                             onChange={updateField}
                           />
                         </div>
+                      </div>
+
+                      <div className="form-field">
+                        <label className="form-label" htmlFor="form-country">
+                          Country <span className="req" aria-hidden="true">*</span>
+                        </label>
+                        <input
+                          id="form-country"
+                          name="country"
+                          type="text"
+                          list="country-options"
+                          autoComplete="country-name"
+                          className="form-input"
+                          placeholder="e.g. India, United Arab Emirates"
+                          value={form.country}
+                          onChange={updateField}
+                          required
+                        />
+                        <datalist id="country-options">
+                          {COUNTRY_OPTIONS.map((name) => (
+                            <option key={name} value={name} />
+                          ))}
+                        </datalist>
                       </div>
 
                       <div className="form-field">

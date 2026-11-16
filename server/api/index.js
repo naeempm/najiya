@@ -106,6 +106,11 @@ const appointmentSchema = new mongoose.Schema(
       default: '',
       trim: true,
     },
+    country: {
+      type: String,
+      default: '',
+      trim: true,
+    },
     service: {
       type: String,
       default: '',
@@ -559,7 +564,7 @@ app.get('/api/appointments', authenticateToken, async (_request, response, next)
 });
 
 app.post('/api/appointments', async (request, response, next) => {
-  const { name, email, age, gender, phone, service, message, concerns } = request.body;
+  const { name, email, age, gender, phone, country, service, message, concerns } = request.body;
 
   if (!name || !phone || !concerns) {
     return response.status(400).json({ error: 'Name, mobile, and concerns are required.' });
@@ -572,6 +577,7 @@ app.post('/api/appointments', async (request, response, next) => {
       age: age || '',
       gender: gender || '',
       phone: phone || '',
+      country: country || '',
       service: service || 'Appointment request',
       message: message || '',
       concerns: concerns || '',

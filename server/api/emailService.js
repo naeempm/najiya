@@ -143,6 +143,11 @@ function buildClientEmailHtml(appointment) {
             <td style="color: #6b7280; font-weight: 500; padding: 4px 0;">Contact Phone:</td>
             <td style="color: #111827; font-weight: 600; text-align: right; padding: 4px 0;">${appointment.phone}</td>
           </tr>
+          ${appointment.country ? `
+          <tr>
+            <td style="color: #6b7280; font-weight: 500; padding: 4px 0;">Country:</td>
+            <td style="color: #111827; font-weight: 600; text-align: right; padding: 4px 0;">${appointment.country}</td>
+          </tr>` : ''}
           <tr>
             <td style="color: #6b7280; font-weight: 500; padding: 4px 0;">Requested Service:</td>
             <td style="color: #235e52; font-weight: 700; text-align: right; padding: 4px 0;">${appointment.service || 'Speech Therapy'}</td>
@@ -275,6 +280,10 @@ function buildAdminAlertEmailHtml(appointment) {
         <tr>
           <td class="lbl">Phone / Mobile</td>
           <td class="val"><a href="${callUrl}" style="color: #0f172a; text-decoration: none;">${appointment.phone}</a></td>
+        </tr>
+        <tr>
+          <td class="lbl">Country</td>
+          <td class="val">${appointment.country || 'Not specified'}</td>
         </tr>
         ${appointment.email ? `
         <tr style="background-color: #f8fafc;">

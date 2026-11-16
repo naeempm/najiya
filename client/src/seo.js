@@ -126,6 +126,9 @@ function clinicEntity(therapist, areaServed = DEFAULT_AREA) {
     telephone: (therapist.call || "").replace(/\s+/g, ""),
     email: therapist.email,
     medicalSpecialty: "SpeechPathology",
+    alternateName: ["Speech Connect Kerala", "Speech Connect Online Speech Therapy"],
+    slogan: "Kerala-based online speech and language therapy",
+    availableLanguage: ["English", "Malayalam"],
     // Online-only practice: city-level location, no street address
     address: {
       "@type": "PostalAddress",
