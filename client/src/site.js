@@ -7,6 +7,11 @@ export const SITE_URL = "https://www.speechconnect.in";
 // same file, so search engines and AI assistants (ChatGPT etc.) learn that
 // this is her photo. To change it, replace the file under public/images.
 export const PORTRAIT_PATH = "/images/najiya-p-m-speech-language-pathologist.jpg";
+// Smaller WebP copies of the same portrait for on-page display
+export const PORTRAIT_SRCSET = [240, 480, 800]
+  .map((w) => `/images/najiya-p-m-speech-language-pathologist-${w}.webp ${w}w`)
+  .concat(`${PORTRAIT_PATH} 1600w`)
+  .join(", ");
 export const SITE_NAME = "Speech Connect";
 
 // Suggestions for the country field; visitors can type any country

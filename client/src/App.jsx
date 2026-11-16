@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Icon, Blob, WaveDivider, iconFor } from "./ui.jsx";
 import { PrivacyPolicy, TermsAndConditions } from "./legal.jsx";
-import { API_URL, COUNTRY_OPTIONS, PAGE_PATHS, PORTRAIT_PATH, cdnImage, legacyHashPath, resolvePath } from "./site.js";
+import { API_URL, COUNTRY_OPTIONS, PAGE_PATHS, PORTRAIT_PATH, PORTRAIT_SRCSET, cdnImage, legacyHashPath, resolvePath } from "./site.js";
 import { FAQS } from "./content/faqs.js";
 import { FOOTER_AREA_IDS, LANDING_PAGES } from "./content/landingPages.js";
 import { applySeo, buildSeo } from "./seo.js";
@@ -452,6 +452,13 @@ function App({ initialPath, initialData = {} }) {
     if (reduceMotion || !("IntersectionObserver" in window)) return;
 
     const root = document.documentElement;
+    // On the first load, content already in view stays visible instead of
+    // fading in after the scripts arrive (that delay hurt LCP badly)
+    if (!root.classList.contains("js-reveal")) {
+      document.querySelectorAll(".reveal").forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-visible");
+      });
+    }
     root.classList.add("js-reveal");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -478,6 +485,13 @@ function App({ initialPath, initialData = {} }) {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  // Theme-dependent UI (toggle icon, labels) renders as the prerendered HTML
+  // did until after hydration, so a saved dark theme can't cause a mismatch.
+  // The page colours come from data-theme, set before React even loads.
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  const uiTheme = hydrated ? theme : "light";
 
   function chooseTheme(next) {
     setTheme(next);
@@ -788,7 +802,7 @@ function App({ initialPath, initialData = {} }) {
           <a className="brand-link" {...linkTo("/")} aria-label="Speech Connect home">
             <img
               src={CLINIC_LOGO_URL}
-              alt=""
+              alt="Speech Connect logo"
               className="brand-logo-img"
             />
             <span className="brand-text-wrap">
@@ -823,10 +837,10 @@ function App({ initialPath, initialData = {} }) {
               className="theme-toggle-btn"
               type="button"
               onClick={toggleTheme}
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              aria-label={uiTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              title={uiTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             >
-              <Icon name={theme === "dark" ? "sun" : "moon"} size={19} />
+              <Icon name={uiTheme === "dark" ? "sun" : "moon"} size={19} />
             </button>
 
             <button
@@ -869,16 +883,16 @@ function App({ initialPath, initialData = {} }) {
               <div className="theme-toggle-chips" role="group" aria-label="Colour theme">
                 <button
                   type="button"
-                  className={`theme-chip ${theme === "light" ? "active" : ""}`}
-                  aria-pressed={theme === "light"}
+                  className={`theme-chip ${uiTheme === "light" ? "active" : ""}`}
+                  aria-pressed={uiTheme === "light"}
                   onClick={() => chooseTheme("light")}
                 >
                   <Icon name="sun" size={16} /> Light
                 </button>
                 <button
                   type="button"
-                  className={`theme-chip ${theme === "dark" ? "active" : ""}`}
-                  aria-pressed={theme === "dark"}
+                  className={`theme-chip ${uiTheme === "dark" ? "active" : ""}`}
+                  aria-pressed={uiTheme === "dark"}
                   onClick={() => chooseTheme("dark")}
                 >
                   <Icon name="moon" size={16} /> Dark
@@ -990,6 +1004,8 @@ function App({ initialPath, initialData = {} }) {
                         <img
                           key={photo}
                           src={cdnImage(photo, 900)}
+                          srcSet={`${cdnImage(photo, 480)} 480w, ${cdnImage(photo, 900)} 900w, ${cdnImage(photo, 1200)} 1200w`}
+                          sizes="(max-width: 860px) 85vw, 560px"
                           // Hero images are illustrations, not photos of Najiya
                           alt="Illustration of an online speech therapy session by video call"
                           className="hero-slide"
@@ -1142,6 +1158,10 @@ function App({ initialPath, initialData = {} }) {
                   <div className="blob-frame meet-photo-frame">
                     <img
                       src={PORTRAIT_PATH}
+                      srcSet={PORTRAIT_SRCSET}
+                      sizes="(max-width: 860px) 80vw, 480px"
+                      width="1600"
+                      height="1600"
                       alt={`${therapist.name}, ${therapist.role}`}
                       className="blob-photo"
                       loading="lazy"
@@ -1340,6 +1360,10 @@ function App({ initialPath, initialData = {} }) {
                 <div className="blob-frame about-photo-frame">
                   <img
                     src={PORTRAIT_PATH}
+                    srcSet={PORTRAIT_SRCSET}
+                    sizes="(max-width: 860px) 80vw, 480px"
+                    width="1600"
+                    height="1600"
                     alt={`${therapist.name}, ${therapist.role}`}
                     className="blob-photo"
                   />
@@ -1952,7 +1976,7 @@ function App({ initialPath, initialData = {} }) {
         <div className="section-wrap footer-grid">
           <div className="footer-brand">
             <div className="footer-brand-badge">
-              <img src={CLINIC_LOGO_URL} alt="" className="brand-logo-img" />
+              <img src={CLINIC_LOGO_URL} alt="Speech Connect logo" className="brand-logo-img" />
               <span className="brand-text-wrap">
                 <span className="brand-title">Speech Connect</span>
                 <span className="brand-sub">Online speech &amp; language telepractice</span>

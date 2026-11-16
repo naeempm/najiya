@@ -24,6 +24,7 @@ const {
   SITE_URL,
   blogPostPath,
   buildSeo,
+  cdnImage,
   render,
   renderSeoHead,
   resolvePath,
@@ -104,6 +105,19 @@ const postList = fullPosts.map(({ content: _text, ...meta }) => meta);
 // last build). It renders client-side, so it carries no page-specific tags.
 await fs.writeFile(path.join(distDir, "app-shell.html"), template);
 
+// Vercel serves 404.html, with a real 404 status, for any URL that isn't a
+// file, a prerendered page or a blog post (see vercel.json). Before this,
+// unknown URLs returned the home page title with status 200 (a "soft 404").
+{
+  const route = resolvePath("/404");
+  const data = { content: liveContent || undefined };
+  const head = renderSeoHead(buildSeo(route, { therapist: content.therapist }));
+  await fs.writeFile(
+    path.join(distDir, "404.html"),
+    fillTemplate(template, { head, appHtml: render("/404", data), data })
+  );
+}
+
 const pages = [
   ...STATIC_PATHS.map((urlPath) => ({ urlPath })),
   ...fullPosts.map((post) => ({ urlPath: blogPostPath(post.slug), post })),
@@ -121,7 +135,14 @@ for (const { urlPath, post } of pages) {
   };
 
   const appHtml = render(urlPath, data);
-  const head = renderSeoHead(buildSeo(route, { therapist: content.therapist, post }));
+  let head = renderSeoHead(buildSeo(route, { therapist: content.therapist, post }));
+  // The first hero image is the home page's largest element: fetch it early,
+  // with the same srcset/sizes as the <img> so the browser reuses it
+  const heroPhoto = route.view === "home" && content.hero?.photos?.[0];
+  if (heroPhoto) {
+    const srcset = [480, 900, 1200].map((w) => `${cdnImage(heroPhoto, w)} ${w}w`).join(", ");
+    head += `\n<link rel="preload" as="image" href="${cdnImage(heroPhoto, 900)}" imagesrcset="${srcset}" imagesizes="(max-width: 860px) 85vw, 560px" fetchpriority="high" />`;
+  }
   await writePage(urlPath, fillTemplate(template, { head, appHtml, data }));
 
   const lastmod = post

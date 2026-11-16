@@ -1,6 +1,6 @@
 import React from "react";
 
-const LAST_UPDATED = "1 November 2026";
+const LAST_UPDATED = "16 November 2026";
 
 function LegalSection({ title, children }) {
   return (
@@ -58,8 +58,13 @@ export function PrivacyPolicy({ therapist }) {
           progress records needed to provide care.
         </p>
         <p>
-          This website does not use advertising or analytics cookies. It stores
-          only your light/dark theme choice in your browser's local storage.
+          This website uses the Meta Pixel, a tool from Meta Platforms (Facebook
+          and Instagram), to measure visits and enquiries from our adverts. It
+          sets cookies and shares information such as the pages you visit and
+          whether you submit an enquiry with Meta. You can control this through
+          your browser's cookie settings and your Facebook ad preferences. The
+          site also stores your light/dark theme choice in your browser's local
+          storage.
         </p>
       </LegalSection>
 

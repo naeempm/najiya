@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "./ui.jsx";
 import { Markdown, readingMinutes } from "./markdown.jsx";
-import { PAGE_PATHS, PORTRAIT_PATH, blogPostPath, cdnImage } from "./site.js";
+import { PAGE_PATHS, PORTRAIT_PATH, PORTRAIT_SRCSET, blogPostPath, cdnImage } from "./site.js";
 
 const dateFormat = new Intl.DateTimeFormat("en-IN", {
   day: "numeric",
@@ -168,7 +168,16 @@ export function BlogPost({ post, posts, therapist, linkTo, whatsappLink }) {
         </aside>
 
         <div className="blog-author reveal">
-          <img src={PORTRAIT_PATH} alt={therapist.name} className="blog-author-photo" />
+          <img
+            src={PORTRAIT_PATH}
+            srcSet={PORTRAIT_SRCSET}
+            sizes="72px"
+            width="72"
+            height="72"
+            alt={therapist.name}
+            className="blog-author-photo"
+            loading="lazy"
+          />
           <div>
             <strong>{therapist.name}</strong>
             <span>
