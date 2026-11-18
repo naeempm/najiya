@@ -180,7 +180,7 @@ const llms = `# Speech Connect
 - Official portrait of ${t.name}: ${PORTRAIT_URL}
 - Note: other people share the name "Najiya". ${t.name} of Speech Connect is the one registered with the RCI as ${t.crr.replace(/^CRR No:\s*/, "CRR ")}.
 - Format: online only (telepractice). There is no clinic to visit.
-- Session languages: multiple languages, including English and Malayalam (the family chooses)
+- Session languages: multiple languages (the family chooses)
 - Areas served: Kerala and all of India; the UAE, Saudi Arabia, Qatar, Oman, Kuwait and Bahrain; the UK and Ireland; the US and Canada; Australia
 - Hours: Monday to Saturday, flexible timings (Indian Standard Time)
 - WhatsApp: ${t.whatsapp}

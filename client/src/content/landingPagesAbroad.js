@@ -43,7 +43,7 @@ export const ABROAD_PAGES = [
         heading: "Keeping Malayalam alive at home",
         paragraphs: [
           "Many parents in the US worry that speaking Malayalam at home will hold their child back at school. Research consistently shows that growing up with two languages does not cause speech or language delay, and a strong home language supports English rather than competing with it.",
-          "Sessions are available in multiple languages, including English and Malayalam. Some families choose Malayalam so that grandparents can join in; others choose English to match preschool. Either way, we will help you use both languages with confidence.",
+          "Sessions are available in multiple languages. Some families choose Malayalam so that grandparents can join in; others choose English to match preschool. Either way, we will help you use both languages with confidence.",
         ],
       },
       {
@@ -77,7 +77,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam, so you can choose the language your child understands best.",
+        a: "Yes. Sessions are available in multiple languages, so you can choose the language your child understands best.",
       },
     ],
     relatedPosts: ["malayalam-speech-therapy-uae-bilingual-children", "how-to-help-a-late-talker-at-home"],
@@ -115,7 +115,7 @@ export const ABROAD_PAGES = [
         heading: "Arabic, English and Malayalam",
         paragraphs: [
           "Many children in Saudi Arabia hear Malayalam or another Indian language at home, English at an Indian-curriculum school and Arabic around them every day. That is not a cause of speech delay: research shows children can learn several languages without being held back.",
-          "If a child is genuinely delayed, the delay appears in every language, and it is worth acting on. Sessions are available in multiple languages, including English and Malayalam, whichever your child understands best.",
+          "If a child is genuinely delayed, the delay appears in every language, and it is worth acting on. Sessions are available in multiple languages, whichever your child understands best.",
         ],
       },
       {
@@ -145,7 +145,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
       {
         q: "How do we get started?",
@@ -187,7 +187,7 @@ export const ABROAD_PAGES = [
         heading: "When a child is learning several languages",
         paragraphs: [
           "Children in Qatar often hear Malayalam at home, English at school and Arabic in the wider community. Parents sometimes worry this is why their child is slow to talk, but learning more than one language does not cause delay.",
-          "We will never ask you to give up your home language. Sessions are available in multiple languages, including English and Malayalam, and the home strategies you learn work in any language your family uses.",
+          "We will never ask you to give up your home language. Sessions are available in multiple languages, and the home strategies you learn work in any language your family uses.",
         ],
       },
       {
@@ -217,7 +217,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Can we have sessions in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
       {
         q: "How do we book from Qatar?",
@@ -259,7 +259,7 @@ export const ABROAD_PAGES = [
         heading: "Languages at home and at school",
         paragraphs: [
           "Many Indian children in Oman speak Malayalam at home and English at school, and hear Arabic every day. That mix does not cause speech delay. Keep using your home language with your child: it gives them a strong base for every other language they learn.",
-          "Sessions are available in multiple languages, including English and Malayalam, so you can choose the one your child is most comfortable with.",
+          "Sessions are available in multiple languages, so you can choose the one your child is most comfortable with.",
         ],
       },
       {
@@ -289,7 +289,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Do you offer sessions in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
       {
         q: "We live outside Muscat. Can we still book?",
@@ -331,7 +331,7 @@ export const ABROAD_PAGES = [
         heading: "Malayalam at home is a strength",
         paragraphs: [
           "Parents in Kuwait sometimes hear that they should switch to English at home to help their child at school. Please don't. Learning more than one language does not cause speech delay, and children with a strong home language often pick up English more easily.",
-          "Sessions are available in multiple languages, including English and Malayalam, so grandparents and other family members can take part too.",
+          "Sessions are available in multiple languages, so grandparents and other family members can take part too.",
         ],
       },
       {
@@ -361,7 +361,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
       {
         q: "How do we get started from Kuwait?",
@@ -402,7 +402,7 @@ export const ABROAD_PAGES = [
         heading: "Language and your child",
         paragraphs: [
           "Children in Bahrain often grow up with Malayalam or another Indian language at home, English at school and Arabic around them. Growing up with several languages does not cause speech delay, so there is no need to give any of them up.",
-          "Sessions are available in multiple languages, including English and Malayalam. Choose whichever your child understands best, and keep using your home language every day.",
+          "Sessions are available in multiple languages. Choose whichever your child understands best, and keep using your home language every day.",
         ],
       },
       {
@@ -432,7 +432,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
       {
         q: "How do we book from Bahrain?",
@@ -474,7 +474,7 @@ export const ABROAD_PAGES = [
         heading: "Keeping your home language",
         paragraphs: [
           "Newcomer parents are sometimes told to speak only English at home. Research shows that maintaining the home language does not cause speech delay and supports a child's overall development, including their English.",
-          "Sessions are available in multiple languages, including English and Malayalam, and we will coach you to use language-building strategies in whichever language you speak at home.",
+          "Sessions are available in multiple languages, and we will coach you to use language-building strategies in whichever language you speak at home.",
         ],
       },
       {
@@ -508,7 +508,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
     ],
     relatedPosts: ["malayalam-speech-therapy-uae-bilingual-children", "how-to-help-a-late-talker-at-home"],
@@ -546,7 +546,7 @@ export const ABROAD_PAGES = [
         heading: "Two languages, no delay",
         paragraphs: [
           "Many children in Australia hear Malayalam at home and English at childcare. Learning two languages does not cause speech or language delay, and dropping the home language usually takes away the richest conversations a child has with their parents.",
-          "Sessions are available in multiple languages, including English and Malayalam, so you can choose the language that suits your child best.",
+          "Sessions are available in multiple languages, so you can choose the language that suits your child best.",
         ],
       },
       {
@@ -576,7 +576,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
       {
         q: "How do we get started from Australia?",
@@ -618,7 +618,7 @@ export const ABROAD_PAGES = [
         heading: "Malayalam, English and Irish",
         paragraphs: [
           "Children in Ireland may hear Malayalam at home, English everywhere else, and Irish at primary school. Parents sometimes worry this is too much. It is not: children can learn several languages, and multilingualism does not cause speech delay.",
-          "Sessions are available in multiple languages, including English and Malayalam. Keep using your home language with your child every day.",
+          "Sessions are available in multiple languages. Keep using your home language with your child every day.",
         ],
       },
       {
@@ -652,7 +652,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
+        a: "Yes. Sessions are available in multiple languages.",
       },
     ],
     relatedPosts: ["malayalam-speech-therapy-uae-bilingual-children", "how-to-help-a-late-talker-at-home"],
