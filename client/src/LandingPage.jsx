@@ -92,7 +92,7 @@ export default function LandingPage({ page, therapist, posts, linkTo, whatsappLi
                   <Icon name="check" size={16} /> {therapist.crr}
                 </li>
                 <li>
-                  <Icon name="video" size={16} /> Live online sessions in English or Malayalam
+                  <Icon name="video" size={16} /> Live online sessions in multiple languages
                 </li>
                 <li>
                   <Icon name="clock" size={16} /> Monday to Saturday, flexible timings

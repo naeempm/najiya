@@ -94,7 +94,7 @@ const STATIC_PAGES = {
   areas: {
     title: "Areas We Serve | Online Speech Therapy | Speech Connect",
     description:
-      "Online speech therapy in English or Malayalam for families in Kerala, India, the UAE, the Gulf, the UK, Ireland, the US, Canada and Australia.",
+      "Online speech therapy in multiple languages for families in Kerala, India, the UAE, the Gulf, the UK, Ireland, the US, Canada and Australia.",
     crumb: "Areas we serve",
   },
   privacy: {
@@ -163,7 +163,7 @@ function personEntity(therapist) {
       height: PORTRAIT_SIZE,
       caption: portraitAlt(therapist),
     },
-    description: `${therapist.name} is an RCI-registered speech-language pathologist (${therapist.crr}) from Kerala, India, and the founder of Speech Connect. She offers online speech therapy in English and Malayalam for children and adults in India, the UAE and the UK.`,
+    description: `${therapist.name} is an RCI-registered speech-language pathologist (${therapist.crr}) from Kerala, India, and the founder of Speech Connect. She offers online speech therapy in multiple languages, including English and Malayalam for children and adults in India, the UAE and the UK.`,
     knowsLanguage: ["English", "Malayalam"],
     worksFor: { "@id": CLINIC_ID },
     knowsAbout: SERVICES,

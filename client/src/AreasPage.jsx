@@ -13,7 +13,7 @@ export default function AreasPage({ linkTo }) {
             Online speech therapy, <em>wherever you live</em>
           </h1>
           <p className="lead">
-            Live, one-to-one sessions in English or Malayalam for families in Kerala,
+            Live, one-to-one sessions in multiple languages for families in Kerala,
             across India and around the world. Choose your country to learn about
             timings and how sessions work where you are.
           </p>

@@ -1,6 +1,6 @@
 // Country landing pages outside India, the UAE and the UK (those live in
 // landingPages.js). Same rules apply: each page is written for its own
-// audience, sessions are in English or Malayalam only, and every page states
+// audience, sessions are in multiple languages only, and every page states
 // plainly which registrations Najiya holds (RCI, India and DOH, UAE) rather
 // than implying a local licence.
 
@@ -18,7 +18,7 @@ export const ABROAD_PAGES = [
     navLabel: "US",
     seoTitle: "Online Speech Therapy in the USA | Speech Connect",
     seoDescription:
-      "Online speech therapy for Malayali and Indian families across the USA. Live sessions in English or Malayalam with an RCI-registered therapist.",
+      "Online speech therapy for Malayali and Indian families across the USA. Live sessions in multiple languages with an RCI-registered therapist.",
     eyebrow: "United States",
     heading: ["Online speech therapy for families", "in the USA"],
     intro:
@@ -43,7 +43,7 @@ export const ABROAD_PAGES = [
         heading: "Keeping Malayalam alive at home",
         paragraphs: [
           "Many parents in the US worry that speaking Malayalam at home will hold their child back at school. Research consistently shows that growing up with two languages does not cause speech or language delay, and a strong home language supports English rather than competing with it.",
-          "Sessions are available in English or Malayalam. Some families choose Malayalam so that grandparents can join in; others choose English to match preschool. Either way, we will help you use both languages with confidence.",
+          "Sessions are available in multiple languages, including English and Malayalam. Some families choose Malayalam so that grandparents can join in; others choose English to match preschool. Either way, we will help you use both languages with confidence.",
         ],
       },
       {
@@ -77,7 +77,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam, so you can choose the language your child understands best.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam, so you can choose the language your child understands best.",
       },
     ],
     relatedPosts: ["malayalam-speech-therapy-uae-bilingual-children", "how-to-help-a-late-talker-at-home"],
@@ -90,11 +90,11 @@ export const ABROAD_PAGES = [
     navLabel: "Saudi Arabia",
     seoTitle: "Online Speech Therapy in Saudi Arabia | Speech Connect",
     seoDescription:
-      "Online speech therapy for families in Riyadh, Jeddah, Dammam and across Saudi Arabia. Sessions in English or Malayalam with Najiya P M.",
+      "Online speech therapy for families in Riyadh, Jeddah, Dammam and across Saudi Arabia. Sessions in multiple languages with Najiya P M.",
     eyebrow: "Saudi Arabia",
     heading: ["Online speech therapy", "in Saudi Arabia"],
     intro:
-      "Families in Riyadh, Jeddah, Dammam, Al Khobar, Jubail and across the Kingdom can work with an RCI- and DOH-registered speech-language pathologist by live video call, in English or Malayalam.",
+      "Families in Riyadh, Jeddah, Dammam, Al Khobar, Jubail and across the Kingdom can work with an RCI- and DOH-registered speech-language pathologist by live video call, in multiple languages.",
     areaServed: [country("Saudi Arabia"), city("Riyadh"), city("Jeddah"), city("Dammam")],
     sections: [
       {
@@ -115,7 +115,7 @@ export const ABROAD_PAGES = [
         heading: "Arabic, English and Malayalam",
         paragraphs: [
           "Many children in Saudi Arabia hear Malayalam or another Indian language at home, English at an Indian-curriculum school and Arabic around them every day. That is not a cause of speech delay: research shows children can learn several languages without being held back.",
-          "If a child is genuinely delayed, the delay appears in every language, and it is worth acting on. Sessions are available in English or Malayalam, whichever your child understands best.",
+          "If a child is genuinely delayed, the delay appears in every language, and it is worth acting on. Sessions are available in multiple languages, including English and Malayalam, whichever your child understands best.",
         ],
       },
       {
@@ -145,7 +145,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
       {
         q: "How do we get started?",
@@ -162,11 +162,11 @@ export const ABROAD_PAGES = [
     navLabel: "Qatar",
     seoTitle: "Online Speech Therapy in Qatar | Speech Connect",
     seoDescription:
-      "Online speech therapy for families in Doha and across Qatar. Live sessions in English or Malayalam with an RCI- and DOH-registered therapist.",
+      "Online speech therapy for families in Doha and across Qatar. Live sessions in multiple languages with an RCI- and DOH-registered therapist.",
     eyebrow: "Qatar",
     heading: ["Online speech therapy", "in Qatar"],
     intro:
-      "Families in Doha, Al Wakrah, Al Khor and across Qatar can work with a speech-language pathologist by live video call, in English or Malayalam, without adding another journey to a busy week.",
+      "Families in Doha, Al Wakrah, Al Khor and across Qatar can work with a speech-language pathologist by live video call, in multiple languages, without adding another journey to a busy week.",
     areaServed: [country("Qatar"), city("Doha")],
     sections: [
       {
@@ -187,7 +187,7 @@ export const ABROAD_PAGES = [
         heading: "When a child is learning several languages",
         paragraphs: [
           "Children in Qatar often hear Malayalam at home, English at school and Arabic in the wider community. Parents sometimes worry this is why their child is slow to talk, but learning more than one language does not cause delay.",
-          "We will never ask you to give up your home language. Sessions are available in English or Malayalam, and the home strategies you learn work in any language your family uses.",
+          "We will never ask you to give up your home language. Sessions are available in multiple languages, including English and Malayalam, and the home strategies you learn work in any language your family uses.",
         ],
       },
       {
@@ -217,7 +217,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Can we have sessions in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
       {
         q: "How do we book from Qatar?",
@@ -234,11 +234,11 @@ export const ABROAD_PAGES = [
     navLabel: "Oman",
     seoTitle: "Online Speech Therapy in Oman | Speech Connect",
     seoDescription:
-      "Online speech therapy for families in Muscat, Salalah, Sohar and across Oman. Sessions in English or Malayalam with Najiya P M.",
+      "Online speech therapy for families in Muscat, Salalah, Sohar and across Oman. Sessions in multiple languages with Najiya P M.",
     eyebrow: "Oman",
     heading: ["Online speech therapy", "in Oman"],
     intro:
-      "Whether you live in Muscat, Salalah, Sohar or Nizwa, your child can work with a qualified speech-language pathologist by live video call, in English or Malayalam.",
+      "Whether you live in Muscat, Salalah, Sohar or Nizwa, your child can work with a qualified speech-language pathologist by live video call, in multiple languages.",
     areaServed: [country("Oman"), city("Muscat"), city("Salalah"), city("Sohar")],
     sections: [
       {
@@ -259,7 +259,7 @@ export const ABROAD_PAGES = [
         heading: "Languages at home and at school",
         paragraphs: [
           "Many Indian children in Oman speak Malayalam at home and English at school, and hear Arabic every day. That mix does not cause speech delay. Keep using your home language with your child: it gives them a strong base for every other language they learn.",
-          "Sessions are available in English or Malayalam, so you can choose the one your child is most comfortable with.",
+          "Sessions are available in multiple languages, including English and Malayalam, so you can choose the one your child is most comfortable with.",
         ],
       },
       {
@@ -289,7 +289,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Do you offer sessions in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
       {
         q: "We live outside Muscat. Can we still book?",
@@ -306,11 +306,11 @@ export const ABROAD_PAGES = [
     navLabel: "Kuwait",
     seoTitle: "Online Speech Therapy in Kuwait | Speech Connect",
     seoDescription:
-      "Online speech therapy for families in Kuwait City, Abbasiya, Salmiya and across Kuwait. Live sessions in English or Malayalam.",
+      "Online speech therapy for families in Kuwait City, Abbasiya, Salmiya and across Kuwait. Live sessions in multiple languages.",
     eyebrow: "Kuwait",
     heading: ["Online speech therapy", "in Kuwait"],
     intro:
-      "Families in Kuwait City, Abbasiya, Salmiya, Fahaheel, Mangaf and across Kuwait can work with an RCI- and DOH-registered speech-language pathologist by live video call, in English or Malayalam.",
+      "Families in Kuwait City, Abbasiya, Salmiya, Fahaheel, Mangaf and across Kuwait can work with an RCI- and DOH-registered speech-language pathologist by live video call, in multiple languages.",
     areaServed: [country("Kuwait"), city("Kuwait City")],
     sections: [
       {
@@ -331,7 +331,7 @@ export const ABROAD_PAGES = [
         heading: "Malayalam at home is a strength",
         paragraphs: [
           "Parents in Kuwait sometimes hear that they should switch to English at home to help their child at school. Please don't. Learning more than one language does not cause speech delay, and children with a strong home language often pick up English more easily.",
-          "Sessions are available in English or Malayalam, so grandparents and other family members can take part too.",
+          "Sessions are available in multiple languages, including English and Malayalam, so grandparents and other family members can take part too.",
         ],
       },
       {
@@ -361,7 +361,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
       {
         q: "How do we get started from Kuwait?",
@@ -378,11 +378,11 @@ export const ABROAD_PAGES = [
     navLabel: "Bahrain",
     seoTitle: "Online Speech Therapy in Bahrain | Speech Connect",
     seoDescription:
-      "Online speech therapy for families in Manama, Riffa, Muharraq and across Bahrain. Sessions in English or Malayalam with Najiya P M.",
+      "Online speech therapy for families in Manama, Riffa, Muharraq and across Bahrain. Sessions in multiple languages with Najiya P M.",
     eyebrow: "Bahrain",
     heading: ["Online speech therapy", "in Bahrain"],
     intro:
-      "Families in Manama, Riffa, Muharraq, Isa Town and across Bahrain can work with a qualified speech-language pathologist by live video call, in English or Malayalam.",
+      "Families in Manama, Riffa, Muharraq, Isa Town and across Bahrain can work with a qualified speech-language pathologist by live video call, in multiple languages.",
     areaServed: [country("Bahrain"), city("Manama")],
     sections: [
       {
@@ -402,7 +402,7 @@ export const ABROAD_PAGES = [
         heading: "Language and your child",
         paragraphs: [
           "Children in Bahrain often grow up with Malayalam or another Indian language at home, English at school and Arabic around them. Growing up with several languages does not cause speech delay, so there is no need to give any of them up.",
-          "Sessions are available in English or Malayalam. Choose whichever your child understands best, and keep using your home language every day.",
+          "Sessions are available in multiple languages, including English and Malayalam. Choose whichever your child understands best, and keep using your home language every day.",
         ],
       },
       {
@@ -432,7 +432,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
       {
         q: "How do we book from Bahrain?",
@@ -449,7 +449,7 @@ export const ABROAD_PAGES = [
     navLabel: "Canada",
     seoTitle: "Online Speech Therapy in Canada | Speech Connect",
     seoDescription:
-      "Online speech therapy for Malayali and Indian families in Toronto, Brampton, Calgary, Edmonton and across Canada, in English or Malayalam.",
+      "Online speech therapy for Malayali and Indian families in Toronto, Brampton, Calgary, Edmonton and across Canada, in multiple languages.",
     eyebrow: "Canada",
     heading: ["Online speech therapy for families", "in Canada"],
     intro:
@@ -474,7 +474,7 @@ export const ABROAD_PAGES = [
         heading: "Keeping your home language",
         paragraphs: [
           "Newcomer parents are sometimes told to speak only English at home. Research shows that maintaining the home language does not cause speech delay and supports a child's overall development, including their English.",
-          "Sessions are available in English or Malayalam, and we will coach you to use language-building strategies in whichever language you speak at home.",
+          "Sessions are available in multiple languages, including English and Malayalam, and we will coach you to use language-building strategies in whichever language you speak at home.",
         ],
       },
       {
@@ -508,7 +508,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
     ],
     relatedPosts: ["malayalam-speech-therapy-uae-bilingual-children", "how-to-help-a-late-talker-at-home"],
@@ -521,11 +521,11 @@ export const ABROAD_PAGES = [
     navLabel: "Australia",
     seoTitle: "Online Speech Therapy in Australia | Speech Connect",
     seoDescription:
-      "Online speech therapy for Malayali and Indian families in Melbourne, Sydney, Brisbane, Perth and across Australia, in English or Malayalam.",
+      "Online speech therapy for Malayali and Indian families in Melbourne, Sydney, Brisbane, Perth and across Australia, in multiple languages.",
     eyebrow: "Australia",
     heading: ["Online speech therapy for families", "in Australia"],
     intro:
-      "Malayali and Indian families in Melbourne, Sydney, Brisbane, Perth, Adelaide and across Australia can work with a speech-language pathologist by live video call, in English or Malayalam, at after-school times.",
+      "Malayali and Indian families in Melbourne, Sydney, Brisbane, Perth, Adelaide and across Australia can work with a speech-language pathologist by live video call, in multiple languages, at after-school times.",
     areaServed: [country("Australia"), city("Melbourne"), city("Sydney"), city("Brisbane"), city("Perth")],
     sections: [
       {
@@ -546,7 +546,7 @@ export const ABROAD_PAGES = [
         heading: "Two languages, no delay",
         paragraphs: [
           "Many children in Australia hear Malayalam at home and English at childcare. Learning two languages does not cause speech or language delay, and dropping the home language usually takes away the richest conversations a child has with their parents.",
-          "Sessions are available in English or Malayalam, so you can choose the language that suits your child best.",
+          "Sessions are available in multiple languages, including English and Malayalam, so you can choose the language that suits your child best.",
         ],
       },
       {
@@ -576,7 +576,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
       {
         q: "How do we get started from Australia?",
@@ -593,11 +593,11 @@ export const ABROAD_PAGES = [
     navLabel: "Ireland",
     seoTitle: "Online Speech Therapy in Ireland | Speech Connect",
     seoDescription:
-      "Online speech therapy for Malayali and Indian families in Dublin, Cork, Limerick, Galway and across Ireland, in English or Malayalam.",
+      "Online speech therapy for Malayali and Indian families in Dublin, Cork, Limerick, Galway and across Ireland, in multiple languages.",
     eyebrow: "Ireland",
     heading: ["Online speech therapy for families", "in Ireland"],
     intro:
-      "Ireland is home to a large Malayali community, many working in healthcare. Families in Dublin, Cork, Limerick, Galway and across the country can work with a speech-language pathologist by live video call, in English or Malayalam.",
+      "Ireland is home to a large Malayali community, many working in healthcare. Families in Dublin, Cork, Limerick, Galway and across the country can work with a speech-language pathologist by live video call, in multiple languages.",
     areaServed: [country("Ireland"), city("Dublin"), city("Cork")],
     sections: [
       {
@@ -618,7 +618,7 @@ export const ABROAD_PAGES = [
         heading: "Malayalam, English and Irish",
         paragraphs: [
           "Children in Ireland may hear Malayalam at home, English everywhere else, and Irish at primary school. Parents sometimes worry this is too much. It is not: children can learn several languages, and multilingualism does not cause speech delay.",
-          "Sessions are available in English or Malayalam. Keep using your home language with your child every day.",
+          "Sessions are available in multiple languages, including English and Malayalam. Keep using your home language with your child every day.",
         ],
       },
       {
@@ -652,7 +652,7 @@ export const ABROAD_PAGES = [
       },
       {
         q: "Are sessions available in Malayalam?",
-        a: "Yes. Sessions are available in English or Malayalam.",
+        a: "Yes. Sessions are available in multiple languages, including English and Malayalam.",
       },
     ],
     relatedPosts: ["malayalam-speech-therapy-uae-bilingual-children", "how-to-help-a-late-talker-at-home"],
