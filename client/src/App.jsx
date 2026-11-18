@@ -946,8 +946,7 @@ function App({ initialPath, initialData = {} }) {
                   <p className="hero-location reveal">
                     <Icon name="globe" size={16} />
                     <span>
-                      Based in India, offering online therapy across India and the
-                      Arab countries
+                      Based in India, offering international online speech therapy
                     </span>
                   </p>
 

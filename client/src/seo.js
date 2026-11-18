@@ -57,9 +57,9 @@ const SERVICES = [
 
 const STATIC_PAGES = {
   home: {
-    title: "Online Speech Therapy in Kerala, India, UAE & UK | Speech Connect",
+    title: "International Online Speech Therapy from Kerala | Speech Connect",
     description:
-      "RCI-registered online speech therapy with Najiya P M. Live video sessions for children and adults in Kerala, across India, the UAE and the UK.",
+      "International online speech therapy from Kerala, India, with RCI-registered Najiya P M. Live sessions in multiple languages for children and adults.",
   },
   about: {
     title: "Najiya P M, RCI-Registered Speech Therapist | Speech Connect",
@@ -122,12 +122,12 @@ function clinicEntity(therapist, areaServed = DEFAULT_AREA) {
     logo: LOGO,
     image: portraitOf(therapist),
     description:
-      "Online speech and language therapy from Kerala, India, for toddlers, children and adults across India, the UAE and the UK.",
+      "International online speech and language therapy from Kerala, India, for toddlers, children and adults in India, the Middle East, Europe, North America and Australia.",
     telephone: (therapist.call || "").replace(/\s+/g, ""),
     email: therapist.email,
     medicalSpecialty: "SpeechPathology",
-    alternateName: ["Speech Connect Kerala", "Speech Connect Online Speech Therapy"],
-    slogan: "Kerala-based online speech and language therapy",
+    alternateName: ["Speech Connect Kerala", "Speech Connect Online Speech Therapy", "Speech Connect International Online Speech Therapy"],
+    slogan: "International online speech and language therapy from Kerala, India",
     availableLanguage: ["English", "Malayalam"],
     // Online-only practice: city-level location, no street address
     address: {
