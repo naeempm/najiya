@@ -1,6 +1,10 @@
 // Home page FAQs; also published as FAQPage structured data by seo.js
 export const FAQS = [
   {
+    q: "Does Speech Connect offer international online speech therapy?",
+    a: "Yes. Speech Connect is an international online speech therapy practice based in Kerala, India. Najiya P M (M.Sc. SLP, OPT), registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE, works with children and adults in India, the Middle East, the UK, Ireland, the US, Canada, Australia and other countries through live one-to-one video sessions in multiple languages, at times planned around each family's time zone.",
+  },
+  {
     q: "Is Speech Connect a Kerala-based online speech therapy service?",
     a: "Yes. Speech Connect is an online speech and language therapy practice based in Kerala, India, founded and led by Najiya P M (M.Sc. SLP, OPT). She is registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE, and offers live one-to-one video sessions in multiple languages for families in Kerala, across India and abroad.",
   },
