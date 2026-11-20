@@ -16,11 +16,11 @@ const HOME_PAGES = [
     navLabel: "Kerala",
     seoTitle: "Online Speech Therapy in Kerala | Speech Connect",
     seoDescription:
-      "Kerala-based online speech therapy with RCI-registered Najiya P M. Sessions in multiple languages for speech delay, autism, stuttering and stroke.",
+      "Online speech therapy across Kerala with RCI-registered Najiya P M. Sessions in multiple languages for speech delay, autism, stuttering and stroke.",
     eyebrow: "Across Kerala",
     heading: ["Online speech therapy", "across Kerala"],
     intro:
-      "Speech Connect is a Kerala-based online speech therapy practice. From Kasaragod to Thiruvananthapuram, families across Kerala can reach a qualified speech-language pathologist without depending on what happens to be close by, with live, one-to-one sessions in multiple languages by video call.",
+      "Speech Connect is an international online speech therapy platform. From Kasaragod to Thiruvananthapuram, families across Kerala can reach a qualified speech-language pathologist without depending on what happens to be close by, with live, one-to-one sessions in multiple languages by video call.",
     areaServed: [KERALA, INDIA],
     sections: [
       {
