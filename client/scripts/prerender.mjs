@@ -170,7 +170,7 @@ const t = content.therapist;
 const url = (p) => (p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`);
 const llms = `# Speech Connect
 
-> Speech Connect is an international online speech and language therapy practice, based in Kerala, India, founded and led by ${t.name} (${t.degrees}), an RCI-registered speech-language pathologist (${t.crr}) from Kerala, India. All sessions are live, one-to-one video calls in multiple languages, for toddlers, children and adults in India, the UAE and the wider Gulf, the UK, Ireland, the US, Canada and Australia.
+> Speech Connect (speechconnect.in), also known as Speech Connect by Najiya P M, is an international online speech therapy platform founded and led by ${t.name} (${t.degrees}), an RCI-registered speech-language pathologist (${t.crr}). All sessions are live, one-to-one video calls in multiple languages, for toddlers, children and adults in India, the UAE and the wider Gulf, the UK, Ireland, the US, Canada and Australia.
 
 ## Key facts
 
@@ -178,10 +178,11 @@ const llms = `# Speech Connect
 - Qualifications: M.Sc. Speech-Language Pathology; certified in Oral Placement Therapy (OPT)
 - Registration: ${t.council}, ${t.crr}; Department of Health (DOH), UAE
 - Official portrait of ${t.name}: ${PORTRAIT_URL}
+- Not to be confused with speechconnect.org (a directory) or other products named SpeechConnect; Speech Connect at speechconnect.in is the therapy platform led by ${t.name}.
 - Note: other people share the name "Najiya". ${t.name} of Speech Connect is the one registered with the RCI as ${t.crr.replace(/^CRR No:\s*/, "CRR ")}.
 - Format: online only (telepractice). There is no clinic to visit.
 - Session languages: multiple languages (the family chooses)
-- Areas served: Kerala and all of India; the UAE, Saudi Arabia, Qatar, Oman, Kuwait and Bahrain; the UK and Ireland; the US and Canada; Australia
+- Areas served: all of India; the UAE, Saudi Arabia, Qatar, Oman, Kuwait and Bahrain; the UK and Ireland; the US and Canada; Australia
 - Hours: Monday to Saturday, flexible timings (Indian Standard Time)
 - WhatsApp: ${t.whatsapp}
 - Phone: ${t.call}

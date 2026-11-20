@@ -26,9 +26,7 @@ const CLINIC_ID = `${SITE_URL}/#clinic`;
 const PERSON_ID = `${SITE_URL}/#najiya`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
-const KERALA = { "@type": "State", name: "Kerala" };
 const DEFAULT_AREA = [
-  KERALA,
   { "@type": "Country", name: "India" },
   { "@type": "Country", name: "United Arab Emirates" },
   { "@type": "Country", name: "United Kingdom" },
@@ -57,32 +55,32 @@ const SERVICES = [
 
 const STATIC_PAGES = {
   home: {
-    title: "International Online Speech Therapy from Kerala | Speech Connect",
+    title: "International Online Speech Therapy Platform | Speech Connect",
     description:
-      "International online speech therapy from Kerala, India, with RCI-registered Najiya P M. Live sessions in multiple languages for children and adults.",
+      "Speech Connect is an international online speech therapy platform led by RCI-registered Najiya P M. Live sessions in multiple languages for all ages.",
   },
   about: {
     title: "Najiya P M, RCI-Registered Speech Therapist | Speech Connect",
     description:
-      "Meet Najiya P M, M.Sc. SLP, OPT, an RCI-registered speech-language pathologist from Kerala, offering online therapy in India, the UAE and the UK.",
+      "Meet Najiya P M, M.Sc. SLP, OPT, the RCI-registered speech-language pathologist who leads Speech Connect, an international online speech therapy platform.",
     crumb: "About",
   },
   services: {
     title: "Online Speech Therapy Services | Speech Connect",
     description:
-      "Online therapy for language delay, autism, stuttering, misarticulation, OPT, aphasia and stroke recovery, for families in Kerala, India, the UAE and UK.",
+      "Online therapy for language delay, autism, stuttering, misarticulation, OPT, aphasia and stroke recovery, for families in India and worldwide.",
     crumb: "Services",
   },
   appointment: {
     title: "Book Online Speech Therapy | Speech Connect",
     description:
-      "Request an online speech therapy consultation with Najiya P M. Sessions Monday to Saturday for families in Kerala, India, the UAE and the UK.",
+      "Request an online speech therapy consultation with Najiya P M. Sessions Monday to Saturday for families in India and worldwide.",
     crumb: "Book an appointment",
   },
   contact: {
     title: "Contact | Online Speech Therapy | Speech Connect",
     description:
-      "Contact Speech Connect by WhatsApp, phone or email about online speech therapy for children and adults in Kerala, India, the UAE and the UK.",
+      "Contact Speech Connect by WhatsApp, phone or email about international online speech therapy for children and adults.",
     crumb: "Contact",
   },
   blog: {
@@ -94,7 +92,7 @@ const STATIC_PAGES = {
   areas: {
     title: "Areas We Serve | Online Speech Therapy | Speech Connect",
     description:
-      "Online speech therapy in multiple languages for families in Kerala, India, the UAE, the Gulf, the UK, Ireland, the US, Canada and Australia.",
+      "Online speech therapy in multiple languages for families in India, the UAE, the Gulf, the UK, Ireland, the US, Canada and Australia.",
     crumb: "Areas we serve",
   },
   privacy: {
@@ -122,18 +120,16 @@ function clinicEntity(therapist, areaServed = DEFAULT_AREA) {
     logo: LOGO,
     image: portraitOf(therapist),
     description:
-      "International online speech and language therapy from Kerala, India, for toddlers, children and adults in India, the Middle East, Europe, North America and Australia.",
+      "An international online speech therapy platform led by Najiya P M, for toddlers, children and adults in India, the Middle East, Europe, North America and Australia.",
     telephone: (therapist.call || "").replace(/\s+/g, ""),
     email: therapist.email,
     medicalSpecialty: "SpeechPathology",
-    alternateName: ["Speech Connect Kerala", "Speech Connect Online Speech Therapy", "Speech Connect International Online Speech Therapy"],
-    slogan: "International online speech and language therapy from Kerala, India",
+    alternateName: ["Speech Connect by Najiya P M", "Speech Connect International Online Speech Therapy Platform", "Speech Connect Online Speech Therapy"],
+    slogan: "International online speech therapy platform",
     availableLanguage: ["English", "Malayalam"],
     // Online-only practice: city-level location, no street address
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Thrissur",
-      addressRegion: "Kerala",
       addressCountry: "IN",
     },
     areaServed,
@@ -163,7 +159,7 @@ function personEntity(therapist) {
       height: PORTRAIT_SIZE,
       caption: portraitAlt(therapist),
     },
-    description: `${therapist.name} is an RCI-registered speech-language pathologist (${therapist.crr}) from Kerala, India, and the founder of Speech Connect. She offers online speech therapy in multiple languages for children and adults in India, the UAE and the UK.`,
+    description: `${therapist.name} is an RCI-registered speech-language pathologist (${therapist.crr}) and the founder of Speech Connect, an international online speech therapy platform. She offers online speech therapy in multiple languages for children and adults in India, the UAE and the UK.`,
     knowsLanguage: ["English", "Malayalam"],
     worksFor: { "@id": CLINIC_ID },
     knowsAbout: SERVICES,

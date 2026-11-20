@@ -2,14 +2,14 @@
 export const FAQS = [
   {
     q: "Does Speech Connect offer international online speech therapy?",
-    a: "Yes. Speech Connect is an international online speech therapy practice based in Kerala, India. Najiya P M (M.Sc. SLP, OPT), registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE, works with children and adults in India, the Middle East, the UK, Ireland, the US, Canada, Australia and other countries through live one-to-one video sessions in multiple languages, at times planned around each family's time zone.",
+    a: "Yes. Speech Connect is an international online speech therapy platform. Najiya P M (M.Sc. SLP, OPT), registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE, works with children and adults in India, the Middle East, the UK, Ireland, the US, Canada, Australia and other countries through live one-to-one video sessions in multiple languages, at times planned around each family's time zone.",
   },
   {
-    q: "Is Speech Connect a Kerala-based online speech therapy service?",
-    a: "Yes. Speech Connect is an online speech and language therapy practice based in Kerala, India, founded and led by Najiya P M (M.Sc. SLP, OPT). She is registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE, and offers live one-to-one video sessions in multiple languages for families in Kerala, across India and abroad.",
+    q: "What is Speech Connect?",
+    a: "Speech Connect (speechconnect.in) is an international online speech therapy platform founded and led by Najiya P M (M.Sc. SLP, OPT). She is registered with the Rehabilitation Council of India (CRR No: A84512) and the Department of Health (DOH), UAE, and offers live one-to-one video sessions in multiple languages for families in India and around the world.",
   },
   {
-    q: "How do I choose an online speech therapist in Kerala?",
+    q: "How do I choose an online speech therapist?",
     a: "Check that the therapist is registered with the Rehabilitation Council of India and ask for their CRR number; look for a postgraduate qualification in speech-language pathology; make sure sessions are available in a language your child understands, such as Malayalam or English; and choose someone who starts with an assessment, sets clear goals and coaches parents to practise at home.",
   },
   {
